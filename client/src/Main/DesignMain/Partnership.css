@@ -1,0 +1,169 @@
+.Partnership {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3e0ff 100%);
+}
+
+.Partnership-title, .Knowledge-title {
+    text-align: center;
+    margin-bottom: 4rem;
+    user-select: none;
+}
+
+.Partnership-title h1, .Knowledge-title h1 {
+    font-size: 3.5rem;
+    color: #2d3436;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 4rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+.Partnership-title {
+    border-bottom: 2px solid #505050;
+    width: 80%;
+    margin: 0 auto;
+}
+
+
+.Partnership-title h1::after, .Knowledge-title h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #008cff, #00f2fe);
+    border-radius: 2px;
+}
+
+.Partnership-title-img, .Knowledge-title-img {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    padding: 0 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.Partnership-img, .Knowledge-img {
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    padding: 15px;
+}
+
+.Partnership-img:hover, .Knowledge-img:hover {
+    transform: translateY(-5px);
+}
+
+/* Animation for logos */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.Partnership-title-img a, .Knowledge-title-img a {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+}
+
+/* Stagger the animation for each logo */
+.Partnership-title-img a:nth-child(n), .Knowledge-title-img a:nth-child(n) {
+    animation-delay: calc(0.1s * var(--i, 1));
+}
+
+.Knowledge-carousel {
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 40px;
+  
+}
+
+.Knowledge-carousel .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Knowledge-carousel .swiper-slide img {
+    width: 100%;
+    max-height: 120px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    padding: 40px;
+}
+
+.Knowledge-carousel .swiper-slide img:hover {
+    transform: translateY(-5px);
+}
+
+/* Adjust navigation button styles */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #008cff !important;
+}
+
+.swiper-pagination-bullet {
+    background: #008cff !important;
+}
+
+
+@media (max-width: 1024px) {
+    .Partnership-title h1, .Knowledge-title h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .Partnership-title h1, .Knowledge-title h1 {
+        font-size: 2.5rem;
+    }
+
+    .Partnership-title-img, .Knowledge-title-img {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1.5rem;
+        padding: 0 3%;
+    }
+
+    .Partnership-img, .Knowledge-img {
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .Partnership {
+        padding: 40px 0;
+    }
+
+    .Partnership-title h1, .Knowledge-title h1 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .Partnership-title-img, .Knowledge-title-img {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 0 15px;
+    }
+
+    .Partnership-img, .Knowledge-img {
+        height: 60px;
+        padding: 10px;
+    }
+
+    .Partnership-title, .Knowledge-title {
+        margin-bottom: 2rem;
+    }
+}
+    
+  
+  

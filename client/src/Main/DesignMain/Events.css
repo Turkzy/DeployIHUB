@@ -1,0 +1,123 @@
+.events-container {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3e0ff 100%);
+    padding: 140px 20px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+}  
+
+.events-content h1 {
+    font-size: 50px;
+    font-weight: bold;
+    color: #2d3436;
+    position: relative;
+    margin-bottom: 40px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    user-select: none;
+}
+
+.events-content h1::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #008cff, #00f2ff);
+    border-radius: 4px;
+}
+
+.events-timeline {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    flex-wrap: wrap;
+    padding: 20px 0;
+}
+
+.event-item {
+    display: block;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.event-image {
+    width: 400px; 
+    height: 300px; 
+    object-fit: cover; 
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    border: 3px solid transparent;
+}
+
+.event-item:hover .event-image {
+    transform: translateY(-10px);
+    border-color: #008cff;
+    box-shadow: 0 15px 30px rgba(0, 140, 255, 0.123);
+}
+
+.event-content {
+    text-align: center;
+    margin-top: 15px;
+    
+    user-select: none;
+}
+
+.event-title h3 {
+    color: #2d3436;
+    margin: 10px 0 5px;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+    max-width: 400px;
+    user-select: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+
+.event-title span {
+    color: #666;
+    font-size: 0.9rem;
+    display: block;
+    user-select: none;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+.event-item:hover .event-title h3 {
+    color: #008cff;
+}
+
+.see-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.see-more-button {
+    background: linear-gradient(90deg, #0074d3, #008086);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 140, 255, 0.2);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+
+.see-more-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 140, 255, 0.3);
+}
+
+.see-more-button:active {
+    transform: translateY(0);
+}
