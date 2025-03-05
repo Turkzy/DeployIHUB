@@ -1,0 +1,10 @@
+.Team-container h1{
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 2rem;
+    user-select: none;
+}
+
+.table-team {
+    user-select: none;
+}

@@ -85,7 +85,7 @@ const Account = () => {
       title: "Actions",
       render: (_, record) => (
         <>
-          <Button type="link" onClick={() => showEditModal(record)}>
+          <Button type="primary" onClick={() => showEditModal(record)}>
             Edit
           </Button>
           <Button type="link" danger onClick={() => handleDelete(record._id)}>
@@ -97,12 +97,12 @@ const Account = () => {
   ];
 
   return (
-    <div>
-      <h2>User Accounts</h2>
+    <div className="Team-container">
+      <h1>User Accounts</h1>
       <Button type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
         Add User
       </Button>
-      <Table dataSource={users} columns={columns} rowKey="_id" />
+      <Table className="table-team" dataSource={users} columns={columns} rowKey="_id" />
 
       <Modal
         title={editingUser ? "Edit User" : "Add User"}

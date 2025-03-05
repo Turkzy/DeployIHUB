@@ -59,9 +59,7 @@ const ContactPanel = () => {
           <Button
             type="primary"
             onClick={() => handleEdit(record)}
-            style={{ marginRight: 8 }}
-          >
-            Edit
+            style={{ marginRight: 8 }}>Edit
           </Button>
         </>
       ),
@@ -69,9 +67,14 @@ const ContactPanel = () => {
   ];
 
   return (
-    <div className="container">
-      <h2>Contact List</h2>
-      <Table dataSource={contacts} columns={columns} rowKey="_id" />
+    <div className="Team-container">
+      <h1>Contact List</h1>
+      <Table
+        className="table-team"
+        dataSource={contacts}
+        columns={columns}
+        rowKey="_id"
+      />
 
       <Modal
         title="Edit Contact"

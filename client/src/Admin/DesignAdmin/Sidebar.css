@@ -5,6 +5,7 @@
   bottom: 0;
   top: 0;
   transition: width 0.3s ease;
+  box-shadow: 0px 0px 5px black;
 }
 
 .sider.collapsed {
