@@ -2,92 +2,73 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 1rem 2rem;
-    background: url('../../img/bgnavbar.png') no-repeat center center/cover;
+    padding: 0rem 1rem;
+    background: url("../../img/bgnavbar.png") no-repeat center center/cover;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
     width: 100%;
     z-index: 1000;
     transition: all 0.3s ease;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 700;
     user-select: none;
-}
-
-.Navbar-title.scrolled {
-    padding: 0.5rem 2rem;
-    background: rgba(255, 255, 255, 0.98);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-}
-
-.content-logo {
+  }
+  
+  .Navbar-title.scrolled {
+    padding: 0.7rem 1.5rem;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .content-logo {
     display: flex;
     align-items: center;
-    gap: 1rem;
-}
-
-.logo-link {
-    transition: transform 0.3s ease;
-}
-
-.logo-link:hover {
-    transform: scale(1.05);
-}
-
-.PIH-logo, .PIH-logos {
-    height: 100px;
-    width: auto;
-    transition: all 0.3s ease;
-}
-
-
-.scrolled .PIH-logo {
-    height: 50px;
-}
-
-.scrolled .PIH-logos {
-    height: 60px;
-}
-
-.PIH-title-link {
-    text-decoration: none;
-}
-
-.PIH-title {
-    font-size: 2.5rem;
-    color: #27549b;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.scrolled .PIH-title {
+    gap: 0.8rem;
+  }
+  
+  .content-logo h1 {
     font-size: 2rem;
-}
+    color: #222b62;
+    text-align: center;
+  }
+  
+  .content-logo span {
+    color: #c02627;
+  }
+  
+  .PIH-logo {
+    height: 90px;
+    transition: all 0.3s ease;
+  }
+  
+  .scrolled .PIH-logo {
+    height: 60px;
+  }
+  
+  .scrolled .logo-title {
+    font-size: 1.6rem;
+  }
 
-.PIH-title1 {
-    color: #be3030;
-}
-
-.navbar-content {
+  .scrolled {
+    height: 70px;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-content {
     display: flex;
     gap: 2rem;
     list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar-link {
-    font-size: 0.9rem;
+  }
   
+  .navbar-link {
+    font-size: 1rem;
+    font-weight: 700;
     text-decoration: none;
     color: #333;
-    font-weight: 1000;
-    padding: 0.5rem 0;
     position: relative;
     transition: color 0.3s ease;
-}
-
-.navbar-link .link-underline {
+  }
+  
+  .navbar-link .link-underline {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -96,148 +77,113 @@
     background: linear-gradient(90deg, #27549b, #ffffff);
     transform: scaleX(0);
     transition: transform 0.3s ease;
-    transform-origin: right;
-}
-
-.navbar-link:hover .link-underline,
-.navbar-link.active .link-underline {
+  }
+  
+  .navbar-link:hover .link-underline,
+  .navbar-link.active .link-underline {
     transform: scaleX(1);
-    transform-origin: left;
-}
-
-.navbar-link:hover,
-.navbar-link.active {
+  }
+  
+  .navbar-link:hover,
+  .navbar-link.active {
     color: #27549b;
-}
-
-.mobile-menu-btn {
+  }
+  
+  .mobile-menu-btn {
     display: none;
     background: none;
     border: none;
     cursor: pointer;
     padding: 0.5rem;
-    position: relative;
-    z-index: 100;
-}
-
-.menu-icon {
-    display: block;
+  }
+  
+  .menu-icon {
     width: 25px;
     height: 2px;
     background: #27549b;
-    position: relative;
     transition: all 0.3s ease;
-}
-
-.menu-icon::before,
-.menu-icon::after {
-    content: '';
+  }
+  
+  .menu-icon::before,
+  .menu-icon::after {
+    content: "";
     position: absolute;
     width: 25px;
     height: 2px;
     background: #27549b;
     transition: all 0.3s ease;
-}
-
-.menu-icon::before {
+  }
+  
+  .menu-icon::before {
     top: -8px;
-}
-
-.menu-icon::after {
+  }
+  
+  .menu-icon::after {
     bottom: -8px;
-}
-
-.mobile-menu-btn.active .menu-icon {
+  }
+  
+  .mobile-menu-btn.active .menu-icon {
     background: transparent;
-}
-
-.mobile-menu-btn.active .menu-icon::before {
-    top: 0;
+  }
+  
+  .mobile-menu-btn.active .menu-icon::before {
     transform: rotate(45deg);
-}
-
-.mobile-menu-btn.active .menu-icon::after {
-    bottom: 0;
+  }
+  
+  .mobile-menu-btn.active .menu-icon::after {
     transform: rotate(-45deg);
-}
-
-@media (max-width: 1024px) {
+  }
+  
+  @media (max-width: 1024px) {
     .Navbar-title {
-        padding: 0.8rem 1.5rem;
+      padding: 0.6rem 1rem;
     }
-
-    .PIH-title {
-        font-size: 1.3rem;
-    }
-
     .navbar-content {
-        gap: 1.5rem;
+      gap: 1rem;
     }
-}
-
-@media (max-width: 768px) {
+  }
+  
+  @media (max-width: 768px) {
     .mobile-menu-btn {
-        display: block;
+      display: block;
     }
-
     .navbar-content {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        height: 100vh;
-        width: 250px;
-        background: rgba(255, 255, 255, 0.98);
-        flex-direction: column;
-        padding: 5rem 2rem;
-        gap: 1.5rem;
-        transition: right 0.3s ease;
-        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      right: -100%;
+      height: 100vh;
+      width: 250px;
+      background: rgba(255, 255, 255, 0.98);
+      flex-direction: column;
+      padding: 5rem 2rem;
+      gap: 1rem;
+      transition: right 0.3s ease;
     }
-
     .navbar-content.active {
-        right: 0;
+      right: 0;
     }
-
     .navbar-link {
-        font-size: 1rem;
-        width: 100%;
-        text-align: left;
-        padding: 0.8rem 0;
+      font-size: 1rem;
+      padding: 0.8rem 0;
     }
-}
-
-@media (max-width: 480px) {
+  }
+  
+  @media (max-width: 480px) {
     .Navbar-title {
-        padding: 0.5rem 1rem;
+      padding: 0.5rem 0.8rem;
     }
-
     .PIH-logo {
-        height: 40px;
+      height: 50px;
     }
-
     .scrolled .PIH-logo {
-        height: 30px;
+      height: 35px;
     }
-
-    .PIH-title {
-        font-size: 1rem;
-    }
-
-    .scrolled .PIH-title {
-        font-size: 0.8rem;
-    }
-
-    .content-logo {
-        gap: 0.5rem;
-    }
-
     .navbar-content {
-        width: 200px;
-        padding: 4rem 1rem;
+      width: 200px;
+      padding: 4rem 1rem;
     }
-
     .navbar-link {
-        font-size: 0.9rem;
-        padding: 0.6rem 0;
+      font-size: 0.9rem;
     }
-}
+  }
+  

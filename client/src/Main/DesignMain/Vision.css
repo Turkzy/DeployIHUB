@@ -17,12 +17,12 @@
   margin-bottom: 1rem;
   position: relative;
   display: inline-block;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 700;
 }
 
 .section-title h1::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -10px;
   left: 50%;
@@ -45,7 +45,7 @@
 .mvv-card {
   background: rgba(255, 255, 255, 0.9);
   border-radius: 20px;
-  padding: 2.5rem 2rem;
+  padding: 3rem 0rem;
   text-align: center;
   position: relative;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -61,7 +61,7 @@
 .card-icon {
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, #008cff, #00f2fe);
+  background: linear-gradient(135deg, #222b62, #02f2ff);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -72,7 +72,7 @@
 }
 
 .card-icon::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
@@ -93,13 +93,13 @@
   font-weight: 700;
   margin-bottom: 1.5rem;
   position: relative;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
   user-select: none;
 }
 
 .mvv-card p {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 500;
   color: #636e72;
   text-align: justify;
@@ -124,72 +124,72 @@
 
 @keyframes pulse {
   0% {
-      transform: scale(1);
-      opacity: 0.8;
+    transform: scale(1);
+    opacity: 0.8;
   }
   70% {
-      transform: scale(1.3);
-      opacity: 0;
+    transform: scale(1.3);
+    opacity: 0;
   }
   100% {
-      transform: scale(1.3);
-      opacity: 0;
+    transform: scale(1.3);
+    opacity: 0;
   }
 }
 
 /* Media Queries */
 @media (max-width: 1024px) {
   .section-title h1 {
-      font-size: 3rem;
+    font-size: 3rem;
   }
-  
+
   .mvv-container {
-      gap: 2rem;
+    gap: 2rem;
   }
 }
 
 @media (max-width: 768px) {
   .mvv-section {
-      padding: 3rem 1rem;
+    padding: 3rem 1rem;
   }
 
   .section-title {
-      margin-bottom: 2rem;
+    margin-bottom: 2rem;
   }
 
   .section-title h1 {
-      font-size: 2.5rem;
+    font-size: 2.5rem;
   }
 
   .mvv-container {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
 
   .mvv-card {
-      padding: 2rem 1.5rem;
+    padding: 2rem 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
   .mvv-section {
-      padding: 2rem 1rem;
+    padding: 2rem 1rem;
   }
 
   .section-title h1 {
-      font-size: 2rem;
+    font-size: 2rem;
   }
 
   .card-icon {
-      width: 60px;
-      height: 60px;
+    width: 60px;
+    height: 60px;
   }
 
   .card-icon i {
-      font-size: 2rem;
+    font-size: 2rem;
   }
 
   .mvv-card h3 {
-      font-size: 1.5rem;
+    font-size: 1.5rem;
   }
 }

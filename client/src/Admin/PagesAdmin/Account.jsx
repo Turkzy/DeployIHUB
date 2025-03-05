@@ -22,21 +22,24 @@ const Account = () => {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await fetch(`http://localhost:5000/api/auth/delete-user/${id}`, { method: "DELETE" });
-      message.success("User deleted successfully");
-      fetchUsers();
-    } catch (error) {
-      console.error("Error deleting user:", error);
+    if (window.confirm("Are you sure you want to delete this contact?")) {
+      try {
+        await fetch(`http://localhost:5000/api/auth/delete-user/${id}`, {
+          method: "DELETE",
+        });
+        message.success("User deleted successfully");
+        fetchUsers();
+      } catch (error) {
+        console.error("Error deleting user:", error);
+      }
     }
   };
 
   const showEditModal = (user) => {
     setEditingUser(user);
-    form.setFieldsValue({ ...user, password: "" }); // Clears password field
+    form.setFieldsValue({ ...user, password: "" });
     setIsModalOpen(true);
   };
-  
 
   const handleAdd = () => {
     setEditingUser(null);
@@ -54,7 +57,7 @@ const Account = () => {
       }
 
       const method = editingUser ? "PUT" : "POST";
-      const url = editingUser 
+      const url = editingUser
         ? `http://localhost:5000/api/auth/edit-user/${editingUser._id}`
         : "http://localhost:5000/api/auth/add-user";
 
@@ -64,14 +67,15 @@ const Account = () => {
         body: JSON.stringify(values),
       });
 
-      message.success(editingUser ? "User updated successfully" : "User added successfully");
+      message.success(
+        editingUser ? "User updated successfully" : "User added successfully"
+      );
       fetchUsers();
       setIsModalOpen(false);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
-};
-
+  };
 
   const columns = [
     { title: "Name", dataIndex: "name", key: "name" },
@@ -81,8 +85,12 @@ const Account = () => {
       title: "Actions",
       render: (_, record) => (
         <>
-          <Button type="link" onClick={() => showEditModal(record)}>Edit</Button>
-          <Button type="link" danger onClick={() => handleDelete(record._id)}>Delete</Button>
+          <Button type="link" onClick={() => showEditModal(record)}>
+            Edit
+          </Button>
+          <Button type="link" danger onClick={() => handleDelete(record._id)}>
+            Delete
+          </Button>
         </>
       ),
     },
@@ -91,7 +99,9 @@ const Account = () => {
   return (
     <div>
       <h2>User Accounts</h2>
-      <Button type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>Add User</Button>
+      <Button type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
+        Add User
+      </Button>
       <Table dataSource={users} columns={columns} rowKey="_id" />
 
       <Modal
@@ -101,19 +111,30 @@ const Account = () => {
         onCancel={() => setIsModalOpen(false)}
       >
         <Form form={form} layout="vertical">
-          <Form.Item name="name" label="Name" rules={[{ required: true, message: "Enter Name" }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="email" label="Email" rules={[{ required: true, message: "Enter Email" }, { type: "email", message: "Invalid email format" }]}>
+          <Form.Item
+            name="name"
+            label="Name"
+            rules={[{ required: true, message: "Enter Name" }]}
+          >
             <Input />
           </Form.Item>
           <Form.Item
-  name="password"
-  label="New Password"
-  rules={[{ required: true, message: "Please enter a new password" }]}>
-  <Input.Password placeholder="Enter new password" />
-</Form.Item>
-
+            name="email"
+            label="Email"
+            rules={[
+              { required: true, message: "Enter Email" },
+              { type: "email", message: "Invalid email format" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            label="New Password"
+            rules={[{ required: true, message: "Please enter a new password" }]}
+          >
+            <Input.Password placeholder="Enter new password" />
+          </Form.Item>
         </Form>
       </Modal>
     </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import "../DesignMain/Vision.css";
 
 const Vision = () => {
@@ -14,7 +14,10 @@ const Vision = () => {
           </div>
           <h3>Mission</h3>
           <div className="content">
-            <p>Enabling industry development, spurring local economies through strategic investments and partnerships.</p>
+            <p>
+              Enabling industry development, spurring local economies through
+              strategic investments and partnerships.
+            </p>
           </div>
           <div className="card-wave"></div>
         </div>
@@ -25,7 +28,12 @@ const Vision = () => {
           </div>
           <h3>Vision</h3>
           <div className="content">
-            <p>Create a physical and virtual space that will consist of a community of innovators that will collate and create breakthrough ideas and solutions, to improve a process, a business, or a model to provide resources and research support</p>
+            <p>
+              Create a physical and virtual space that will consist of a
+              community of innovators that will collate and create breakthrough
+              ideas and solutions, to improve a process, a business, or a model
+              to provide resources and research support
+            </p>
           </div>
           <div className="card-wave"></div>
         </div>
@@ -36,7 +44,12 @@ const Vision = () => {
           </div>
           <h3>Philosophy</h3>
           <div className="content">
-            <p>We are committed to fulfill NDC's vital role in the overall economic development of the country. We advocate excellence, teamwork, and accountability to advance the interests of our stakeholders.</p>
+            <p>
+              We are committed to fulfill NDC's vital role in the overall
+              economic development of the country. We advocate excellence,
+              teamwork, and accountability to advance the interests of our
+              stakeholders.
+            </p>
           </div>
           <div className="card-wave"></div>
         </div>

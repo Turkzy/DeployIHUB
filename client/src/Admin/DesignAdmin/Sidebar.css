@@ -1,37 +1,39 @@
-/* Sidebar.css */
-.sidebar {
-    width: 100%;
-    height: 100%;
-    background-color: rgb(255, 255, 255);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
+.sider {
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  transition: width 0.3s ease;
+}
+
+.sider.collapsed {
+  width: 80px !important;
 }
 
 .logo {
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
 }
 
 .logo img {
-    height: 80px;
-    max-width: 100%;
-    object-fit: contain;
+  height: 50px;
+  transition: all 0.3s ease-in-out;
+}
+
+.sider.collapsed .logo img {
+  height: 40px;
 }
 
 .menu-bar {
-    width: 100%;
-    border-right: none;
+  width: 100%;
+  border: none !important;
 }
 
-.menu-bar .ant-menu-item {
-    font-size: 16px;
-    font-weight: 500;
-    color: #333;
-    transition: all 0.3s ease-in-out;
-}
-
-.menu-bar .ant-menu-item:hover {
-    background-color: #e6f7ff;
-    color: #1890ff;
+.trigger-btn {
+  width: 100%;
+  position: absolute;
+  bottom: 10px;
 }

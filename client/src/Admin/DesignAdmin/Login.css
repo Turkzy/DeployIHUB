@@ -19,7 +19,7 @@
   flex-direction: row;
   text-align: left;
  
-}
+} 
 
 .login-logo {
   width: 300px;
@@ -31,13 +31,13 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 4rem;
-  color: #002ec4;
+  color: #222b62;
   margin-right: 120px;
   text-align: center;
 }
 
 .login-logo-container span {
-  color: rgb(184, 0, 0);
+  color: #c02627;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 4rem;

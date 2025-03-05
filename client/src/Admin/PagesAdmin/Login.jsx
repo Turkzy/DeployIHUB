@@ -27,10 +27,13 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        {
+          email,
+          password,
+        }
+      );
 
       console.log("Login Response:", response.data);
 
@@ -98,7 +101,9 @@ const Login = () => {
               <label htmlFor="rememberMe">Remember Me</label>
             </div>
 
-            <button type="submit" className="login-button">Sign in</button>
+            <button type="submit" className="login-button">
+              Sign in
+            </button>
           </form>
         </div>
       </div>
