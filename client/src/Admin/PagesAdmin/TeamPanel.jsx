@@ -6,9 +6,8 @@ import "../DesignAdmin/TeamPanel.css"
 const TeamPanel = () => {
 
   const columns = [
-    { title: "Phone", dataIndex: "phone", key: "phone" },
-    { title: "Email", dataIndex: "email", key: "email" },
-    { title: "Address", dataIndex: "address", key: "address" },
+    { title: "Name", dataIndex: "name", key: "name" },
+    { title: "Position", dataIndex: "position", key: "position" },
     {
       title: "Actions",
       render: (_, record) => (

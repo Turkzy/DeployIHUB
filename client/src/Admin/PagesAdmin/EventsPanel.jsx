@@ -4,9 +4,9 @@ import { Table, Button, Modal, Form, Input, message } from "antd";
 const EventsPanel = () => {
 
   const columns = [
-    { title: "Phone", dataIndex: "phone", key: "phone" },
-    { title: "Email", dataIndex: "email", key: "email" },
-    { title: "Address", dataIndex: "address", key: "address" },
+    { title: "Title", dataIndex: "title", key: "title" },
+    { title: "Date", dataIndex: "date", key: "date" },
+    { title: "Image", dataIndex: "image", key: "image" },
     {
       title: "Actions",
       render: (_, record) => (
