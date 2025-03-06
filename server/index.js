@@ -9,7 +9,6 @@ const contactRoutes = require("./routes/contactRoutes");
 connectDB();
 
 const app = express();
-app.use(express.json());
 app.use(bodyParser.json());
 
 app.use(
