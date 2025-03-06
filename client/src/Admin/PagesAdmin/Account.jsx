@@ -13,7 +13,7 @@ const Account = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/auth/all-users");
+      const response = await fetch("https://cloud-database-test3.onrender.com/api/auth/all-users");
       const data = await response.json();
       setUsers(data.users);
     } catch (error) {
@@ -24,7 +24,7 @@ const Account = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this contact?")) {
       try {
-        await fetch(`http://localhost:5000/api/auth/delete-user/${id}`, {
+        await fetch(`https://cloud-database-test3.onrender.com/api/auth/delete-user/${id}`, {
           method: "DELETE",
         });
         message.success("User deleted successfully");
@@ -58,8 +58,8 @@ const Account = () => {
 
       const method = editingUser ? "PUT" : "POST";
       const url = editingUser
-        ? `http://localhost:5000/api/auth/edit-user/${editingUser._id}`
-        : "https://cloud-database-test2.onrender.com/api/auth/add-user";
+        ? `https://cloud-database-test3.onrender.com/api/auth/edit-user/${editingUser._id}`
+        : "https://cloud-database-test3.onrender.com/api/auth/add-user";
 
       await fetch(url, {
         method,

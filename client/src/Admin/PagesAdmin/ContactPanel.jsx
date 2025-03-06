@@ -35,7 +35,7 @@ const ContactPanel = () => {
   const handleUpdate = async (values) => {
     try {
       await axios.put(
-        "http://localhost:5000/api/contact/update-contact",
+        "https://cloud-database-test3.onrender.com/api/contact/update-contact",
         values
       );
       message.success("Contact updated successfully!");
