@@ -5,6 +5,43 @@
     user-select: none;
 }
 
+
+
+.ant-table-thead > tr > th {
+    background-color: #222b62 !important;
+    color: white !important; 
+    font-size: 16px;
+    user-select: none;
+  }
+
+  .ant-table-tbody > tr > td {
+    user-select: none;
+  }
+
 .table-team {
     user-select: none;
 }
+
+.edit-btn-team {
+    width: 100px;
+    font-family: "Montserrat", sans-serif;
+    margin-right: 10px;
+    background-color: #43c502 !important; 
+    color: white !important;
+}
+
+.edit-btn-team:hover {
+    background-color: #43e000 !important; 
+    border-color:#43e000 !important;
+  }
+
+.del-btn-team {
+    width: 100px;
+    font-family: "Montserrat", sans-serif;
+}
+
+.add-btn-team {
+    float: right;
+    margin-bottom: 20px;
+}
+  

@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/create-account", createAccount);
 router.post("/login", login);
 router.get("/get-user", authenticateToken, getUser);
-router.get("/all-users", getAllUsers);
+
 
 //CRUD
 router.get("/all-users", getAllUsers);

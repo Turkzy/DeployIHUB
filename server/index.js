@@ -5,6 +5,9 @@ const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const contactRoutes = require("./routes/contactRoutes");
+const teamRoutes = require("./routes/TeamRoutes");
+const fileUpload = require("express-fileupload");
+const path = require("path");
 
 connectDB();
 
@@ -19,9 +22,12 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(express.static("public"));
+app.use(fileUpload());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/team", teamRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -88,7 +88,7 @@ const Account = () => {
           <Button type="primary" onClick={() => showEditModal(record)}>
             Edit
           </Button>
-          <Button type="link" danger onClick={() => handleDelete(record._id)}>
+          <Button type="primary" danger onClick={() => handleDelete(record._id)}>
             Delete
           </Button>
         </>

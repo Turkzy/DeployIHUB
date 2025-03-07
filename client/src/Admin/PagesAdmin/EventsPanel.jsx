@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table, Button, Modal, Form, Input, message } from "antd";
 
+
 const EventsPanel = () => {
 
   const columns = [
@@ -11,6 +12,7 @@ const EventsPanel = () => {
       title: "Actions",
       render: (_, record) => (
         <>
+        
           <Button
             type="primary"
             
@@ -26,6 +28,7 @@ const EventsPanel = () => {
   return (
     <div className='Team-container'>
       <h1>Events</h1>
+      
       <Table  className="table-team" columns={columns} rowKey="_id" />
       </div>
   )
