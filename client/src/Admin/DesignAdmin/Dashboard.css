@@ -4,6 +4,7 @@
     position: sticky;
     top: 0;
     color: white;
+    z-index: 1000;
 }
 
 .content {

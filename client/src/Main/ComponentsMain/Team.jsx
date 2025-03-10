@@ -1,39 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../DesignMain/Team.css'
-import image1 from '../../img/Image1.png'
-import image2 from '../../img/Image2.jpg'
-import image3 from '../../img/Image3.png'
-import image4 from '../../img/Image4.png'
-
+import axios from "axios";
+import { message } from "antd";
 
 const Team = () => {
-  const teamMembers = [
-    {
-      name: "Saturnino H. Mejia",
-      position: "General Manager",
-      image: image1,
-      pdfFile: "pdfs/sample.pdf",
-    },
-    {
-      name: "Joyce Ann S. Azurin",
-      position: "Department Manager",
-      image: image2,
-      pdfFile: "pdfs/sample2.pdf",
-    },
-    {
-      name: "Jerahmeel Chen",
-      position: "Chief Innovation Officer",
-      image: image3,
-      pdfFile: "pdfs/sample3.pdf",
-    },
-    {
-      name: "Maria Cecilia Mendiola",
-      position: "Administrative Officer",
-      image: image4,
-    },
+  const [teamMembers, setTeamMembers] = useState([]);
 
-  ];
-
+  // Fetch Team Members from API
+  useEffect(() => {
+    fetchTeams();
+  }, []);
+    const fetchTeams = async () => {
+      try {
+        const res = await axios.get("https://cloud-database-test3.onrender.com/api/team/teams");
+        setTeamMembers(res.data);
+      } catch (err) {
+        message.error("Failed to Fetch Team Members");
+      }
+    };
+    
   return (
     <div id="team" className='team-section'>
       <div className='team-title'>
@@ -46,7 +31,7 @@ const Team = () => {
           <div className='team-member' key={index}>
             <div className='member-image'>
               <img 
-                src={member.image} 
+                src={member.url} 
                 alt={member.name} 
                 onClick={() => {
                   if (member.pdfFile) {
@@ -59,7 +44,6 @@ const Team = () => {
             <div className='member-info'>
               <h3>{member.name}</h3>
               <p className='position'>{member.position}</p>
-              
             </div>
           </div>
         ))}

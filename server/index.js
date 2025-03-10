@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const contactRoutes = require("./routes/contactRoutes");
 const teamRoutes = require("./routes/TeamRoutes");
+const eventRoutes = require("./routes/EventsRoutes");
 const fileUpload = require("express-fileupload");
 const path = require("path");
 
@@ -28,6 +29,7 @@ app.use(fileUpload());
 app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/team", teamRoutes);
+app.use("/api/event", eventRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -10,7 +10,7 @@ const Contact = () => {
   const fetchContacts = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/contact/all-contacts"
+        "https://cloud-database-test3.onrender.com/api/contact/all-contacts"
       );
       setContacts(response.data);
     } catch (error) {

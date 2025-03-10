@@ -7,8 +7,11 @@ import "../DesignAdmin/TeamPanel.css";
 
 const TeamPanel = () => {
   const [teams, setTeams] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [form] = Form.useForm();
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [addForm] = Form.useForm();
+  const [editForm] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -35,7 +38,7 @@ const TeamPanel = () => {
     }
   };
 
-  const handleAddEdit = async (values) => {
+  const handleAddTeam = async (values) => {
     setLoading(true);
     const formData = new FormData();
     formData.append("name", values.name);
@@ -46,19 +49,42 @@ const TeamPanel = () => {
     }
 
     try {
-      const method = values._id ? "PUT" : "POST";
-      const url = values._id
-        ? `http://localhost:5000/api/team/edit-teams/${values._id}`
-        : "http://localhost:5000/api/team/create-teams";
+      await axios.post("http://localhost:5000/api/team/create-teams", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
-      await axios({ method, url, data: formData, headers: { "Content-Type": "multipart/form-data" } });
-
-      message.success(values._id ? "Team updated successfully!" : "Team added successfully!");
+      message.success("Team added successfully!");
       fetchTeams();
-      setIsModalOpen(false);
-      form.resetFields();
+      setIsAddModalOpen(false);
+      addForm.resetFields();
     } catch (error) {
-      message.error("Failed to save team member.");
+      message.error("Failed to add team member.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEditTeam = async (values) => {
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("position", values.position);
+
+    if (values.file?.[0]?.originFileObj) {
+      formData.append("file", values.file[0].originFileObj);
+    }
+
+    try {
+      await axios.put(`http://localhost:5000/api/team/edit-teams/${selectedTeam._id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      message.success("Team updated successfully!");
+      fetchTeams();
+      setIsEditModalOpen(false);
+      editForm.resetFields();
+    } catch (error) {
+      message.error("Failed to update team member.");
     } finally {
       setLoading(false);
     }
@@ -80,8 +106,9 @@ const TeamPanel = () => {
           <Button
             className="edit-btn-team"
             onClick={() => {
-              form.setFieldsValue({ ...record, file: [] });
-              setIsModalOpen(true);
+              setSelectedTeam(record);
+              editForm.setFieldsValue({ ...record, file: [] });
+              setIsEditModalOpen(true);
             }}
           >
             <FaEdit /> Edit
@@ -96,30 +123,51 @@ const TeamPanel = () => {
 
   return (
     <div className="Team-container">
-      <h1><FaUsers />Teams</h1>
+      <h1><FaUsers /> Teams</h1>
       <Button
         type="primary"
         className="add-btn-team"
         onClick={() => {
-          form.resetFields();
-          setIsModalOpen(true);
+          addForm.resetFields();
+          setIsAddModalOpen(true);
         }}
       >
-        <FaPlus />Add Team Member
+        <FaPlus /> Add Team Member
       </Button>
-      <Table columns={columns} dataSource={teams} rowKey="_id" pagination={{pageSize: 6}}/>
+      <Table columns={columns} dataSource={teams} rowKey="_id" pagination={{ pageSize: 10 }} />
 
+      {/* Add Modal */}
       <Modal
-        title="Add/Edit Team Member"
-        open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
-        onOk={() => form.submit()}
+        title="Add New Team Member"
+        open={isAddModalOpen}
+        onCancel={() => setIsAddModalOpen(false)}
+        onOk={() => addForm.submit()}
         confirmLoading={loading}
       >
-        <Form form={form} onFinish={handleAddEdit} layout="vertical">
-          <Form.Item name="_id" hidden>
+        <Form form={addForm} onFinish={handleAddTeam} layout="vertical">
+          <Form.Item name="name" label="Name" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
+          <Form.Item name="position" label="Position" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+          <Form.Item name="file" label="Image" valuePropName="fileList" getValueFromEvent={(e) => e?.fileList || []}>
+            <Upload beforeUpload={() => false} listType="picture">
+              <Button icon={<UploadOutlined />}>Upload Image</Button>
+            </Upload>
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      {/* Edit Modal */}
+      <Modal
+        title="Edit Team Member"
+        open={isEditModalOpen}
+        onCancel={() => setIsEditModalOpen(false)}
+        onOk={() => editForm.submit()}
+        confirmLoading={loading}
+      >
+        <Form form={editForm} onFinish={handleEditTeam} layout="vertical">
           <Form.Item name="name" label="Name" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
