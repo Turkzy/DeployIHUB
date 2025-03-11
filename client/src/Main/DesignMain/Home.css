@@ -20,7 +20,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.479);
+  background: #000000a9;
   z-index: 1;
 }
 
@@ -49,7 +49,7 @@
   color: white;
   margin-bottom: 1.5rem;
   line-height: 1.2;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.836);
   border-bottom: 2px solid #008cff;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
@@ -60,7 +60,7 @@
   font-size: 1.9rem;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 2rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.979);
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   user-select: none;
