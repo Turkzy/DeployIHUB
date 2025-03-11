@@ -4,7 +4,7 @@ import "../DesignMain/Vision.css";
 const Vision = () => {
   return (
     <section id="vision" className="mvv-section">
-      <div className="section-title">
+      <div className="vision-title">
         <h1>Company Mission, Vision, and Philosophy</h1>
       </div>
       <div className="mvv-container">
