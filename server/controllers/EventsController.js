@@ -7,7 +7,7 @@ export const getEvents = async (req, res) => {
   try {
     const events = await Event.find();
     res.json(events);
-  } catch (err) {
+  } catch (error) {
     res.status(500).json({ msg: error.message });
   }
 };
@@ -24,18 +24,18 @@ export const createEvent = async (req, res) => {
     const fileSize = file.size;
     const ext = path.extname(file.name);
     const filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
-    const url = `${req.protocol}://${req.get("host")}/images/${filename}`;
+    const url = `${req.protocol}://${req.get("host")}/EventsImages/${filename}`;
     const allowType = ['.png', '.jpg', '.jpeg'];
 
     if (!allowType.includes(ext.toLowerCase()))
-      return req.status(422).json({msg: "Invalid Image Format"});
+      return res.status(422).json({msg: "Invalid Image Format"});
 
     if (fileSize > 10000000)
       return res.status(422).json({ msg: "Image must be less than 10MB"});
 
     try {
       await new Promise((resolve, reject) => {
-        file.mv(`./public/images/${filename}`, (err) => {
+        file.mv(`./public/EventsImages/${filename}`, (err) => {
           if (err) reject(err);
           else resolve();
         });
@@ -71,13 +71,13 @@ export const updateEvent = async (req, res) => {
       if (fileSize > 10000000)
         return res.status(422).json({ msg: "Image must be less than 10MB" });
 
-      const filepath = `./public/images/${event.image}`;
+      const filepath = `./public/EventsImages/${event.image}`;
       if (fs.existsSync(filepath)) {
         fs.unlinkSync(filepath);
       }
 
       await new Promise((resolve, reject) => {
-        file.mv(`./public/images/${filename}`, (err) => {
+        file.mv(`./public/EventsImages/${filename}`, (err) => {
           if (err) reject(err);
           else resolve();
         });
@@ -85,7 +85,7 @@ export const updateEvent = async (req, res) => {
     }
 
     const { title, date, link } = req.body;
-    const url = `${req.protocol}://${req.get("host")}/images/${filename}`;
+    const url = `${req.protocol}://${req.get("host")}/EventsImages/${filename}`;
 
     event.title = title || event.title;
     event.date = date || event.date;
@@ -106,7 +106,7 @@ export const deleteEvent = async (req, res) => {
     if (!event) return res.status(404).json({ msg: "Event is Not Found"});
 
     try {
-        const filepath = `./public/images/${event.image}`;
+        const filepath = `./public/EventsImages/${event.image}`;
         if (fs.existsSync(filepath)) {
             fs.unlinkSync(filepath);
         }

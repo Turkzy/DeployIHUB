@@ -2,13 +2,16 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const connectDB = require("./config/db");
-const authRoutes = require("./routes/authRoutes");
-const contactRoutes = require("./routes/contactRoutes");
-const teamRoutes = require("./routes/TeamRoutes");
-const eventRoutes = require("./routes/EventsRoutes");
+const connectDB = require("./config/db.js");
+const authRoutes = require("./routes/authRoutes.js");
+const contactRoutes = require("./routes/contactRoutes.js");
+const teamRoutes = require("./routes/TeamRoutes.js");
+const eventRoutes = require("./routes/EventsRoutes.js");
+const aboutRoutes = require("./routes/AboutRoutes.js");
+const visionRoutes = require("./routes/VisionRoutes.js");
+const homeRoutes = require ("./routes/HomeRoutes.js");
 const fileUpload = require("express-fileupload");
-const path = require("path");
+
 
 connectDB();
 
@@ -30,6 +33,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/team", teamRoutes);
 app.use("/api/event", eventRoutes);
+app.use("/api/about", aboutRoutes);
+app.use("/api/vision", visionRoutes);
+app.use("/api/home", homeRoutes);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, Button, Modal, Form, Input, message } from "antd";
+import {FaEnvelope} from "react-icons/fa";
 
 const ContactPanel = () => {
   const [contacts, setContacts] = useState([]);
@@ -68,7 +69,7 @@ const ContactPanel = () => {
 
   return (
     <div className="Team-container">
-      <h1>Contact List</h1>
+      <h1><FaEnvelope /> Contact List</h1>
       <Table
         className="table-team"
         dataSource={contacts}

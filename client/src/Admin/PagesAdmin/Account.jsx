@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Form, Input, message } from "antd";
+import {FaUserCircle} from "react-icons/fa";
 
 const Account = () => {
   const [users, setUsers] = useState([]);
@@ -98,7 +99,7 @@ const Account = () => {
 
   return (
     <div className="Team-container">
-      <h1>User Accounts</h1>
+      <h1><FaUserCircle /> User Accounts</h1>
       <Button type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
         Add User
       </Button>

@@ -22,7 +22,7 @@ export const createTeam = async (req, res) => {
   const fileSize = file.size;
   const ext = path.extname(file.name);
   const filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
-  const url = `${req.protocol}://${req.get("host")}/images/${filename}`;
+  const url = `${req.protocol}://${req.get("host")}/TeamImages/${filename}`;
   const allowType = [".png", ".jpg", ".jpeg"];
 
   if (!allowType.includes(ext.toLowerCase()))
@@ -34,7 +34,7 @@ export const createTeam = async (req, res) => {
   try {
     // Move the file
     await new Promise((resolve, reject) => {
-      file.mv(`./public/images/${filename}`, (err) => {
+      file.mv(`./public/TeamImages/${filename}`, (err) => {
         if (err) reject(err);
         else resolve();
       });
@@ -72,7 +72,7 @@ export const updateTeam = async (req, res) => {
         return res.status(422).json({ msg: "Image must be less than 10MB" });
 
       // Delete old image if it exists
-      const oldFilePath = `./public/images/${team.image}`;
+      const oldFilePath = `./public/TeamImages/${team.image}`;
       if (fs.existsSync(oldFilePath)) {
         await fs.promises
           .unlink(oldFilePath)
@@ -81,7 +81,7 @@ export const updateTeam = async (req, res) => {
 
       // Move new file
       await new Promise((resolve, reject) => {
-        file.mv(`./public/images/${filename}`, (err) => {
+        file.mv(`./public/TeamImages/${filename}`, (err) => {
           if (err) reject(err);
           else resolve();
         });
@@ -90,7 +90,7 @@ export const updateTeam = async (req, res) => {
 
     // Update database
     const { name, position } = req.body;
-    const url = `${req.protocol}://${req.get("host")}/images/${filename}`;
+    const url = `${req.protocol}://${req.get("host")}/TeamImages/${filename}`;
 
     team.name = name || team.name;
     team.position = position || team.position;
@@ -110,7 +110,7 @@ export const deleteTeam = async (req, res) => {
   if (!team) return res.status(404).json({ msg: "Team Member Not Found" });
 
   try {
-    const filepath = `./public/images/${team.image}`;
+    const filepath = `./public/TeamImages/${team.image}`;
     if (fs.existsSync(filepath)) {
       fs.promises.unlink(filepath).catch((err) => console.error(err));
     }

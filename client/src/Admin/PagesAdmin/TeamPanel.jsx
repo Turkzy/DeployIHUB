@@ -28,7 +28,8 @@ const TeamPanel = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this team member?")) return;
+    if (!window.confirm("Are you sure you want to delete this team member?"))
+      return;
     try {
       await axios.delete(`http://localhost:5000/api/team/delete-teams/${id}`);
       message.success("Team member deleted successfully.");
@@ -49,9 +50,13 @@ const TeamPanel = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/team/create-teams", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      await axios.post(
+        "http://localhost:5000/api/team/create-teams",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
       message.success("Team added successfully!");
       fetchTeams();
@@ -75,9 +80,13 @@ const TeamPanel = () => {
     }
 
     try {
-      await axios.put(`http://localhost:5000/api/team/edit-teams/${selectedTeam._id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      await axios.put(
+        `http://localhost:5000/api/team/edit-teams/${selectedTeam._id}`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
       message.success("Team updated successfully!");
       fetchTeams();
@@ -97,7 +106,8 @@ const TeamPanel = () => {
       title: "Image",
       dataIndex: "url",
       key: "url",
-      render: (url) => (url ? <img src={url} alt="Team" style={{ width: 50 }} /> : "No Image"),
+      render: (url) =>
+        url ? <img src={url} alt="Team" style={{ width: 50 }} /> : "No Image",
     },
     {
       title: "Actions",
@@ -113,7 +123,12 @@ const TeamPanel = () => {
           >
             <FaEdit /> Edit
           </Button>
-          <Button className="del-btn-team" type="primary" danger onClick={() => handleDelete(record._id)}>
+          <Button
+            className="del-btn-team"
+            type="primary"
+            danger
+            onClick={() => handleDelete(record._id)}
+          >
             <FaTrash /> Delete
           </Button>
         </>
@@ -123,7 +138,9 @@ const TeamPanel = () => {
 
   return (
     <div className="Team-container">
-      <h1><FaUsers /> Teams</h1>
+      <h1>
+        <FaUsers /> Teams
+      </h1>
       <Button
         type="primary"
         className="add-btn-team"
@@ -134,7 +151,12 @@ const TeamPanel = () => {
       >
         <FaPlus /> Add Team Member
       </Button>
-      <Table columns={columns} dataSource={teams} rowKey="_id" pagination={{ pageSize: 10 }} />
+      <Table
+        columns={columns}
+        dataSource={teams}
+        rowKey="_id"
+        pagination={{ pageSize: 10 }}
+      />
 
       {/* Add Modal */}
       <Modal
@@ -148,10 +170,19 @@ const TeamPanel = () => {
           <Form.Item name="name" label="Name" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
-          <Form.Item name="position" label="Position" rules={[{ required: true }]}>
+          <Form.Item
+            name="position"
+            label="Position"
+            rules={[{ required: true }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="file" label="Image" valuePropName="fileList" getValueFromEvent={(e) => e?.fileList || []}>
+          <Form.Item
+            name="file"
+            label="Image"
+            valuePropName="fileList"
+            getValueFromEvent={(e) => e?.fileList || []}
+          >
             <Upload beforeUpload={() => false} listType="picture">
               <Button icon={<UploadOutlined />}>Upload Image</Button>
             </Upload>
@@ -171,10 +202,19 @@ const TeamPanel = () => {
           <Form.Item name="name" label="Name" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
-          <Form.Item name="position" label="Position" rules={[{ required: true }]}>
+          <Form.Item
+            name="position"
+            label="Position"
+            rules={[{ required: true }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="file" label="Image" valuePropName="fileList" getValueFromEvent={(e) => e?.fileList || []}>
+          <Form.Item
+            name="file"
+            label="Image"
+            valuePropName="fileList"
+            getValueFromEvent={(e) => e?.fileList || []}
+          >
             <Upload beforeUpload={() => false} listType="picture">
               <Button icon={<UploadOutlined />}>Upload Image</Button>
             </Upload>
