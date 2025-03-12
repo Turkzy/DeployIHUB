@@ -8,7 +8,7 @@ const Vision = () => {
   useEffect(() => {
     const fetchVisions = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/vision/visions");
+        const res = await axios.get("https://cloud-database-test3.onrender.com/api/vision/visions");
         setVisions(res.data);
       } catch (error) {
         console.error("Failed to fetch the content of Vision/Mission", error);

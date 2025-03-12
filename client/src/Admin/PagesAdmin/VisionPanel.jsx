@@ -15,7 +15,7 @@ const VisionPanel = () => {
   const handleAddVision = async (values) => {
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/vision/create-vision-content", values);
+      await axios.post("https://cloud-database-test3.onrender.com/api/vision/create-vision-content", values);
       message.success("The Content is added successfully");
       fetchVisions();
       setIsAddModalOpen(false);
@@ -33,7 +33,7 @@ const VisionPanel = () => {
 
   const fetchVisions = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/vision/visions");
+      const res = await axios.get("https://cloud-database-test3.onrender.com/api/vision/visions");
       setVisions(res.data);
     } catch (error) {
       message.error("Failed to fetch the content of Vision/Mission");
@@ -44,7 +44,7 @@ const VisionPanel = () => {
     setLoading(true);
     try {
       await axios.put(
-        `http://localhost:5000/api/vision/update-vision-content/${selectedVision._id}`, 
+        `https://cloud-database-test3.onrender.com/api/vision/update-vision-content/${selectedVision._id}`, 
         values
       );
       message.success("The Content is updated successfully");
@@ -61,7 +61,7 @@ const VisionPanel = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this content?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/vision/delete-vision-content/${id}`);
+      await axios.delete(`https://cloud-database-test3.onrender.com/api/vision/delete-vision-content/${id}`);
       message.success("Content deleted successfully");
       fetchVisions();
     } catch (error) {

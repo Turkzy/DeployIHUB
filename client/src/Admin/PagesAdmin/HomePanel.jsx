@@ -25,7 +25,7 @@ const HomePanel = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/home/create-home-content", formData, {
+        "https://cloud-database-test3.onrender.com/api/home/create-home-content", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
@@ -48,7 +48,7 @@ const HomePanel = () => {
 
   const fetchHomes = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/home/homes");
+      const res = await axios.get("https://cloud-database-test3.onrender.com/api/home/homes");
       setHomes(res.data);
     } catch (error) {
       message.error("Failed to Fetch the content of Homes.");
@@ -68,7 +68,7 @@ const HomePanel = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/home/update-home-content/${selectedHome._id}`, formData, {
+        `https://cloud-database-test3.onrender.com/api/home/update-home-content/${selectedHome._id}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
@@ -88,7 +88,7 @@ const HomePanel = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this Home Content?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/home/delete-home-content/${id}`);
+      await axios.delete(`https://cloud-database-test3.onrender.com/api/home/delete-home-content/${id}`);
       message.success("Home Content is deleted Successfully");
       fetchHomes();
     } catch (error) {
