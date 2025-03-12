@@ -52,7 +52,7 @@
 }
 
 .mvv-card:hover {
-  transform: translateY(-1px);
+  transform: translateY(-5px);
 }
 
 .card-header {
