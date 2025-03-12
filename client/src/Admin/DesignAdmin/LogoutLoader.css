@@ -1,0 +1,20 @@
+.logout-container {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: url("../../img/logoutbg.png") no-repeat center center;
+    background-size: cover;
+}
+
+.logout-container img {
+    height: 500px;
+}
+
+.logout-container p {
+    font-family: "Montserrat", sans-serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: #222b62;
+}

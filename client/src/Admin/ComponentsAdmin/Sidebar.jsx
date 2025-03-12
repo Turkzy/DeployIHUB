@@ -26,7 +26,7 @@ const Sidebar = ({ onSelect, collapsed }) => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
-    navigate("/login");
+    navigate("/Logout");
   };
 
   return (

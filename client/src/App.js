@@ -21,6 +21,7 @@ import Partnership from './Main/ComponentsMain/Partnership';
 import Team from './Main/ComponentsMain/Team';
 import Contact from './Main/ComponentsMain/Contact';
 import Footer from './Main/ComponentsMain/Footer';
+import LogoutLoader from "./Admin/PagesAdmin/LogoutLoader";
 
 
 const App = () => {
@@ -79,6 +80,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<DashboardPanel />} />
         <Route path="/CMS" element={<ProtectedRoute element={<CMS />} />} />
+        <Route path="/Logout" element={<LogoutLoader />}/>
       </Routes>
     </Router>
   );

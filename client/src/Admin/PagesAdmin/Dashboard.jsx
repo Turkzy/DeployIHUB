@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Layout } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Layout, Spin } from "antd";
 import Sidebar from "../ComponentsAdmin/Sidebar";
 import CustomHeader from "../ComponentsAdmin/Header";
 import HomePanel from "../PagesAdmin/HomePanel";
@@ -8,16 +8,42 @@ import AboutPanel from "../PagesAdmin/AboutPanel";
 import EventsPanel from "../PagesAdmin/EventsPanel";
 import ContactPanel from "../PagesAdmin/ContactPanel";
 import AccountPanel from "../PagesAdmin/Account";
-
 import TeamPanel from "../PagesAdmin/TeamPanel";
 import "../DesignAdmin/Dashboard.css";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const { Sider, Header, Content } = Layout;
 
 const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState("1");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let logoutTimer;
+
+    const resetTimer = () => {
+      clearTimeout(logoutTimer);
+      logoutTimer = setTimeout(() => {
+        localStorage.removeItem("token");
+        navigate("/Logout");
+      }, 60000);
+    };
+
+    window.addEventListener("mousemove", resetTimer);
+    window.addEventListener("keydown", resetTimer);
+    window.addEventListener("click", resetTimer);
+
+    resetTimer();
+
+    return () => {
+      clearTimeout(logoutTimer);
+      window.removeEventListener("mousedown", resetTimer);
+      window.removeEventListener("keydown", resetTimer);
+      window.removeEventListener("click", resetTimer);
+    };
+  }, [navigate]);
 
   return (
     <Layout>

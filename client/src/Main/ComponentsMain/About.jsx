@@ -5,7 +5,6 @@ import '../DesignMain/About.css';
 const About = () => {
   const [aboutData, setAboutData] = useState([]);
 
-  // Fetch data from the backend
   useEffect(() => {
     const fetchAbouts = async () => {
       try {
