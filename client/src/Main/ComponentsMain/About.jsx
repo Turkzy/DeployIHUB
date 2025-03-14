@@ -8,7 +8,7 @@ const About = () => {
   useEffect(() => {
     const fetchAbouts = async () => {
       try {
-        const res = await axios.get("https://cloud-database-test3.onrender.com/api/about/abouts");
+        const res = await axios.get("http://localhost:5000/api/about/abouts");
         setAboutData(res.data);
       } catch (error) {
         console.error("Failed to fetch About content:", error);
@@ -31,13 +31,13 @@ const About = () => {
 
     <div className='about-content'>
       <div className='about-content-left'>
-        {about.url && about.url.endsWith('.mp4') ? (
+        {about.Imgurl && about.Imgurl.endsWith('.mp4') ? (
           <video controls className="about-image" width="100%">
-            <source src={about.url} type="video/mp4" />
+            <source src={about.Imgurl} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         ) : (
-          <img src={about.url} alt="About Media" className="about-image" />
+          <img src={about.Imgurl} alt="About Media" className="about-image" />
         )}
       </div>
 

@@ -1,6 +1,11 @@
 import Event from "../models/EventsModel.js";
-import path from "path";
-import fs from "fs";
+import cloudinary from "cloudinary";
+
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // Get all of the Events
 export const getEvents = async (req, res) => {
@@ -16,103 +21,104 @@ export const getEvents = async (req, res) => {
 
 // CREATE EVENTS
 export const createEvent = async (req, res) => {
-  if (!req.files || !req.files.file) 
-    return res.status(400).json({ msg: "No File Upload" });
+  if (!req.files || !req.files.Imgurl) 
+    return res.status(400).json({ message: "No Image Upload" });
 
-    const { title, date, link } = req.body
-    const file = req.files.file;
-    const fileSize = file.size;
-    const ext = path.extname(file.name);
-    const filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
-    const url = `${req.protocol}://${req.get("host")}/EventsImages/${filename}`;
-    const allowType = ['.png', '.jpg', '.jpeg'];
+  const { title, date, link } = req.body;
+  const imageFile = req.files.Imgurl;
 
-    if (!allowType.includes(ext.toLowerCase()))
-      return res.status(422).json({msg: "Invalid Image Format"});
+  try {
 
-    if (fileSize > 10000000)
-      return res.status(422).json({ msg: "Image must be less than 10MB"});
+    const imageResult = await cloudinary.v2.uploader.upload(
+      imageFile.tempFilePath || imageFile.path,
+      {
+        folder: "events_images",
+      }
+    );
 
-    try {
-      await new Promise((resolve, reject) => {
-        file.mv(`./public/EventsImages/${filename}`, (err) => {
-          if (err) reject(err);
-          else resolve();
-        });
-      });
+    const newEvent = new Event({
+      title, date, link, Imgurl: imageResult.secure_url,
+    });
 
-      const newEvent = new Event({ title, date, image: filename, url, link });
-      await newEvent.save();
-
-      res.status(201).json({ msg: "The New Event Created Successfully"});
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
-    }
+    await newEvent.save();
+    res.status(201).json({ message: "Event is Successfully Created" })
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 // UPDATE THE EVENTS
 export const updateEvent = async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id);
-    if (!event) return res.status(404).json({ msg: "Event Not Found" });
+     const event = await Event.findById(req.params.id);
+     if (!event) return res.status(404).json({ message: "Events Not Found" });
 
-    let filename = event.image;
+     let newImageUrl = event.Imgurl;
 
-    if (req.files && req.files.file) {
-      const file = req.files.file;
-      const fileSize = file.size;
-      const ext = path.extname(file.name);
-      filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
-      const allowType = [".png", ".jpg", ".jpeg", ".jfif"];
-
-      if (!allowType.includes(ext.toLowerCase()))
-        return res.status(422).json({ msg: "Invalid Image Format" });
-
-      if (fileSize > 10000000)
-        return res.status(422).json({ msg: "Image must be less than 10MB" });
-
-      const filepath = `./public/EventsImages/${event.image}`;
-      if (fs.existsSync(filepath)) {
-        fs.unlinkSync(filepath);
+     if (req.files && req.files.Imgurl) {
+      
+      if (event.Imgurl) {
+        const imagePublicId = event.Imgurl
+      .split("/")
+      .slice(-2)
+      .join("/")
+      .split(".")[0];
+      try {
+        await cloudinary.v2.uploader.destroy(imagePublicId);
+      } catch (deleteError) {
+        console.log ("Error deleting old image:", deleteError);
+      }
       }
 
-      await new Promise((resolve, reject) => {
-        file.mv(`./public/EventsImages/${filename}`, (err) => {
-          if (err) reject(err);
-          else resolve();
-        });
-      });
-    }
+      const imageResult = await cloudinary.v2.uploader.upload(
+        req.files.Imgurl.tempFilePath || req.files.Imgurl.path,
+        { folder: "events_images" }
+      );
+      
+      newImageUrl = imageResult.secure_url;
+     }
 
-    const { title, date, link } = req.body;
-    const url = `${req.protocol}://${req.get("host")}/EventsImages/${filename}`;
+     const { title, date, link } = req.body;
 
-    event.title = title || event.title;
-    event.date = date || event.date;
-    event.image = filename;
-    event.url = url;
-    event.link = link || event.link;
-    await event.save();
+     event.title = title || event.title;
+     event.date = date || event.date;
+     event.link = link || event.link;
+     event.Imgurl = newImageUrl;
 
-    return res.status(200).json({ msg: "Event Updated Successfully", event });
-  } catch (err) {
-    return res.status(500).json({ msg: err.message });
+     await event.save();
+     res.status(200).json({ message: "Event Content Updated Successfully" });
+  } catch (error) {
+    console.error("Updated error:", error);
+    res.status(500).json({ message: error.message });
   }
 };
 
 // DELETE THE EVENTS
 export const deleteEvent = async (req, res) => {
+  try {
     const event = await Event.findById(req.params.id);
-    if (!event) return res.status(404).json({ msg: "Event is Not Found"});
+    if (!event) return res.status(404).json({ message: "Event Content Not Found" });
 
-    try {
-        const filepath = `./public/EventsImages/${event.image}`;
-        if (fs.existsSync(filepath)) {
-            fs.unlinkSync(filepath);
-        }
-        await Event.findByIdAndDelete(req.params.id);
-        res.status(200).json({ msg: "Event Deleted Successfully"});
-    } catch (error) {
-        res.status(500).json({msg: error.message});
+    if (event.Imgurl) {
+      const imagePublicId = event.Imgurl
+      .split("/")
+      .slice(-2)
+      .join("/")
+      .split(".")[0];
+
+      try {
+        await cloudinary.v2.uploader.destroy(imagePublicId);
+      } catch (deleteError) {
+        console.log("Error deleting image:", deleteError);
+      }
     }
-}
+
+    await Event.findByIdAndDelete(req.params.id);
+    res
+      .status(200)
+      .json({ msg: "Events files deleted successfully" });
+  } catch (error) {
+    console.error("Delete error:", error);
+    res.status(500).json({ msg: error.message });
+  }
+};

@@ -13,7 +13,7 @@ const Events = () => {
 
   const fetchEvents = async () => {
     try {
-      const res = await axios.get("https://cloud-database-test3.onrender.com/api/event/events");
+      const res = await axios.get("http://localhost:5000/api/event/events");
       setEvents(res.data);
     } catch (err) {
       message.error("Failed to fetch the Events");
@@ -44,7 +44,7 @@ const Events = () => {
             rel="noopener noreferrer"
           >
             <img 
-              src={event.url} 
+              src={event.Imgurl} 
               className='event-image' 
               alt={event.title} 
             />

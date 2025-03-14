@@ -20,7 +20,7 @@ const EventsPanel = () => {
 
   const fetchEvents = async () => {
     try {
-      const res = await axios.get("https://cloud-database-test3.onrender.com/api/event/events");
+      const res = await axios.get("http://localhost:5000/api/event/events");
       setEvents(res.data);
     } catch (err) {
       message.error("Failed to fetch the Events");
@@ -30,7 +30,7 @@ const EventsPanel = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this Event?")) return;
     try {
-      await axios.delete(`https://cloud-database-test3.onrender.com/api/event/delete-events/${id}`);
+      await axios.delete(`http://localhost:5000/api/event/delete-events/${id}`);
       message.success("Events deleted Successfully");
       fetchEvents();
     } catch (err) {
@@ -46,12 +46,12 @@ const EventsPanel = () => {
     formData.append("link", values.link);
 
     if (values.file?.[0]?.originFileObj) {
-      formData.append("file", values.file[0].originFileObj);
+      formData.append("Imgurl", values.file[0].originFileObj);
     }
 
     try {
       await axios.post(
-        "https://cloud-database-test3.onrender.com/api/event/create-events",
+        "http://localhost:5000/api/event/create-events",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -77,12 +77,12 @@ const EventsPanel = () => {
     formData.append("link", values.link);
 
     if (values.file?.[0]?.originFileObj) {
-      formData.append("file", values.file[0].originFileObj);
+      formData.append("Imgurl", values.file[0].originFileObj);
     }
 
     try {
       await axios.put(
-        `https://cloud-database-test3.onrender.com/api/event/update-events/${selectedEvent._id}`,
+        `http://localhost:5000/api/event/update-events/${selectedEvent._id}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -105,17 +105,11 @@ const EventsPanel = () => {
     { title: "Date", dataIndex: "date", key: "date" },
     {
       title: "Image",
-      dataIndex: "url",
-      key: "url",
-      render: (url, record) =>
-        url ? (
-          <a href={record.link} target="_blank" rel="noopener noreferrer">
-            <img
-              src={url}
-              alt="Event"
-              style={{ width: 70, cursor: "pointer" }}
-            />
-          </a>
+      dataIndex: "Imgurl",
+      key: "Imgurl",
+      render: (Imgurl) =>
+        Imgurl ? (
+          <img src={Imgurl} alt="Team" style={{ width: 50 }} />
         ) : (
           "No Image"
         ),

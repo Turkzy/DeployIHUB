@@ -20,12 +20,12 @@ const AboutPanel = () => {
     formData.append("content", values.content);
 
     if (values.file?.[0]?.originFileObj) {
-      formData.append("file", values.file[0].originFileObj);
+      formData.append("Imgurl", values.file[0].originFileObj);
     }
 
     try {
       await axios.post(
-        "https://cloud-database-test3.onrender.com/api/about/create-about-content", formData, {
+        "http://localhost:5000/api/about/create-about-content", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
@@ -48,7 +48,7 @@ const AboutPanel = () => {
 
   const fetchAbouts = async () => {
     try {
-      const res = await axios.get("https://cloud-database-test3.onrender.com/api/about/abouts");
+      const res = await axios.get("http://localhost:5000/api/about/abouts");
       setAbouts(res.data);
     } catch (error) {
       message.error("Failed to Fetch the content of Abouts.");
@@ -63,12 +63,12 @@ const AboutPanel = () => {
     formData.append("content", values.content);
 
     if (values.file?.[0]?.originFileObj) {
-      formData.append("file", values.file[0].originFileObj);
+      formData.append("Imgurl", values.file[0].originFileObj);
     }
 
     try {
       await axios.put(
-        `https://cloud-database-test3.onrender.com/api/about/update-about-content/${selectedAbout._id}`, formData, {
+        `http://localhost:5000/api/about/update-about-content/${selectedAbout._id}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
@@ -88,7 +88,7 @@ const AboutPanel = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this About Content?")) return;
     try {
-      await axios.delete(`https://cloud-database-test3.onrender.com/api/about/delete-about-content/${id}`);
+      await axios.delete(`http://localhost:5000/api/about/delete-about-content/${id}`);
       message.success("About Content is deleted Successfully");
       fetchAbouts();
     } catch (error) {
@@ -107,22 +107,22 @@ const AboutPanel = () => {
     )},
     {
       title: "Media",
-      dataIndex: "url",
-      key: "url",
-      render: (url) => {
-        if (!url) return "No Media";
-    
-        const isVideo = url.endsWith(".mp4");
-    
+      dataIndex: "Imgurl",
+      key: "Imgurl",
+      render: (Imgurl) => {
+        if (!Imgurl) return "No Media";
+      
+        const isVideo = Imgurl.endsWith(".mp4");
+      
         return isVideo ? (
           <video width="200" controls>
-            <source src={url} type="video/mp4" />
+            <source src={Imgurl} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         ) : (
-          <img src={url} alt="About Media" style={{ width: 200 }} />
+          <img src={Imgurl} alt="About Media" style={{ width: 200 }} />
         );
-      }
+      }  
     },
     {
       title: "Actions",
