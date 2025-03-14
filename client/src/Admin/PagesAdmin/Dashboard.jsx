@@ -28,7 +28,7 @@ const Dashboard = () => {
       logoutTimer = setTimeout(() => {
         localStorage.removeItem("token");
         navigate("/Logout");
-      }, 60000);
+      }, 300000);
     };
 
     window.addEventListener("mousemove", resetTimer);

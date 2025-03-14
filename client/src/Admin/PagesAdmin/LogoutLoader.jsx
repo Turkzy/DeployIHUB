@@ -13,7 +13,7 @@ const LogoutLoader = () => {
             localStorage.removeItem('token'); 
             setLoading(false);
             navigate("/login"); 
-        }, 2000); 
+        }, 3000); 
     }, [navigate]);
 
     return (

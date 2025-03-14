@@ -20,7 +20,7 @@ const TeamPanel = () => {
 
   const fetchTeams = async () => {
     try {
-      const res = await axios.get("https://cloud-database-test3.onrender.com/api/team/teams");
+      const res = await axios.get("http://localhost:5000/api/team/teams");
       setTeams(res.data);
     } catch (err) {
       message.error("Failed to fetch teams.");
@@ -31,7 +31,7 @@ const TeamPanel = () => {
     if (!window.confirm("Are you sure you want to delete this team member?"))
       return;
     try {
-      await axios.delete(`https://cloud-database-test3.onrender.com/api/team/delete-teams/${id}`);
+      await axios.delete(`http://localhost:5000/api/team/delete-teams/${id}`);
       message.success("Team member deleted successfully.");
       fetchTeams();
     } catch (err) {
@@ -45,13 +45,17 @@ const TeamPanel = () => {
     formData.append("name", values.name);
     formData.append("position", values.position);
 
-    if (values.file?.[0]?.originFileObj) {
-      formData.append("file", values.file[0].originFileObj);
+    if (values.image?.[0]?.originFileObj) {
+      formData.append("Imgurl", values.image[0].originFileObj);
+    }
+
+    if (values.pdf?.[0]?.originFileObj) {
+      formData.append("pdf", values.pdf[0].originFileObj);
     }
 
     try {
       await axios.post(
-        "https://cloud-database-test3.onrender.com/api/team/create-teams",
+        "http://localhost:5000/api/team/create-teams",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -76,12 +80,16 @@ const TeamPanel = () => {
     formData.append("position", values.position);
 
     if (values.file?.[0]?.originFileObj) {
-      formData.append("file", values.file[0].originFileObj);
+      formData.append("Imgurl", values.file[0].originFileObj);
+    }
+
+    if (values.pdf?.[0]?.originFileObj) {
+      formData.append("pdf", values.pdf[0].originFileObj);
     }
 
     try {
       await axios.put(
-        `https://cloud-database-test3.onrender.com/api/team/edit-teams/${selectedTeam._id}`,
+        `http://localhost:5000/api/team/edit-teams/${selectedTeam._id}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -94,6 +102,7 @@ const TeamPanel = () => {
       editForm.resetFields();
     } catch (error) {
       message.error("Failed to update team member.");
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -104,10 +113,20 @@ const TeamPanel = () => {
     { title: "Position", dataIndex: "position", key: "position" },
     {
       title: "Image",
-      dataIndex: "url",
-      key: "url",
-      render: (url) =>
-        url ? <img src={url} alt="Team" style={{ width: 50 }} /> : "No Image",
+      dataIndex: "Imgurl",
+      key: "Imgurl",
+      render: (Imgurl) =>
+        Imgurl ? (
+          <img src={Imgurl} alt="Team" style={{ width: 50 }} />
+        ) : (
+          "No Image"
+        ),
+    },
+    {
+      title: "PDF",
+      dataIndex: "pdfUrl",
+      key: "pdfUrl",
+      render: (pdfUrl) => (pdfUrl ? "Yes" : "No"),
     },
     {
       title: "Actions",
@@ -178,13 +197,23 @@ const TeamPanel = () => {
             <Input />
           </Form.Item>
           <Form.Item
-            name="file"
+            name="image"
             label="Image"
             valuePropName="fileList"
             getValueFromEvent={(e) => e?.fileList || []}
           >
-            <Upload beforeUpload={() => false} listType="picture">
+            <Upload beforeUpload={() => false} listType="picture" accept="image/*">
               <Button icon={<UploadOutlined />}>Upload Image</Button>
+            </Upload>
+          </Form.Item>
+          <Form.Item
+            name="pdf"
+            label="PDF File"
+            valuePropName="fileList"
+            getValueFromEvent={(e) => e?.fileList || []}
+          >
+            <Upload beforeUpload={() => false} accept=".pdf">
+              <Button icon={<UploadOutlined />}>Upload PDF</Button>
             </Upload>
           </Form.Item>
         </Form>
@@ -215,8 +244,18 @@ const TeamPanel = () => {
             valuePropName="fileList"
             getValueFromEvent={(e) => e?.fileList || []}
           >
-            <Upload beforeUpload={() => false} listType="picture">
+            <Upload beforeUpload={() => false} listType="picture" accept="image/*">
               <Button icon={<UploadOutlined />}>Upload Image</Button>
+            </Upload>
+          </Form.Item>
+          <Form.Item
+            name="pdf"
+            label="PDF File"
+            valuePropName="fileList"
+            getValueFromEvent={(e) => e?.fileList || []}
+          >
+            <Upload beforeUpload={() => false} accept=".pdf">
+              <Button icon={<UploadOutlined />}>Upload PDF</Button>
             </Upload>
           </Form.Item>
         </Form>

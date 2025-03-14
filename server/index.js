@@ -27,7 +27,8 @@ app.use(
 );
 app.use(express.json());
 app.use(express.static("public"));
-app.use(fileUpload());
+app.use(fileUpload({ useTempFiles: true, tempFileDir: '/tmp/'}));
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
@@ -36,6 +37,8 @@ app.use("/api/event", eventRoutes);
 app.use("/api/about", aboutRoutes);
 app.use("/api/vision", visionRoutes);
 app.use("/api/home", homeRoutes);
+
+
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
