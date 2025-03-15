@@ -9,7 +9,16 @@ const Vision = () => {
     const fetchVisions = async () => {
       try {
         const res = await axios.get("https://cloud-database-test3.onrender.com/api/vision/visions");
-        setVisions(res.data);
+
+        // Predefined Order: Mission -> Vision -> Values
+        const order = ["mission", "vision", "values"];
+        
+        // Sort based on predefined order
+        const sortedVisions = res.data.sort((a, b) => {
+          return order.indexOf(a.title.toLowerCase()) - order.indexOf(b.title.toLowerCase());
+        });
+
+        setVisions(sortedVisions);
       } catch (error) {
         console.error("Failed to fetch the content of Vision/Mission", error);
       }

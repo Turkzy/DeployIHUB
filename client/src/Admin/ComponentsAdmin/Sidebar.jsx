@@ -10,6 +10,7 @@ import {
   FaEnvelope,
   FaSignOutAlt,
   FaUserCircle,
+  FaBook
 } from "react-icons/fa";
 import "../DesignAdmin/Sidebar.css";
 import LogoDashboard from "../../img/logo.png";
@@ -47,12 +48,13 @@ const Sidebar = ({ onSelect, collapsed }) => {
           { key: "1", icon: <FaHome />, label: "Home" },
           { key: "2", icon: <FaEye />, label: "Vision" },
           { key: "3", icon: <FaInfoCircle />, label: "About" },
-          { key: "4", icon: <FaCalendarAlt />, label: "Events" },
-          { key: "5", icon: <FaUsers />, label: "Team" },
-          { key: "6", icon: <FaEnvelope />, label: "Contact" },
-          { key: "7", icon: <FaUserCircle />, label: "Account" },
+          { key: "4", icon: <FaBook />, label: "IHub Story" },
+          { key: "5", icon: <FaCalendarAlt />, label: "Events" },
+          { key: "6", icon: <FaUsers />, label: "Team" },
+          { key: "7", icon: <FaEnvelope />, label: "Contact" },
+          { key: "8", icon: <FaUserCircle />, label: "Account" },
           isLoggedIn && {
-            key: "8",
+            key: "9",
             icon: <FaSignOutAlt style={{ color: "red" }} />,
             label: "Logout",
             danger: true,

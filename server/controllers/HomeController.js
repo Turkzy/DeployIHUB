@@ -1,6 +1,11 @@
-import Home from "../models/HomeModel.js";
-import path from "path";
-import fs from "fs";
+import Home from "../models/HomeModel.js"
+import cloudinary from "cloudinary";
+
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 //FETCH THE HOME
 export const getHome = async (req, res) => {
@@ -8,7 +13,7 @@ export const getHome = async (req, res) => {
         const homes = await Home.find();
         res.json(homes);
     } catch (error) {
-        res.status(500).json ({ message: error.message});
+        res.status(500).json({ msg: error.message });
     }
 };
 
@@ -17,37 +22,42 @@ export const getHome = async (req, res) => {
 
 //CREATE HOME CONTENT
 export const createHome = async (req, res) => {
-    if (!req.files || !req.files.file)
-        return res.status(400).json ({ message: "No File Uploaded"});
-
+    if (!req.files || !req.files.Imgurl) 
+        return res.status(400).json({ msg: "No File Upload" });
+    
     const { title, content } = req.body;
-    const file = req.files.file;
-    const fileSize = file.size;
-    const ext = path.extname(file.name);
-    const filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
-    const url = `${req.protocol}://${req.get("host")}/HomeImages/${filename}`;
-    const allowType = [ '.png', '.jpg', '.jpeg', '.jfif', '.mp4'];
-
-    if (!allowType.includes(ext.toLocaleLowerCase()))
-        return res.status(422).json({ message: "Invalid Image Format" });
-
-    if (fileSize > 50000000)
-        return res.status(422).json({ message: " Image and Videos must be less than 50MB try to compress.."});
-
+    const file = req.files.Imgurl;
+    
     try {
-        await new Promise((resolve, reject) => {
-            file.mv(`./public/HomeImages/${filename}`, (error) => {
-                if (error) reject (error);
-                else resolve();
-            });
+        // Check file size (50MB limit)
+        if (file.size > 50 * 1024 * 1024) {
+            return res.status(400).json({ msg: "File size must be less than 50MB" });
+        }
+
+        // Determine if it's a video or image
+        const isVideo = file.mimetype.startsWith('video/');
+        
+        const uploadResult = await cloudinary.v2.uploader.upload(
+            file.tempFilePath,
+            {
+                folder: "home_content",
+                resource_type: isVideo ? "video" : "image",
+                chunk_size: 6000000, // Recommended for videos
+                eager_async: true
+            }
+        );
+
+        const newHome = new Home({
+            title,
+            content,
+            Imgurl: uploadResult.secure_url
         });
 
-        const newHome = new Home({ title, content, image: filename, url});
         await newHome.save();
-
-        res.status(201).json({ message: "The New Home Content Created Successfully"});
+        res.status(201).json({ msg: "Home Content Created Successfully" });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error("Create error:", error);
+        res.status(500).json({ msg: error.message });
     }
 }
 
@@ -56,63 +66,61 @@ export const createHome = async (req, res) => {
 export const updateHome = async (req, res) => {
     try {
         const home = await Home.findById(req.params.id);
-        if (!home) return res.status(404).json({ message: "Home Content Not Found" });
+        if (!home) return res.status(404).json({ msg: "Home Content Not Found" });
 
-        let filename = home.image;
+        let newMediaUrl = home.Imgurl;
 
-        if (req.files && req.files.file) {
-            const file = req.files.file;
-            const fileSize = file.size;
-            const ext = path.extname(file.name);
-            filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}${ext}`;
-            const allowType = [ '.png', '.jpg', '.jpeg', '.jfif', '.mp4'];
+        if (req.files && req.files.Imgurl) {
+            // Delete old media if it exists
+            if (home.Imgurl) {
+                const publicId = home.Imgurl
+                    .split("/")
+                    .slice(-2)
+                    .join("/")
+                    .split(".")[0];
 
-            if (!allowType.includes(ext.toLocaleLowerCase()))
-                return res.status(422).json({ message: "Invalid Image or Videos Format" });
-
-            if (fileSize > 50000000)
-                return res.status(422).json({ message: "Image or Videos must be less than 50MB try to compress" });
-
-            const filepath = `./public/HomeImages/${home.image}`;
-            if (fs.existsSync(filepath)) {
-                fs.unlinkSync(filepath);
+                const isVideo = home.Imgurl.toLowerCase().match(/\.(mp4|mov|avi|wmv)$/);
+                try {
+                    await cloudinary.v2.uploader.destroy(publicId, {
+                        resource_type: isVideo ? "video" : "image"
+                    });
+                } catch (deleteError) {
+                    console.log("Error deleting old file:", deleteError);
+                }
             }
 
-            await new Promise((resolve, reject) => {
-                file.mv(`./public/HomeImages/${filename}`, (error) => {
-                    if (error) reject(error);
-                    else resolve()
-                });
-            });
+            // Upload new file
+            const file = req.files.Imgurl;
+            const isVideo = file.mimetype.startsWith('video/');
+
+            // Check file size
+            if (file.size > 50 * 1024 * 1024) {
+                return res.status(400).json({ msg: "File size must be less than 50MB" });
+            }
+
+            const uploadResult = await cloudinary.v2.uploader.upload(
+                file.tempFilePath,
+                {
+                    folder: "home_content",
+                    resource_type: isVideo ? "video" : "image",
+                    chunk_size: 6000000,
+                    eager_async: true
+                }
+            );
+            
+            newMediaUrl = uploadResult.secure_url;
         }
+
         const { title, content } = req.body;
-        const url = `${req.protocol}://${req.get("host")}/HomeImages/${filename}`;
 
         home.title = title || home.title;
         home.content = content || home.content;
-        home.image = filename;
-        home.url = url;
+        home.Imgurl = newMediaUrl;
+
         await home.save();
-
-        return res.status(200).json({ message: "Home Content Updated Succesfully" , home});
+        res.status(200).json({ msg: "Home Content Updated Successfully" });
     } catch (error) {
-        return res.status(500).json({ message: error.message});
-    }
-}
-
-// DELETE HOME CONTENTS
-export const deleteHome = async (req, res) => {
-    const home = await Home.findById(req.params.id);
-    if (!home) return res.status(404).json({ message: "Home Content is Not Found" });
-
-    try {
-        const filepath = `./public/HomeImages/${home.image}`;
-        if (fs.existsSync(filepath)) {
-            fs.unlinkSync(filepath);
-        }
-        await Home.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: "Home Content is Deleted Successfully" });
-    } catch (error) {
-        res.status (500).json({ message: error.message });
+        console.error("Update error:", error);
+        res.status(500).json({ msg: error.message });
     }
 }

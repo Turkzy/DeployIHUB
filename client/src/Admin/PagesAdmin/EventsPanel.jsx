@@ -160,7 +160,7 @@ const EventsPanel = () => {
         columns={columns}
         dataSource={events}
         rowKey="_id"
-        pagination={{ pageSize: 10 }}
+        pagination={{ pageSize: 6 }}
       />
 
       <Modal

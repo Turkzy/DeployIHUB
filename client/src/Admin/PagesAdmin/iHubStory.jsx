@@ -4,32 +4,32 @@ import { Table, Button, Modal, Form, Input, message } from "antd";
 import {FaEnvelope} from "react-icons/fa";
 import { FaEdit} from "react-icons/fa";
 
-const ContactPanel = () => {
-  const [contacts, setContacts] = useState([]);
+const IHubStory = () => {
+  const [hubs, setHubs] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [editContact, setEditContact] = useState(null);
+  const [editHub, setEditHub] = useState(null);
   const [form] = Form.useForm();
 
-  // Fetch Contacts
-  const fetchContacts = async () => {
+  // Fetch Hub
+  const fetchHubs = async () => {
     try {
       const response = await axios.get(
-        "https://cloud-database-test3.onrender.com/api/contact/all-contacts"
+        "http://localhost:5000/api/hub/hub"
       );
-      setContacts(response.data);
+      setHubs(response.data);
     } catch (error) {
-      console.error("Error fetching contacts:", error);
+      console.error("Error fetching hubs:", error);
     }
   };
 
   useEffect(() => {
-    fetchContacts();
+    fetchHubs();
   }, []);
 
   // Open Edit Modal
-  const handleEdit = (contact) => {
-    setEditContact(contact);
-    form.setFieldsValue(contact);
+  const handleEdit = (hub) => {
+    setEditHub(hub);
+    form.setFieldsValue(hub);
     setIsModalVisible(true);
   };
 
@@ -37,23 +37,24 @@ const ContactPanel = () => {
   const handleUpdate = async (values) => {
     try {
       await axios.put(
-        "https://cloud-database-test3.onrender.com/api/contact/update-contact",
+        "http://localhost:5000/api/hub/update-hub",
         values
       );
-      message.success("Contact updated successfully!");
+      message.success("Hub Story updated successfully!");
       setIsModalVisible(false);
-      fetchContacts(); // Refresh data
+      fetchHubs(); // Refresh data
     } catch (error) {
-      message.error("Error updating contact.");
+      message.error("Error updating Hub Story.");
       console.error(error);
     }
   };
 
   // Table Columns
   const columns = [
-    { title: "Phone", dataIndex: "phone", key: "phone" },
-    { title: "Email", dataIndex: "email", key: "email" },
-    { title: "Address", dataIndex: "address", key: "address" },
+    { title: "Content", dataIndex: "content", key: "content", render: (text) => (
+        <div style={{ whiteSpace: 'pre-line' }}>
+          {text}
+        </div> )},
     {
       title: "Actions",
       render: (_, record) => (
@@ -71,10 +72,10 @@ const ContactPanel = () => {
 
   return (
     <div className="Team-container">
-      <h1><FaEnvelope /> Contact List</h1>
+      <h1><FaEnvelope /> iHub Story</h1>
       <Table
         className="table-team"
-        dataSource={contacts}
+        dataSource={hubs}
         columns={columns}
         rowKey="_id"
       />
@@ -87,25 +88,11 @@ const ContactPanel = () => {
       >
         <Form form={form} layout="vertical" onFinish={handleUpdate}>
           <Form.Item
-            name="phone"
-            label="Phone"
-            rules={[{ required: true, message: "Please enter phone number" }]}
+            name="content"
+            label="Content"
+            rules={[{ required: true, message: "Please enter Story" }]}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="email"
-            label="Email"
-            rules={[{ required: true, message: "Please enter email" }]}
-          >
-            <Input type="email" />
-          </Form.Item>
-          <Form.Item
-            name="address"
-            label="Address"
-            rules={[{ required: true, message: "Please enter address" }]}
-          >
-            <Input />
+            <Input.TextArea showCount placeholder='Enter iHub Story...' style={{ height: 300 }}/>
           </Form.Item>
         </Form>
       </Modal>
@@ -113,4 +100,4 @@ const ContactPanel = () => {
   );
 };
 
-export default ContactPanel;
+export default IHubStory;

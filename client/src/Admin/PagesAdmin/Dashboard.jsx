@@ -9,6 +9,7 @@ import EventsPanel from "../PagesAdmin/EventsPanel";
 import ContactPanel from "../PagesAdmin/ContactPanel";
 import AccountPanel from "../PagesAdmin/Account";
 import TeamPanel from "../PagesAdmin/TeamPanel";
+import HubStory from "../PagesAdmin/iHubStory.jsx"
 import "../DesignAdmin/Dashboard.css";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -76,10 +77,11 @@ const Dashboard = () => {
           {selectedMenu === "1" ? <HomePanel /> : <h2></h2>}
           {selectedMenu === "2" ? <VisionPanel /> : <h2></h2>}
           {selectedMenu === "3" ? <AboutPanel /> : <h2></h2>}
-          {selectedMenu === "4" ? <EventsPanel /> : <h2></h2>}
-          {selectedMenu === "5" ? <TeamPanel /> : <h2></h2>}
-          {selectedMenu === "6" ? <ContactPanel /> : <h2></h2>}
-          {selectedMenu === "7" ? <AccountPanel /> : <h2></h2>}
+          {selectedMenu === "4" ? <HubStory /> : <h2></h2>}
+          {selectedMenu === "5" ? <EventsPanel /> : <h2></h2>}
+          {selectedMenu === "6" ? <TeamPanel /> : <h2></h2>}
+          {selectedMenu === "7" ? <ContactPanel /> : <h2></h2>}
+          {selectedMenu === "8" ? <AccountPanel /> : <h2></h2>}
         </Content>
       </Layout>
     </Layout>

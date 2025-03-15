@@ -1,9 +1,28 @@
-import React, { useEffect, useRef } from 'react';
-import video from '../../img/vid2.mp4';
+import React, { useEffect, useRef, useState } from 'react';
 import '../DesignMain/Home.css';
+import axios from 'axios';
 
 const Home = () => {
   const videoRef = useRef(null);
+  const [homeContent, setHomeContent] = useState({
+    title: '',
+    content: '',
+    Imgurl: ''
+  });
+
+  useEffect(() => {
+    const fetchHomeContent = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/home/homes');
+        if (response.data && response.data.length > 0) {
+          setHomeContent(response.data[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching home content:', error);
+      }
+    };
+    fetchHomeContent();
+  }, []);
 
   useEffect(() => {
     const playVideo = async () => {
@@ -15,31 +34,36 @@ const Home = () => {
         }
       }
     };
-
     playVideo();
   }, []);
 
   return (
     <div>
       <div id="home" className='home-container'>
-        <video
-          ref={videoRef}
-          src={video}
-          loop
-          muted
-          playsInline
-          className="background-video"
-        />
+        {homeContent.Imgurl && homeContent.Imgurl.endsWith('.mp4') ? (
+          <video
+            ref={videoRef}
+            src={homeContent.Imgurl}
+            loop
+            muted
+            playsInline
+            autoPlay
+            preload="auto"
+            className="background-video"
+          />
+        ) : (
+          <img 
+            src={homeContent.Imgurl} 
+            alt="background" 
+            className="background-video"
+          />
+        )}
         <div className="background-overlay1"></div>
         <div className="content-wrapper">
           <div className="hero-section">
             <div className="hero-content">
-              <h1>Welcome to the Philippine Innovation Hub</h1>
-              <p>
-                Where creativity shapes the future. Our hub is a vibrant center for innovation,
-                collaboration, and progress in this dynamic archipelago. We unlock Filipino talent, where
-                ideas take flight, dreams become reality, and innovation knows no bounds!
-              </p>
+              <h1>{homeContent.title}</h1>
+              <p>{homeContent.content}</p>
             </div>
           </div>
         </div>

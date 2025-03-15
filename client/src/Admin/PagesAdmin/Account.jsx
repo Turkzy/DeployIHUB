@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Form, Input, message } from "antd";
-import {FaUserCircle} from "react-icons/fa";
+import {FaEdit, FaPlus, FaTrash, FaUserCircle} from "react-icons/fa";
 
 const Account = () => {
   const [users, setUsers] = useState([]);
@@ -86,11 +86,11 @@ const Account = () => {
       title: "Actions",
       render: (_, record) => (
         <>
-          <Button type="primary" onClick={() => showEditModal(record)}>
-            Edit
+          <Button className="edit-btn-team" type="primary" onClick={() => showEditModal(record)}>
+          <FaEdit />Edit
           </Button>
-          <Button type="primary" danger onClick={() => handleDelete(record._id)}>
-            Delete
+          <Button className="del-btn-team" type="primary" danger onClick={() => handleDelete(record._id)}>
+          <FaTrash />Delete
           </Button>
         </>
       ),
@@ -100,8 +100,8 @@ const Account = () => {
   return (
     <div className="Team-container">
       <h1><FaUserCircle /> User Accounts</h1>
-      <Button type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
-        Add User
+      <Button className="add-btn-team" type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
+      <FaPlus />Add User
       </Button>
       <Table className="table-team" dataSource={users} columns={columns} rowKey="_id" />
 

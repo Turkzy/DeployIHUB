@@ -1,6 +1,5 @@
 import Vision from "../models/VisionModel.js";
-import path from "path";
-import fs from "fs";
+
 
 //FETCH THE VISION
 export const getVision = async (req, res) => {
@@ -15,7 +14,7 @@ export const getVision = async (req, res) => {
 
 //C R U D
 
-//CREATE VISION CONTENT
+
 // CREATE VISION CONTENT
 export const createVision = async (req, res) => {
     const { title, content } = req.body;

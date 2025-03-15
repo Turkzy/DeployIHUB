@@ -40,12 +40,16 @@
 
 .Partnership-title-img, .Knowledge-title-img {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 2rem;
-    padding: 0 5%;
-    max-width: 1200px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding-bottom: 5%;
+    max-width: 100%;
     margin: 0 auto;
+    height: auto;
+    width: 1200px;
 }
+
+
 
 .Partnership-img, .Knowledge-img {
     width: 100%;

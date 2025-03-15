@@ -10,6 +10,7 @@ const eventRoutes = require("./routes/EventsRoutes.js");
 const aboutRoutes = require("./routes/AboutRoutes.js");
 const visionRoutes = require("./routes/VisionRoutes.js");
 const homeRoutes = require ("./routes/HomeRoutes.js");
+const hubRoutes = require ("./routes/HubRoutes.js")
 const fileUpload = require("express-fileupload");
 
 
@@ -37,6 +38,7 @@ app.use("/api/event", eventRoutes);
 app.use("/api/about", aboutRoutes);
 app.use("/api/vision", visionRoutes);
 app.use("/api/home", homeRoutes);
+app.use("/api/hub", hubRoutes);
 
 
 
