@@ -1,11 +1,5 @@
 import React from "react";
 import "../DesignMain/Partnership.css";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-
 import DTILogo from "../../img/Partnership/DTI.png";
 import DICTLogo from "../../img/Partnership/DICT.png";
 import DOSTLogo from "../../img/Partnership/DOST.png";
@@ -13,34 +7,27 @@ import NedaLogo from "../../img/Partnership/Neda.png";
 import BOILogo from "../../img/Partnership/BOI.png";
 import BagoPHLogo from "../../img/Partnership/BagoPH.png";
 import NDCLogo from "../../img/Partnership/NDC.png";
-import FCenterLogo from "../../img/Knowledge_Partners/FEdCenter.png";
-import WBCPHLogo from "../../img/Knowledge_Partners/WBCPH.png";
-import DPLogo from "../../img/Knowledge_Partners/DP.png";
-import TIILogo from "../../img/Knowledge_Partners/TII.png";
-import DLSLogo from "../../img/Knowledge_Partners/DLCSB.jpg";
-import EMBLogo from "../../img/Knowledge_Partners/Emb.png";
-import QVLogo from "../../img/Knowledge_Partners/QV.png";
-import QuickLogo from "../../img/Knowledge_Partners/Quick.png";
-import MTLogo from "../../img/Knowledge_Partners/MT.png";
-import CSGLogo from "../../img/Knowledge_Partners/CSG.png";
-import PWCLogo from "../../img/Knowledge_Partners/PWC.png";
-import StartLogo from "../../img/Knowledge_Partners/start2.png";
 import LawLogo from "../../img/Partnership/ra11337.png";
 
-const knowledgePartners = [
-  { link: "https://fedcenter.org/", logo: FCenterLogo },
-  { link: "https://www.womenbiz.ph/", logo: WBCPHLogo },
-  { link: "https://www.digitalpilipinas.ph/", logo: DPLogo },
-  { link: "https://theindependentinvestor.ph/", logo: TIILogo },
-  { link: "https://www.benilde.edu.ph/", logo: DLSLogo },
-  { link: "https://embiggengroup.com/", logo: EMBLogo },
-  { link: "https://www.questventures.com/", logo: QVLogo },
-  { link: "https://quickers.com/", logo: QuickLogo },
-  { link: "https://tech.manacommon.com/", logo: MTLogo },
-  { link: "https://www.companies.sg/", logo: CSGLogo },
-  { link: "https://www.pwc.com/gx/en.html", logo: PWCLogo },
-  { link: "https://start2.group/", logo: StartLogo },
-];
+import Marquee from "react-fast-marquee"
+
+
+import AceSG from "../../img/Knowledge_Partners/ACE_SG.png";
+import Ateneo from "../../img/Knowledge_Partners/AteneoLogo.png"
+import GDAP from "../../img/Knowledge_Partners/GDAP.png"
+import GlobalAI from "../../img/Knowledge_Partners/GlobalAI_Council.png"
+import LaN from "../../img/Knowledge_Partners/LeaveaNest_logo.png"
+import Likhaan from "../../img/Knowledge_Partners/Likhaan-logo.png"
+import MHT from "../../img/Knowledge_Partners/ManilaHealthTek.png"
+import MV from "../../img/Knowledge_Partners/MeetVentures.png"
+import PHC from "../../img/Knowledge_Partners/PhilippineChamber.png"
+import Qryp from "../../img/Knowledge_Partners/Qrypted.png"
+import RSchool from "../../img/Knowledge_Partners/ReactorsSchool.png"
+import RSatallite from "../../img/Knowledge_Partners/RotarySatallite.png"
+import ROne from "../../img/Knowledge_Partners/RoundOne.png"
+import Twala from "../../img/Knowledge_Partners/Twala.png"
+import Unesco from "../../img/Knowledge_Partners/UNESCO_EE_Net_PH.png"
+
 
 const Partnership = () => {
   return (
@@ -81,38 +68,83 @@ const Partnership = () => {
 
       <div className="Knowledge-title">
         <h1>Knowledge Partners</h1>
-        <Swiper
-  modules={[Autoplay]}
-  slidesPerView={5} /* Number of visible logos */
-  spaceBetween={10} /* Space between images */
-  loop={true} /* Enables infinite scrolling */
-  autoplay={{
-    delay: 0, /* No pause */
-    disableOnInteraction: false, /* Keeps running even when interacted */
-    reverseDirection: false, /* Moves in one direction */
-  }}
-  speed={3000} /* Slow & smooth scrolling */
-  freeMode={true} /* Removes snapping */
-  allowTouchMove={false} /* Prevents manual stopping */
-  grabCursor={true} /* Adds a grabbing cursor effect */
-  breakpoints={{
-    1024: { slidesPerView: 4 },
-    768: { slidesPerView: 3 },
-    480: { slidesPerView: 2 },
-    320: { slidesPerView: 1 }
-  }}
-  className='Knowledge-carousel'
->
-  {[...knowledgePartners, ...knowledgePartners].map((partner, index) => (
-    <SwiperSlide key={index}>
-      <a href={partner.link}>
-        <img className='Knowledge-img' src={partner.logo} alt="Partner Logo"/>
-      </a>
-    </SwiperSlide>
-  ))}
-</Swiper>
-
-
+          <Marquee>
+            <div>
+              <a href="https://ace.sg/">
+              <img className="knowledge-img" src ={AceSG} />
+              </a>
+            </div>
+            <div>
+              <a href="https://www.ateneo.edu/">
+              <img className="knowledge-img" src ={Ateneo} />
+              </a>
+            </div>
+            <div>
+              <a href="https://gdap.org.ph/">
+              <img className="knowledge-img" src ={GDAP} />
+              </a>
+            </div>
+            <div>
+              <a href="https://globalaicouncil.ph/">
+              <img className="knowledge-img" src ={GlobalAI} />
+              </a>
+            </div>
+            <div>
+              <a href="https://global.lne.st/">
+              <img className="knowledge-img" src ={LaN} />
+              </a>
+            </div>
+            <div>
+              <a href="https://www.likhaan.org/">
+              <img className="knowledge-img" src ={Likhaan} />
+              </a>
+            </div>
+            <div>
+              <a href="https://www.facebook.com/mteklabs/">
+              <img className="knowledge-img" src ={MHT} />
+              </a>
+            </div>
+            <div>
+              <a href="https://www.meetventures.com/">
+              <img className="knowledge-img" src ={MV} />
+              </a>
+            </div>
+            <div>
+              <a href="https://www.philippinechamber.com/">
+              <img className="knowledge-img" src ={PHC} />
+              </a>
+            </div>
+            <div>
+              <a href="https://qrypted.technology/">
+              <img className="knowledge-img" src ={Qryp} />
+              </a>
+            </div>
+            <div>
+              <a href="https://www.reactor.school/">
+              <img className="knowledge-img" src ={RSchool} />
+              </a>
+            </div>
+            <div>
+              <a href="https://my.rotary.org/">
+              <img className="knowledge-img" src ={RSatallite} />
+              </a>
+            </div>
+            <div>
+              <a href="https://roundone.ph/">
+              <img className="knowledge-img" src ={ROne} />
+              </a>
+            </div>
+            <div>
+              <a href="https://www.twala.io/">
+              <img className="knowledge-img" src ={Twala} />
+              </a>
+            </div>
+            <div>
+              <a href="https://www.unesco.org/en">
+              <img className="knowledge-img" src ={Unesco} />
+              </a>
+            </div>
+          </Marquee>
       </div>
     </div>
   );

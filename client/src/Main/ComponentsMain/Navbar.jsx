@@ -32,12 +32,10 @@ const Navbar = () => {
           <img className="PIH-logo" src={Logo} alt="PIH Logo"/>
           <h1 className='logo-title'>Philippine <br />
           <span className="logo-title">Innovation Hub</span>
-        </h1>
+          </h1>
       </div>
 
-      <button className={`mobile-menu-btn ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
-        <span className="menu-icon"></span>
-      </button>
+      
 
       <nav className={`navbar-content ${isMenuOpen ? 'active' : ''}`}>
         {[
@@ -64,6 +62,9 @@ const Navbar = () => {
         ))}
       
       </nav>
+      <button className={`mobile-menu-btn ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
+        <span className="menu-icon"></span>
+      </button>
     </div>
   )
 }
