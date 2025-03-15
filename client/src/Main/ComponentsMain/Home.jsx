@@ -13,7 +13,7 @@ const Home = () => {
   useEffect(() => {
     const fetchHomeContent = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/home/homes');
+        const response = await axios.get('https://cloud-database-test3.onrender.com/api/home/homes');
         if (response.data && response.data.length > 0) {
           setHomeContent(response.data[0]);
         }

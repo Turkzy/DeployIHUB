@@ -41,7 +41,7 @@ const Sidebar = ({ onSelect, collapsed }) => {
         defaultSelectedKeys={["1"]}
         className="menu-bar"
         onClick={(e) => {
-          if (e.key === "8") handleLogout();
+          if (e.key === "9") handleLogout();
           else onSelect(e.key);
         }}
         items={[

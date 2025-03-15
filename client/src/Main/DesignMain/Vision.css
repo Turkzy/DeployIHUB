@@ -1,7 +1,7 @@
 .mvv-section {
   text-align: center;
   padding: 50px 20px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3e0ff 100%);
+  background-color: #d9e2e9;
 }
 
 .vision-title {
@@ -12,7 +12,7 @@
 
 .vision-title h1 {
   font-size: 3.5rem;
-  color: #000000;
+  color: #272727;
   margin-bottom: 1rem;
   position: relative;
   display: inline-block;
@@ -106,4 +106,51 @@
   font-family: 'Montserrat', sans-serif;
   color: rgb(77, 75, 75);
   user-select: none;
+}
+
+
+@media screen and (max-width: 480px) {
+  .mvv-section {
+    width: 510px;
+  }
+  .mvv-card {
+    width: 100%; 
+    padding: 25px;
+  }
+
+  .vision-title h1 {
+    font-size: 2.5rem;  
+  }
+
+  .card-header {
+    font-size: 1.5rem;  
+    padding: 15px 0;
+  }
+
+  .card-content p {
+    font-size: 14px; 
+  }
+
+  .card-icon i {
+    font-size: 50px; 
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .mvv-card {
+    width: 100%;  
+    padding: 20px;
+  }
+
+  .vision-title h1 {
+    font-size: 2rem; 
+  }
+
+  .card-content p {
+    font-size: 12px;
+  }
+
+  .card-icon i {
+    font-size: 40px;
+  }
 }
