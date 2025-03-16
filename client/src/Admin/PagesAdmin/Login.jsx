@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import "../DesignAdmin/Login.css";
 import logo from "../../img/ihublogo.gif";
 
@@ -37,8 +37,10 @@ const Login = () => {
 
       console.log("Login Response:", response.data);
 
+      // Store token and user data
       localStorage.setItem("token", response.data.accessToken);
       localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("lastLoginTime", Date.now().toString());
 
       if (rememberMe) {
         localStorage.setItem("rememberedEmail", email);
@@ -58,53 +60,34 @@ const Login = () => {
     <div className="login-container">
       <div className="login-logo-container">
         <img src={logo} alt="Company Logo" className="login-logo" />
-        <h1>
+        <h1 className="login-title">
           Philippine <br />
           <span className="login-title">Innovation Hub</span>
         </h1>
 
         <div className="login-form-container">
           <h2 className="login-title">Welcome back!</h2>
+
           {error && <p className="login-error">{error}</p>}
 
-          <form className="login-form" onSubmit={handleLogin}>
+          <form className="login-form" onSubmit={handleLogin}> 
             <div className="input-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                className="login-input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+                <label htmlFor="email">Email</label>
+                <input type="email" id="email" className="login-input" value={email} onChange={(e) => setEmail(e.target.value)} required/>
             </div>
 
             <div className="input-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                className="login-input"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+                <label htmlFor="password">Password</label>
+                <input type="password" id="password" className="login-input" value={password} onChange={(e) => setPassword(e.target.value)} required/>
             </div>
+
             <div className="remember-me">
-              <input
-                type="checkbox"
-                id="rememberMe"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-              />
-              <label htmlFor="rememberMe">Remember Me</label>
+                <input type="checkbox" id="rememberMe" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />
+                <label htmlFor="rememberMe">Remember Me</label>
             </div>
 
-            <button type="submit" className="login-button">
-              Sign in
-            </button>
-          </form>
+            <button type="submit" className="login-button"> Sign in </button>
+            </form>
         </div>
       </div>
     </div>

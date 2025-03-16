@@ -20,7 +20,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: #000000a9;
+  background: #000000d3;
   z-index: 1;
 }
 
@@ -89,7 +89,6 @@
 @media screen and (max-width: 480px) {
   .home-container {
     height: 75vh;
-    width: 550px;
   }
   .hero-section {
     margin-top: 50px;
@@ -118,9 +117,3 @@
     font-size: 0.7rem;
   }
 }
-
-
-
-
-
-

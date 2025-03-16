@@ -28,9 +28,32 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-   
-    const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token);
+    const checkAuth = () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        // Check if token is expired
+        try {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          const isExpired = payload.exp * 1000 < Date.now();
+          
+          if (isExpired) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            setIsAuthenticated(false);
+          } else {
+            setIsAuthenticated(true);
+          }
+        } catch (error) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          setIsAuthenticated(false);
+        }
+      } else {
+        setIsAuthenticated(false);
+      }
+    };
+
+    checkAuth();
   }, []);
 
   const DashboardPanel = () => {
@@ -76,10 +99,10 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={isAuthenticated ? <Navigate to="/login" /> : <LoginPanel />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={isAuthenticated ? <Navigate to="/CMS" /> : <LoginPanel />} />
         <Route path="/" element={<DashboardPanel />} />
         <Route path="/CMS" element={<ProtectedRoute element={<CMS />} />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/Logout" element={<LogoutLoader />}/>
       </Routes>
     </Router>

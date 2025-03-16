@@ -111,27 +111,4 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-    .events-container {
-        padding: 80px 10px;
-    }
 
-    .events-content h1 {
-        font-size: 40px;
-    }
-
-    .event-card {
-        max-width: 90%;
-        margin: auto;
-    }
-}
-
-@media (max-width: 480px) {
-    .events-content h1 {
-        font-size: 32px;
-    }
-
-    .event-card {
-        max-width: 95%;
-    }
-}

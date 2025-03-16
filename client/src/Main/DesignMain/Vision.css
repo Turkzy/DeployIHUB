@@ -1,7 +1,9 @@
 .mvv-section {
   text-align: center;
   padding: 50px 20px;
-  background-color: #d9e2e9;
+  background: url("../../img/footerdesign.png")no-repeat center center;
+  background-size: cover;
+  height: 100%;
 }
 
 .vision-title {
@@ -12,7 +14,7 @@
 
 .vision-title h1 {
   font-size: 3.5rem;
-  color: #272727;
+  color: #2d3436;
   margin-bottom: 1rem;
   position: relative;
   display: inline-block;
@@ -38,6 +40,7 @@
   justify-content: center;
   gap: 50px;
   flex-wrap: wrap;
+  padding-bottom: 100px;
 }
 
 .mvv-card {
@@ -47,7 +50,7 @@
   padding: 50px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.808);
   transition: transform 0.3s ease;
 }
 
@@ -90,67 +93,99 @@
   color: #222b62;
   margin-bottom: 15px;
   margin-top: 25px;
+  text-shadow: 0px 2px 2px black;
 }
 
 .card-icon .fa-eye {
   color: #f9c213;
+  text-shadow: 0px 2px 2px black;
 }
 
 .card-icon .fa-gem {
   color: #c02627;
+  text-shadow: 0px 2px 2px black;
 }
+
+
 
 .card-content p {
   font-size: 15px;
   text-align: justify;
   font-family: 'Montserrat', sans-serif;
-  color: rgb(77, 75, 75);
+  color: #2d3436;
+  font-weight: 400;
   user-select: none;
 }
 
 
-@media screen and (max-width: 480px) {
-  .mvv-section {
-    width: 510px;
+@media screen and (max-width: 768px) {
+  .mvv-container {
+      gap: 20px;  
+      padding-bottom: 50px; 
   }
+
   .mvv-card {
-    width: 100%; 
-    padding: 25px;
+      width: 40%;   
+      padding: 30px;
   }
 
   .vision-title h1 {
-    font-size: 2.5rem;  
-  }
-
-  .card-header {
-    font-size: 1.5rem;  
-    padding: 15px 0;
+      font-size: 2.5rem;
   }
 
   .card-content p {
-    font-size: 14px; 
+      font-size: 14px;
   }
 
   .card-icon i {
-    font-size: 50px; 
+      font-size: 50px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .mvv-container {
+      flex-direction: column; 
+      gap: 30px; 
+  }
+
+  .mvv-card {
+      width: 85%;  
+      padding: 25px;
+  }
+
+  .vision-title h1 {
+      font-size: 2.2rem;
+  }
+
+  .card-content p {
+      font-size: 13px;
+  }
+
+  .card-icon i {
+      font-size: 45px;
   }
 }
 
 @media screen and (max-width: 320px) {
+  .mvv-container {
+      flex-direction: column;
+      
+  }
+
   .mvv-card {
-    width: 100%;  
-    padding: 20px;
+      width: 82%;  
+      
   }
 
   .vision-title h1 {
-    font-size: 2rem; 
+      font-size: 2rem;
   }
 
   .card-content p {
-    font-size: 12px;
+      font-size: 12px;
   }
 
   .card-icon i {
-    font-size: 40px;
+      font-size: 40px;
   }
 }

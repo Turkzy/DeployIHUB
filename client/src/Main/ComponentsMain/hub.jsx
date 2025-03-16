@@ -10,7 +10,7 @@ const Hub = () => {
   useEffect(() => {
     const fetchHubContent = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/hub/hub');
+        const response = await axios.get('https://cloud-database-test3.onrender.com/api/hub/hub');
         if (response.data && response.data.length > 0) {
           setHubContent(response.data[0].content);
         }
