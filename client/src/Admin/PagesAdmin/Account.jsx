@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Form, Input, message } from "antd";
-import {FaEdit, FaPlus, FaTrash} from "react-icons/fa";
+import {FaEdit, FaPlus, FaTrash, FaUserCircle} from "react-icons/fa";
 
 const Account = () => {
   const [users, setUsers] = useState([]);
@@ -99,7 +99,7 @@ const Account = () => {
 
   return (
     <div className="Team-container">
-      <h1>User Accounts</h1>
+      <h1><FaUserCircle /> User Accounts</h1>
       <Button className="add-btn-team" type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
       <FaPlus />Add User
       </Button>

@@ -174,7 +174,7 @@ const TeamPanel = () => {
     dataSource={teams}
     rowKey="_id"
     pagination={{ pageSize: 10 }}
-    scroll={{ x: "max-content" }}  // Key Fix: Enables horizontal scrolling
+    scroll={{ x: "max-content" }}  
   />
 
       {/* Add Modal */}

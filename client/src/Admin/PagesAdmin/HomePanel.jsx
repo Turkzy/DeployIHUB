@@ -15,7 +15,7 @@ const HomePanel = () => {
 const toggleExpanded = (key) => {
   setExpandedRows((prev) => ({
     ...prev,
-    [key]: !prev[key] // Toggle the specific row's state
+    [key]: !prev[key]
   }));
 };
   

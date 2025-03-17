@@ -4,10 +4,14 @@ const User = require("../models/usermodel");
 
 exports.createAccount = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, usertype } = req.body;
 
-        if (!name || !email || !password) {
+        if (!name || !email || !password || !usertype) {
             return res.status(400).json({ error: true, message: "All fields are required" });
+        }
+
+        if (!["User", "Admin"].includes(usertype)) {
+            return res.status(400).json({ error: true, message: "Invalid usertype value" });
         }
 
         const isUser = await User.findOne({ email });
@@ -17,14 +21,18 @@ exports.createAccount = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const user = new User({ name, email, password: hashedPassword });
+        const user = new User({ name, email, password: hashedPassword, usertype });
         await user.save();
 
-        const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "72h" });
+        const accessToken = jwt.sign(
+            { userId: user._id, usertype: user.usertype },
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: "72h" }
+        );
 
         return res.status(201).json({
             error: false,
-            user: { name: user.name, email: user.email },
+            user: { name: user.name, email: user.email, usertype: user.usertype },
             accessToken,
             message: "Registration Successful",
         });
@@ -34,6 +42,7 @@ exports.createAccount = async (req, res) => {
         res.status(500).json({ error: true, message: "Internal Server Error" });
     }
 };
+
 
 exports.login = async (req, res) => {
     try {
@@ -99,8 +108,8 @@ exports.getAllUsers = async (req, res) => {
 // Add a new user
 exports.addUser = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
-        if (!name || !email || !password) {
+        const { name, email, password, usertype} = req.body;
+        if (!name || !email || !password || !usertype) {
             return res.status(400).json({ error: true, message: "All fields are required" });
         }
         if (!email.includes("@")) {
@@ -112,7 +121,7 @@ exports.addUser = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ name, email, password: hashedPassword });
+        const newUser = new User({ name, email, password: hashedPassword, usertype });
         await newUser.save();
 
         return res.status(201).json({ error: false, message: "User added successfully", user: newUser });
@@ -126,9 +135,9 @@ exports.addUser = async (req, res) => {
 exports.editUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, email, password } = req.body;
+        const { name, email, password, usertype } = req.body;
 
-        const updateData = { name, email };
+        const updateData = { name, email, usertype };
 
         if (password) {
             updateData.password = await bcrypt.hash(password, 10);
