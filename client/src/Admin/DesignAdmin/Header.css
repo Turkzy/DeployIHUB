@@ -1,17 +1,55 @@
-.header-name {
-  font-weight: bold;
-  font-family: "Montserrat", sans-serif;
-  font-size: 1.5rem;
+.header {
+  width: 100%;
+  height: auto;
   user-select: none;
+ }
+
+.header-name {
+  display: flex;
+  gap: 50px;
+  justify-content: space-between;
+  padding: 20px;
 }
 
-.header-datetime {
-  display: flex;
-  flex-direction: row;
-  font-style: italic;
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  gap: 25px;
-  user-select: none;
+.header-title {
+  font-size: 2rem;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
 }
+
+.date-time {
+  font-family: "Montserrat", sans-serif;
+}
+
+.date-time span {
+  margin-left: 30px;
+}
+
+@media screen and (max-width: 768px) {
+  
+  .header-title {
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .date-time {
+    font-size: 0.7rem;
+  }
+  
+}
+
+@media screen and (max-width: 480px) {
+  
+  .header-title {
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+
+  .date-time {
+    display: none;
+  }
+  
+}
+
+
+

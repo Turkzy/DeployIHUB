@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Table, Button, Modal, Form, Input, message } from "antd";
-import {FaEnvelope} from "react-icons/fa";
 import { FaEdit} from "react-icons/fa";
 
 const IHubStory = () => {
@@ -9,12 +8,20 @@ const IHubStory = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editHub, setEditHub] = useState(null);
   const [form] = Form.useForm();
+  const [expandedRows, setExpandedRows] = useState({});
+
+const toggleExpanded = (key) => {
+  setExpandedRows((prev) => ({
+    ...prev,
+    [key]: !prev[key]
+  }));
+};
 
   // Fetch Hub
   const fetchHubs = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/hub/hub"
+        "https://cloud-database-test3.onrender.com/api/hub/hub"
       );
       setHubs(response.data);
     } catch (error) {
@@ -37,7 +44,7 @@ const IHubStory = () => {
   const handleUpdate = async (values) => {
     try {
       await axios.put(
-        "http://localhost:5000/api/hub/update-hub",
+        "https://cloud-database-test3.onrender.com/api/hub/update-hub",
         values
       );
       message.success("Hub Story updated successfully!");
@@ -51,10 +58,30 @@ const IHubStory = () => {
 
   // Table Columns
   const columns = [
-    { title: "Content", dataIndex: "content", key: "content", render: (text) => (
-        <div style={{ whiteSpace: 'pre-line' }}>
-          {text}
-        </div> )},
+    {
+      title: "Content",
+      dataIndex: "content",
+      key: "content",
+      width: 1800,
+      render: (text, record) => {
+        const isExpanded = expandedRows[record._id] || false;
+  
+        return (
+          <div style={{ whiteSpace: 'pre-line' }}>
+            {isExpanded ? text : `${text.substring(0, 150)}...`}
+            {text.length > 100 && (
+              <Button className='see-lessmore'
+                type="link"
+                onClick={() => toggleExpanded(record._id)}
+                style={{ padding: 0, marginLeft: 5 }}
+              >
+                {isExpanded ? "See Less" : "See More"}
+              </Button>
+            )}
+          </div>
+        );
+      }
+    },
     {
       title: "Actions",
       render: (_, record) => (
@@ -72,7 +99,7 @@ const IHubStory = () => {
 
   return (
     <div className="Team-container">
-      <h1><FaEnvelope /> iHub Story</h1>
+      <h1>iHub Story</h1>
       <Table
         className="table-team"
         dataSource={hubs}

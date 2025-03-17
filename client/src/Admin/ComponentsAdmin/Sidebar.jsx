@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu } from "antd";
 import {
-  FaHome,
-  FaEye,
-  FaInfoCircle,
-  FaCalendarAlt,
-  FaUsers,
-  FaEnvelope,
-  FaSignOutAlt,
-  FaUserCircle,
-  FaBook
-} from "react-icons/fa";
+  HomeOutlined,
+  EyeOutlined,
+  InfoCircleOutlined,
+  BookOutlined,
+  CalendarOutlined,
+  TeamOutlined,
+  MailOutlined,
+  UserOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
+
 import "../DesignAdmin/Sidebar.css";
-import LogoDashboard from "../../img/logo.png";
+import LogoDashboard from "../../img/ihublogo.gif";
 
 const Sidebar = ({ onSelect, collapsed }) => {
   const navigate = useNavigate();
@@ -45,17 +46,17 @@ const Sidebar = ({ onSelect, collapsed }) => {
           else onSelect(e.key);
         }}
         items={[
-          { key: "1", icon: <FaHome />, label: "Home" },
-          { key: "2", icon: <FaEye />, label: "Vision" },
-          { key: "3", icon: <FaInfoCircle />, label: "About" },
-          { key: "4", icon: <FaBook />, label: "IHub Story" },
-          { key: "5", icon: <FaCalendarAlt />, label: "Events" },
-          { key: "6", icon: <FaUsers />, label: "Team" },
-          { key: "7", icon: <FaEnvelope />, label: "Contact" },
-          { key: "8", icon: <FaUserCircle />, label: "Account" },
+          { key: "1", icon: <HomeOutlined />, label: "Home" },
+          { key: "2", icon: <EyeOutlined />, label: "Vision" },
+          { key: "3", icon: <InfoCircleOutlined />, label: "About" },
+          { key: "4", icon: <BookOutlined />, label: "IHub Story" },
+          { key: "5", icon: <CalendarOutlined />, label: "Events" },
+          { key: "6", icon: <TeamOutlined />, label: "Team" },
+          { key: "7", icon: <MailOutlined />, label: "Contact" },
+          { key: "8", icon: <UserOutlined />, label: "Account" },
           isLoggedIn && {
             key: "9",
-            icon: <FaSignOutAlt style={{ color: "red" }} />,
+            icon: <LogoutOutlined style={{ color: "red" }} />,
             label: "Logout",
             danger: true,
           },

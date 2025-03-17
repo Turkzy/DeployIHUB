@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Table, Button, Modal, Form, Input, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { FaEdit, FaPlus, FaTrash, FaUsers } from "react-icons/fa";
+import { FaEdit, FaPlus, FaTrash} from "react-icons/fa";
 import axios from "axios";
 import "../DesignAdmin/TeamPanel.css";
 
@@ -109,12 +109,12 @@ const TeamPanel = () => {
   };
 
   const columns = [
-    { title: "Name", dataIndex: "name", key: "name" },
-    { title: "Position", dataIndex: "position", key: "position" },
+    { title: "Name", dataIndex: "name", key: "name", width:"200px" },
+    { title: "Position", dataIndex: "position", key: "position", width:"200px" },
     {
       title: "Image",
       dataIndex: "Imgurl",
-      key: "Imgurl",
+      key: "Imgurl", width:"200px",
       render: (Imgurl) =>
         Imgurl ? (
           <img src={Imgurl} alt="Team" style={{ width: 50 }} />
@@ -125,11 +125,11 @@ const TeamPanel = () => {
     {
       title: "PDF",
       dataIndex: "pdfUrl",
-      key: "pdfUrl",
+      key: "pdfUrl", width:"200px",
       render: (pdfUrl) => (pdfUrl ? "Yes" : "No"),
     },
     {
-      title: "Actions",
+      title: "Actions",width:"200px",
       render: (_, record) => (
         <>
           <Button
@@ -157,8 +157,7 @@ const TeamPanel = () => {
 
   return (
     <div className="Team-container">
-      <h1>
-        <FaUsers /> Teams
+      <h1>Teams
       </h1>
       <Button
         type="primary"
@@ -171,11 +170,12 @@ const TeamPanel = () => {
         <FaPlus /> Add Team Member
       </Button>
       <Table
-        columns={columns}
-        dataSource={teams}
-        rowKey="_id"
-        pagination={{ pageSize: 10 }}
-      />
+    columns={columns}
+    dataSource={teams}
+    rowKey="_id"
+    pagination={{ pageSize: 10 }}
+    scroll={{ x: "max-content" }}  // Key Fix: Enables horizontal scrolling
+  />
 
       {/* Add Modal */}
       <Modal

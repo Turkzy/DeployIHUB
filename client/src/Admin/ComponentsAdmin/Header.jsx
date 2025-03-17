@@ -29,11 +29,8 @@ const Header = () => {
   return (
     <div className="header">
       <div className="header-name">
-        Welcome Back, {userName ? userName : "Guest"}!
-      </div>
-      <div className="header-datetime">
-        <div className="date">{currentDateTime.date}</div>
-        <div className="time">{currentDateTime.time}</div>
+        <div className="header-title">Welcome Back, {userName ? userName : "Guest"}!</div>
+        <div className="date-time">{currentDateTime.date}<span>{currentDateTime.time}</span></div>
       </div>
     </div>
   );

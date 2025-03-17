@@ -2,7 +2,7 @@ import React, {useEffect, useState } from 'react'
 import { Table, Button, Modal, Form, Upload, Input, message } from "antd";
 import axios from "axios";
 import { UploadOutlined } from "@ant-design/icons";
-import {FaInfoCircle, FaEdit, FaPlus, FaTrash} from "react-icons/fa";
+import {FaEdit, FaPlus, FaTrash} from "react-icons/fa";
 
 const AboutPanel = () => {
   const [abouts, setAbouts] = useState([]);
@@ -12,6 +12,14 @@ const AboutPanel = () => {
   const [addForm] = Form.useForm();
   const [editForm] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [expandedRows, setExpandedRows] = useState({});
+
+const toggleExpanded = (key) => {
+  setExpandedRows((prev) => ({
+    ...prev,
+    [key]: !prev[key]
+  }));
+};
 
   const handleAddAbout = async (values) => {
     setLoading(true);
@@ -25,7 +33,7 @@ const AboutPanel = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/about/create-about-content", formData, {
+        "https://cloud-database-test3.onrender.com/api/about/create-about-content", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
@@ -48,7 +56,7 @@ const AboutPanel = () => {
 
   const fetchAbouts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/about/abouts");
+      const res = await axios.get("https://cloud-database-test3.onrender.com/api/about/abouts");
       setAbouts(res.data);
     } catch (error) {
       message.error("Failed to Fetch the content of Abouts.");
@@ -68,7 +76,7 @@ const AboutPanel = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/about/update-about-content/${selectedAbout._id}`, formData, {
+        `https://cloud-database-test3.onrender.com/api/about/update-about-content/${selectedAbout._id}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
@@ -88,7 +96,7 @@ const AboutPanel = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this About Content?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/about/delete-about-content/${id}`);
+      await axios.delete(`https://cloud-database-test3.onrender.com/api/about/delete-about-content/${id}`);
       message.success("About Content is deleted Successfully");
       fetchAbouts();
     } catch (error) {
@@ -100,11 +108,30 @@ const AboutPanel = () => {
 
   const columns = [
     { title: "Title", dataIndex: "title", key: "title", width: 120},
-    { title: "Content", dataIndex: "content", key: "content", width: 800, render: (text) => (
-      <div style={{ whiteSpace: 'pre-line' }}>
-        {text}
-      </div>
-    )},
+    {
+      title: "Content",
+      dataIndex: "content",
+      key: "content",
+      width: 1000,
+      render: (text, record) => {
+        const isExpanded = expandedRows[record._id] || false;
+  
+        return (
+          <div style={{ whiteSpace: 'pre-line' }}>
+            {isExpanded ? text : `${text.substring(0, 150)}...`}
+            {text.length > 100 && (
+              <Button className='see-lessmore'
+                type="link"
+                onClick={() => toggleExpanded(record._id)}
+                style={{ padding: 0, marginLeft: 5 }}
+              >
+                {isExpanded ? "See Less" : "See More"}
+              </Button>
+            )}
+          </div>
+        );
+      }
+    },
     {
       title: "Media",
       dataIndex: "Imgurl",
@@ -144,7 +171,7 @@ const AboutPanel = () => {
 
   return (
     <div className='Team-container'>
-      <h1> <FaInfoCircle /> About</h1>
+      <h1>About</h1>
       <Button type='primary' className='add-btn-team' onClick={() => {addForm.resetFields();
         setIsAddModalOpen(true);
       }}> <FaPlus /> Add New Content</Button>

@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Menu } from "antd";
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  HomeOutlined,
-  UserOutlined,
-  SettingOutlined,
-  LogoutOutlined,
-} from "@ant-design/icons";
+import { Layout as AntdLayout, Menu } from "antd";
+import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../img/ihublogo.gif";
 import HomePanel from "../PagesAdmin/HomePanel";
 import VisionPanel from "../PagesAdmin/VisionPanel";
 import AboutPanel from "../PagesAdmin/AboutPanel";
@@ -17,12 +9,12 @@ import EventsPanel from "../PagesAdmin/EventsPanel";
 import ContactPanel from "../PagesAdmin/ContactPanel";
 import AccountPanel from "../PagesAdmin/Account";
 import TeamPanel from "../PagesAdmin/TeamPanel";
-import HubStory from "../PagesAdmin/iHubStory.jsx"
+import HubStory from "../PagesAdmin/iHubStory.jsx";
 
+import Header from "../ComponentsAdmin/Header.jsx";
 import Sidebar from "../ComponentsAdmin/Sidebar";
 
-
-const { Header, Sider, Content, Footer } = Layout;
+const { Header: AntdHeader, Sider, Content, Footer } = AntdLayout;
 
 const Dashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -53,13 +45,13 @@ const Dashboard = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         navigate("/Logout");
-      }, 600000); // 5 minutes
+      }, 600000); // 10 minutes
     };
 
     const events = ["mousemove", "keydown", "click"];
     events.forEach((event) => window.addEventListener(event, resetTimer));
 
-    resetTimer(); 
+    resetTimer();
 
     return () => {
       clearTimeout(logoutTimer);
@@ -92,7 +84,6 @@ const Dashboard = () => {
     const tokenCheckInterval = setInterval(checkTokenExpiration, 60000);
     checkTokenExpiration(); // Initial check
 
-    // Existing inactivity timer
     let logoutTimer;
     const resetTimer = () => {
       clearTimeout(logoutTimer);
@@ -119,7 +110,7 @@ const Dashboard = () => {
   }, [navigate]);
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <AntdLayout style={{ minHeight: "100vh" }}>
       {/* Sidebar */}
       <Sider
         className="sider-style"
@@ -130,48 +121,12 @@ const Dashboard = () => {
         onCollapse={(value) => setCollapsed(value)}
       >
         <Sidebar onSelect={setSelectedMenu} />
-        <div className="logo" style={{ textAlign: "center", padding: "20px" }}>
-          {collapsed ? (
-            <img
-              src={Logo}
-              alt="Logo"
-              style={{ width: "40px", height: "30px" }}
-            />
-          ) : (
-            <img
-              src={Logo}
-              alt="Logo"
-              style={{ width: "100px", height: "100px" }}
-            />
-          )}
-        </div>
-
-        <Menu theme="light" mode="inline" defaultSelectedKeys={["1"]}>
-          <Menu.Item key="1" icon={<HomeOutlined />}>
-            Dashboard
-          </Menu.Item>
-          <Menu.Item key="2" icon={<UserOutlined />}>
-            Profile
-          </Menu.Item>
-          <Menu.Item key="3" icon={<SettingOutlined />}>
-            Settings
-          </Menu.Item>
-          {isLoggedIn && (
-            <Menu.Item
-              key="4"
-              icon={<LogoutOutlined />}
-              onClick={handleLogout}
-            >
-              Logout
-            </Menu.Item>
-          )}
-        </Menu>
       </Sider>
 
       {/* Main Layout */}
-      <Layout>
+      <AntdLayout>
         {/* Header */}
-        <Header
+        <AntdHeader
           style={{
             boxShadow: "0px 0px 1px black",
             padding: "0 16px",
@@ -191,8 +146,8 @@ const Dashboard = () => {
               onClick={() => setCollapsed(true)}
             />
           )}
-          <h2 style={{ marginLeft: "16px" }}>Dashboard</h2>
-        </Header>
+          <Header /> {/* Custom Header Component */}
+        </AntdHeader>
 
         {/* Content */}
         <Content
@@ -223,8 +178,8 @@ const Dashboard = () => {
         >
           MyApp ©2025 Created by You
         </Footer>
-      </Layout>
-    </Layout>
+      </AntdLayout>
+    </AntdLayout>
   );
 };
 

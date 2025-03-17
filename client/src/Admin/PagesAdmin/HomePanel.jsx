@@ -2,7 +2,7 @@ import React, {useEffect, useState } from 'react'
 import { Table, Button, Modal, Form, Upload, Input, message } from "antd";
 import axios from "axios";
 import { UploadOutlined } from "@ant-design/icons";
-import {FaHome, FaEdit} from "react-icons/fa";
+import {FaEdit} from "react-icons/fa";
 
 const HomePanel = () => {
   const [homes, setHomes] = useState([]);
@@ -10,6 +10,14 @@ const HomePanel = () => {
   const [selectedHome, setSelectedHome] = useState(null);
   const [editForm] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [expandedRows, setExpandedRows] = useState({});
+
+const toggleExpanded = (key) => {
+  setExpandedRows((prev) => ({
+    ...prev,
+    [key]: !prev[key] // Toggle the specific row's state
+  }));
+};
   
 
 
@@ -19,7 +27,7 @@ const HomePanel = () => {
 
   const fetchHomes = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/home/homes");
+      const res = await axios.get("https://cloud-database-test3.onrender.com/api/home/homes");
       setHomes(res.data);
     } catch (error) {
       message.error("Failed to Fetch the content of Homes.");
@@ -39,7 +47,7 @@ const HomePanel = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/home/update-home-content/${selectedHome._id}`, formData, {
+        `https://cloud-database-test3.onrender.com/api/home/update-home-content/${selectedHome._id}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
@@ -56,12 +64,31 @@ const HomePanel = () => {
   };
 
   const columns = [
-    { title: "Title", dataIndex: "title", key: "title", width: 300},
-    { title: "Content", dataIndex: "content", key: "content", width: 600, render: (text) => (
-      <div style={{ whiteSpace: 'pre-line' }}>
-        {text}
-      </div>
-    )},
+    { title: "Title", dataIndex: "title", key: "title", width: 200},
+    {
+      title: "Content",
+      dataIndex: "content",
+      key: "content",
+      width: 1000,
+      render: (text, record) => {
+        const isExpanded = expandedRows[record._id] || false;
+  
+        return (
+          <div style={{ whiteSpace: 'pre-line' }}>
+            {isExpanded ? text : `${text.substring(0, 150)}...`}
+            {text.length > 100 && (
+              <Button className='see-lessmore'
+                type="link"
+                onClick={() => toggleExpanded(record._id)}
+                style={{ padding: 0, marginLeft: 5 }}
+              >
+                {isExpanded ? "See Less" : "See More"}
+              </Button>
+            )}
+          </div>
+        );
+      }
+    },
     {
       title: "Media",
       dataIndex: "Imgurl",
@@ -72,7 +99,7 @@ const HomePanel = () => {
         const isVideo = Imgurl.endsWith(".mp4");
     
         return isVideo ? (
-          <video width="200" controls>
+          <video width="150" controls>
             <source src={Imgurl} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
@@ -82,7 +109,7 @@ const HomePanel = () => {
       }
     },
     {
-      title: "Actions",
+      title: "Actions", width: 0,
       render: (_, record) => (
         <>
           <Button
@@ -92,7 +119,7 @@ const HomePanel = () => {
     editForm.setFieldsValue({ 
       title: record.title, 
       content: record.content, 
-      file: [] // Reset file input
+      file: [] 
     });
     setIsEditModalOpen(true);
   }}
@@ -107,7 +134,7 @@ const HomePanel = () => {
 
   return (
     <div className='Team-container'>
-      <h1> <FaHome /> Home</h1>
+      <h1> Home</h1>
       
       <Table
         className="table-team"

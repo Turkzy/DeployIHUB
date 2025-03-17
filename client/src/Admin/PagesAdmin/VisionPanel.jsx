@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Table, Button, Modal, Form, Input, message } from "antd";
 import axios from "axios";
-import { FaEye,FaEdit, FaPlus, FaTrash } from "react-icons/fa";
+import {FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 
 const VisionPanel = () => {
   const [visions, setVisions] = useState([]);
@@ -11,6 +11,14 @@ const VisionPanel = () => {
   const [addForm] = Form.useForm();
   const [editForm] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [expandedRows, setExpandedRows] = useState({});
+
+const toggleExpanded = (key) => {
+  setExpandedRows((prev) => ({
+    ...prev,
+    [key]: !prev[key] // Toggle the specific row's state
+  }));
+};
 
   const handleAddVision = async (values) => {
     setLoading(true);
@@ -71,16 +79,29 @@ const VisionPanel = () => {
 
   const columns = [
     { title: "Title", dataIndex: "title", key: "title", width: 120 },
-    { 
-      title: "Content", 
-      dataIndex: "content", 
-      key: "content", 
-      width: 800,
-      render: (text) => (
-        <div style={{ whiteSpace: 'pre-line' }}>
-          {text}
-        </div>
-      )
+    {
+      title: "Content",
+      dataIndex: "content",
+      key: "content",
+      width: 1000,
+      render: (text, record) => {
+        const isExpanded = expandedRows[record._id] || false;
+  
+        return (
+          <div style={{ whiteSpace: 'pre-line' }}>
+            {isExpanded ? text : `${text.substring(0, 150)}...`}
+            {text.length > 100 && (
+              <Button className='see-lessmore'
+                type="link"
+                onClick={() => toggleExpanded(record._id)}
+                style={{ padding: 0, marginLeft: 5 }}
+              >
+                {isExpanded ? "See Less" : "See More"}
+              </Button>
+            )}
+          </div>
+        );
+      }
     },
     {
       title: "Actions",
@@ -111,7 +132,7 @@ const VisionPanel = () => {
 
   return (
     <div className='Team-container'>
-      <h1> <  FaEye/> Vision</h1>
+      <h1>Vision</h1>
       <Button 
         type='primary' 
         className='add-btn-team' 

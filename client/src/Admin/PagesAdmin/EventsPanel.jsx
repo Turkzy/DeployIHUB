@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Table, Button, Modal, Form, Input, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { FaEdit, FaPlus, FaTrash, FaCalendarAlt } from "react-icons/fa";
+import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import axios from "axios";
 
 const EventsPanel = () => {
@@ -20,7 +20,7 @@ const EventsPanel = () => {
 
   const fetchEvents = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/event/events");
+      const res = await axios.get("https://cloud-database-test3.onrender.com/api/event/events");
       setEvents(res.data);
     } catch (err) {
       message.error("Failed to fetch the Events");
@@ -30,7 +30,7 @@ const EventsPanel = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this Event?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/event/delete-events/${id}`);
+      await axios.delete(`https://cloud-database-test3.onrender.com/api/event/delete-events/${id}`);
       message.success("Events deleted Successfully");
       fetchEvents();
     } catch (err) {
@@ -51,7 +51,7 @@ const EventsPanel = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/event/create-events",
+        "https://cloud-database-test3.onrender.com/api/event/create-events",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -82,7 +82,7 @@ const EventsPanel = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/event/update-events/${selectedEvent._id}`,
+        `https://cloud-database-test3.onrender.com/api/event/update-events/${selectedEvent._id}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -143,7 +143,7 @@ const EventsPanel = () => {
 
   return (
     <div className="Team-container">
-      <h1> <FaCalendarAlt /> List of Events</h1>
+      <h1> List of Events</h1>
       <Button
         type="primary"
         className="add-btn-team"
