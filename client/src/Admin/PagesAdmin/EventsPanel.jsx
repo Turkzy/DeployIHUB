@@ -20,7 +20,9 @@ const EventsPanel = () => {
 
   const fetchEvents = async () => {
     try {
-      const res = await axios.get("https://cloud-database-test3.onrender.com/api/event/events");
+      const res = await axios.get(
+        "https://cloud-database-test3.onrender.com/api/event/events"
+      );
       setEvents(res.data);
     } catch (err) {
       message.error("Failed to fetch the Events");
@@ -30,7 +32,9 @@ const EventsPanel = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this Event?")) return;
     try {
-      await axios.delete(`https://cloud-database-test3.onrender.com/api/event/delete-events/${id}`);
+      await axios.delete(
+        `https://cloud-database-test3.onrender.com/api/event/delete-events/${id}`
+      );
       message.success("Events deleted Successfully");
       fetchEvents();
     } catch (err) {
@@ -43,6 +47,7 @@ const EventsPanel = () => {
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("date", values.date);
+    formData.append("content", values.content);
     formData.append("link", values.link);
 
     if (values.file?.[0]?.originFileObj) {
@@ -74,6 +79,7 @@ const EventsPanel = () => {
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("date", values.date);
+    formData.append("content", values.content);
     formData.append("link", values.link);
 
     if (values.file?.[0]?.originFileObj) {
@@ -103,6 +109,17 @@ const EventsPanel = () => {
   const columns = [
     { title: "Title", dataIndex: "title", key: "title" },
     { title: "Date", dataIndex: "date", key: "date" },
+    {
+      title: "Content",
+      dataIndex: "content",
+      key: "content",
+      width: 1000,
+      render: (text, record) => {
+        return (
+          <div style={{ whiteSpace: "pre-line" }}>{text.substring(0, 150)}</div>
+        );
+      },
+    },
     {
       title: "Image",
       dataIndex: "Imgurl",

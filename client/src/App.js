@@ -23,6 +23,8 @@ import Contact from './Main/ComponentsMain/Contact';
 import Footer from './Main/ComponentsMain/Footer';
 import LogoutLoader from "./Admin/PagesAdmin/LogoutLoader";
 
+import ListEvent from "./Main/ComponentsMain/ListEvent";
+
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -104,6 +106,7 @@ const App = () => {
         <Route path="/CMS" element={<ProtectedRoute element={<CMS />} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/Logout" element={<LogoutLoader />}/>
+        <Route path="/ListEvent" element={<ListEvent/>}/>
       </Routes>
     </Router>
   );

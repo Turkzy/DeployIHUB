@@ -24,7 +24,7 @@ export const createEvent = async (req, res) => {
   if (!req.files || !req.files.Imgurl) 
     return res.status(400).json({ message: "No Image Upload" });
 
-  const { title, date, link } = req.body;
+  const { title, date, content, link } = req.body;
   const imageFile = req.files.Imgurl;
 
   try {
@@ -37,7 +37,7 @@ export const createEvent = async (req, res) => {
     );
 
     const newEvent = new Event({
-      title, date, link, Imgurl: imageResult.secure_url,
+      title, date, content, link, Imgurl: imageResult.secure_url,
     });
 
     await newEvent.save();
@@ -78,10 +78,11 @@ export const updateEvent = async (req, res) => {
       newImageUrl = imageResult.secure_url;
      }
 
-     const { title, date, link } = req.body;
+     const { title, date, content, link } = req.body;
 
      event.title = title || event.title;
      event.date = date || event.date;
+     event.content = content || event.content;
      event.link = link || event.link;
      event.Imgurl = newImageUrl;
 
