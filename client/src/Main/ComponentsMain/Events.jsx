@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import axios from 'axios';
-import { message } from 'antd';  // Assuming you use Ant Design for notifications
+import { message } from 'antd'; 
+import { Link } from 'react-router-dom';
 import '../DesignMain/Events.css'; 
 
 const Events = () => {
@@ -13,21 +14,37 @@ const Events = () => {
   const fetchEvents = async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/event/events");
-      setEvents(res.data);
+  
+      const formattedEvents = res.data
+        .map((event) => ({
+          ...event,
+          date: new Date(event.date),
+          formattedDate: new Date(event.date).toLocaleString("en-US", {
+            month: "long", 
+            day: "2-digit", 
+            year: "numeric"
+          })
+        }))
+        .sort((a, b) => b.date - a.date)
+        .slice(0, 3); 
+  
+      setEvents(formattedEvents); 
     } catch (err) {
       message.error("Failed to fetch the Events");
     }
   };
+  
+
 
   return (
-    <div className="event-container">
-      <h1>Latest Events</h1>
+    <div id="events" className="event-container">
+      <h1>LATEST UPDATES</h1>
+      
+      
 
       {events.map((event, index) => (
         <div className="event-card" key={index}>
-          <div className="event-date">
-           <span>{event.date}</span>
-          </div>
+          
 
           <img 
             src={event.Imgurl} 
@@ -36,13 +53,14 @@ const Events = () => {
           />
 
           <div className="event-info">
+          <div className="event-date">
+           <span>{event.formattedDate}</span>
+          </div>
             <h2>{event.title}</h2>
-            <p>1015 California Ave, Los Angeles CA</p>
-            <p>2:00 pm — 8:00 pm</p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non
-              dignissim eu turpis non hendrerit. Nunc nec lacus tellus.
-            </p>
+            <div
+                  className='event-content-text'
+                  dangerouslySetInnerHTML={{ __html: event.content.replace(/\n/g, '<br />') }}
+                />
             <a 
               href={event.link}
               className="event-link"
@@ -54,6 +72,9 @@ const Events = () => {
           </div>
         </div>
       ))}
+      <div className="link-event-container">
+         <Link className="link-event" to="/listevent">View All Events</Link>
+      </div>
     </div>
   );
 };

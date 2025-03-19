@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Modal, Form, Input, message } from "antd";
-import {FaEdit, FaPlus, FaTrash, FaUserCircle} from "react-icons/fa";
+import { Table, Button, Modal, Form, Input, message, Select } from "antd";
+import { FaEdit, FaPlus, FaTrash, FaUserCircle } from "react-icons/fa";
+import axios from "axios";
+
+
+
+
 
 const Account = () => {
   const [users, setUsers] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingUser, setEditingUser] = useState(null);
-  const [form] = Form.useForm();
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [addForm] = Form.useForm();
+  const [editForm] = Form.useForm();
+  const [loading, setLoading] = useState(false);
+
+  const { Option } = Select;
 
   useEffect(() => {
     fetchUsers();
@@ -14,83 +24,101 @@ const Account = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch("https://cloud-database-test3.onrender.com/api/auth/all-users");
-      const data = await response.json();
-      setUsers(data.users);
+      const res = await axios.get("http://localhost:5000/api/auth/all-users");
+      setUsers(res.data.users || []);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      message.error("Error fetching users.");
     }
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Are you sure you want to delete this contact?")) {
-      try {
-        await fetch(`https://cloud-database-test3.onrender.com/api/auth/delete-user/${id}`, {
-          method: "DELETE",
-        });
-        message.success("User deleted successfully");
-        fetchUsers();
-      } catch (error) {
-        console.error("Error deleting user:", error);
-      }
+    if (!window.confirm("Are you sure you want to delete this user?")) return;
+    try {
+      await axios.delete(`http://localhost:5000/api/auth/delete-user/${id}`);
+      message.success("User deleted successfully.");
+      fetchUsers();
+    } catch (error) {
+      message.error("Error deleting user.");
+    }
+  };
+
+  const handleAddUser = async (values) => {
+    setLoading(true);
+    try {
+      await axios.post("http://localhost:5000/api/auth/add-user", values);
+      message.success("User added successfully!");
+      fetchUsers();
+      setIsAddModalOpen(false);
+      addForm.resetFields();
+    } catch (error) {
+      message.error("Failed to add user.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEditUser = async (values) => {
+    if (!values.password) {
+      message.error("Please enter a new password.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await axios.put(
+        `http://localhost:5000/api/auth/edit-user/${selectedUser._id}`,
+        values
+      );
+      message.success("User updated successfully!");
+      fetchUsers();
+      setIsEditModalOpen(false);
+      editForm.resetFields();
+    } catch (error) {
+      message.error("Failed to update user.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const showEditModal = (user) => {
-    setEditingUser(user);
-    form.setFieldsValue({ ...user, password: "" });
-    setIsModalOpen(true);
-  };
-
-  const handleAdd = () => {
-    setEditingUser(null);
-    form.resetFields();
-    setIsModalOpen(true);
-  };
-
-  const handleSubmit = async () => {
-    try {
-      const values = await form.validateFields();
-
-      // Remove password from request if not changed
-      if (!values.password) {
-        delete values.password;
-      }
-
-      const method = editingUser ? "PUT" : "POST";
-      const url = editingUser
-        ? `https://cloud-database-test3.onrender.com/api/auth/edit-user/${editingUser._id}`
-        : "https://cloud-database-test3.onrender.com/api/auth/add-user";
-
-      await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-
-      message.success(
-        editingUser ? "User updated successfully" : "User added successfully"
-      );
-      fetchUsers();
-      setIsModalOpen(false);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
+    setSelectedUser(user);
+    editForm.setFieldsValue({ ...user, password: "" });
+    setIsEditModalOpen(true);
   };
 
   const columns = [
-    { title: "Name", dataIndex: "name", key: "name" },
-    { title: "Email", dataIndex: "email", key: "email" },
-    { title: "Password", dataIndex: "password", key: "password" },
+    { title: "Name", dataIndex: "name", key: "name", width: "200px" },
+    { title: "Email", dataIndex: "email", key: "email", width: "200px" },
+    {
+      title: "Password",
+      dataIndex: "password",
+      key: "password",
+      width: "200px",
+    },
+    {
+      title: "Usertype",
+      dataIndex: "usertype",
+      key: "usertype",
+      width: "200px",
+    },
     {
       title: "Actions",
+      width: "200px",
       render: (_, record) => (
         <>
-          <Button className="edit-btn-team" type="primary" onClick={() => showEditModal(record)}>
-          <FaEdit />Edit
+          <Button
+            className="edit-btn-team"
+            onClick={() => showEditModal(record)}
+          >
+            <FaEdit /> Edit
           </Button>
-          <Button className="del-btn-team" type="primary" danger onClick={() => handleDelete(record._id)}>
-          <FaTrash />Delete
+          <Button
+            className="del-btn-team"
+            type="primary"
+            danger
+            onClick={() => handleDelete(record._id)}
+          >
+            <FaTrash /> Delete
           </Button>
         </>
       ),
@@ -99,35 +127,92 @@ const Account = () => {
 
   return (
     <div className="Team-container">
-      <h1><FaUserCircle /> User Accounts</h1>
-      <Button className="add-btn-team" type="primary" onClick={handleAdd} style={{ marginBottom: 16 }}>
-      <FaPlus />Add User
-      </Button>
-      <Table className="table-team" dataSource={users} columns={columns} rowKey="_id" />
-
-      <Modal
-        title={editingUser ? "Edit User" : "Add User"}
-        open={isModalOpen}
-        onOk={handleSubmit}
-        onCancel={() => setIsModalOpen(false)}
+      <h1>User Accounts</h1>
+      <Button
+        type="primary"
+        className="add-btn-team"
+        onClick={() => {
+          addForm.resetFields();
+          setIsAddModalOpen(true);
+        }}
       >
-        <Form form={form} layout="vertical">
-          <Form.Item
-            name="name"
-            label="Name"
-            rules={[{ required: true, message: "Enter Name" }]}
-          >
+        <FaPlus /> Add New User
+      </Button>
+      <Table
+        columns={columns}
+        dataSource={users}
+        rowKey="_id"
+        pagination={{ pageSize: 5 }}
+        scroll={{ x: "max-content" }}
+      />
+
+      {/* Add Modal */}
+      <Modal
+        title="Add New User"
+        open={isAddModalOpen}
+        onCancel={() => setIsAddModalOpen(false)}
+        onOk={() => addForm.submit()}
+        confirmLoading={loading}
+      >
+        <Form form={addForm} onFinish={handleAddUser} layout="vertical">
+          <Form.Item name="name" label="Name" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
           <Form.Item
             name="email"
             label="Email"
-            rules={[
-              { required: true, message: "Enter Email" },
-              { type: "email", message: "Invalid email format" },
-            ]}
+            rules={[{ required: true, type: "email" }]}
           >
             <Input />
+          </Form.Item>
+          <Form.Item
+            name="usertype"
+            label="Usertype"
+            rules={[{ required: true, message: "Please select a user type!" }]}
+          >
+            <Select placeholder="Select user type">
+              <Option value="Admin">Admin</Option>
+              <Option value="User">User</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name="password"
+            label="Password"
+            rules={[{ required: true }]}
+          >
+            <Input.Password />
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      {/* Edit Modal */}
+      <Modal
+        title="Edit User"
+        open={isEditModalOpen}
+        onCancel={() => setIsEditModalOpen(false)}
+        onOk={() => editForm.submit()}
+        confirmLoading={loading}
+      >
+        <Form form={editForm} onFinish={handleEditUser} layout="vertical">
+          <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[{ required: true, type: "email" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="usertype"
+            label="Usertype"
+            rules={[{ required: true, message: "Please select a user type!" }]}
+          >
+            <Select placeholder="Select user type">
+              <Option value="Admin">Admin</Option>
+              <Option value="User">User</Option>
+            </Select>
           </Form.Item>
           <Form.Item
             name="password"

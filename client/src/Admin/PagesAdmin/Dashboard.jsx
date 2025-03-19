@@ -175,8 +175,7 @@ const Dashboard = () => {
             background: "#f0f2f5",
             padding: "10px",
           }}
-        >
-          MyApp ©2025 Created by You
+        ><a href="https://turzkyportfolio.netlify.app/">©2025 Created by TurkzyDev</a>
         </Footer>
       </AntdLayout>
     </AntdLayout>

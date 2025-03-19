@@ -27,34 +27,49 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await axios.post(
-        "https://cloud-database-test3.onrender.com/api/auth/login",
-        {
-          email,
-          password,
+        const response = await axios.post("http://localhost:5000/api/auth/login", {
+            email,
+            password,
+        });
+
+        console.log("Login Response:", response.data);
+
+        const { accessToken, user } = response.data;
+
+        if (!user || !user.usertype) {
+            setError("User type not found. Contact support.");
+            return;
         }
-      );
 
-      console.log("Login Response:", response.data);
+        // Store token and user data
+        localStorage.setItem("token", accessToken);
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("lastLoginTime", Date.now().toString());
 
-      // Store token and user data
-      localStorage.setItem("token", response.data.accessToken);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      localStorage.setItem("lastLoginTime", Date.now().toString());
+        // Usertype-based redirection
+        if (user.usertype === "Admin") {
+            navigate("/CMS");
+        } else if (user.usertype === "User") {
+            navigate("/register");
+        } else {
+            setError("Invalid user type. Contact support.");
+        }
 
-      if (rememberMe) {
-        localStorage.setItem("rememberedEmail", email);
-        localStorage.setItem("rememberedPassword", password);
-      } else {
-        localStorage.removeItem("rememberedEmail");
-        localStorage.removeItem("rememberedPassword");
-      }
+        if (rememberMe) {
+            localStorage.setItem("rememberedEmail", email);
+            localStorage.setItem("rememberedPassword", password);
+        } else {
+            localStorage.removeItem("rememberedEmail");
+            localStorage.removeItem("rememberedPassword");
+        }
 
-      navigate("/CMS");
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+        setError(err.response?.data?.message || "Login failed");
     }
-  };
+};
+
+
+
 
   return (
     <div className="login-container">

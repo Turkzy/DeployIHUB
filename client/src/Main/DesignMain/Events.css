@@ -1,75 +1,130 @@
+/* General Styling */
 .event-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .event-card {
-    display: flex;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .event-date {
-    background-color: #f0f0f0;
-    padding: 20px;
-    text-align: center;
+    background: url("../../img/eventbg.png")no-repeat center center;
+    background-size: cover;
+    padding: 100px 20px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 70px;
-  }
-  
-  .event-month {
-    font-size: 14px;
+    align-items: center; 
+    border-top: 5px solid white;
+    user-select: none;
+}
+
+/* Title Styling */
+.event-container h1 {
+    text-align: center;
+    font-size: 50px;
     font-weight: bold;
-    color: #999;
-  }
-  
-  .event-day {
-    font-size: 32px;
-    font-weight: bold;
-    color: #222;
-  }
-  
-  .event-details {
+    color: #ffffff;
+    position: relative;
+    margin-bottom: 40px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.event-container h1::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #008cff, #00f2ff);
+    border-radius: 4px;
+}
+
+/* Event Card */
+.event-card {
     display: flex;
+    background-color: white;
+    margin-bottom: 50px;
+    padding: 30px;
+    width: 100%; /* Full width for responsiveness */
+    max-width: 1250px; /* Limit maximum width for better design */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+    gap: 20px;
+}
+
+/* Event Image */
+.event-image {
+    width: 450px; 
+    height: 300px;
+    object-fit: cover; 
+}
+
+/* Event Details */
+.event-date {
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: "Montserrat", sans-serif;
+    color: #115d8f;
+    min-width: 100px; 
+}
+
+.event-info {
     flex: 1;
-  }
-  
-  .event-image {
-    width: 150px;
-    object-fit: cover;
-  }
-  
-  .event-info {
-    padding: 15px;
-  }
-  
-  .event-info h2 {
-    margin: 0;
-    font-size: 20px;
-    color: #333;
-  }
-  
-  .event-info p {
-    margin: 5px 0;
-    color: #666;
-  }
-  
-  .event-link {
-    display: inline-block;
-    margin-top: 10px;
-    color: #0078ff;
+    padding-left: 20px;
+}
+
+.event-info h2 {
+    font-size: 1.8rem;
+    color: #444444;
+    font-family: "Montserrat", sans-serif;
+}
+
+.event-content-text {
+    font-family: "Montserrat", sans-serif;
+    border-bottom: 1px solid gray;
+    line-height: 2rem;
+    margin-bottom: 20px;
+}
+
+.event-link {
+    color: rgb(206, 168, 0);
+    font-family: "Montserrat", sans-serif;
+    transition: color 0.3s ease;
     text-decoration: none;
-    font-weight: bold;
-  }
-  
-  .event-link:hover {
+}
+
+.event-link:hover {
     text-decoration: underline;
-  }
-  
+    color: rgb(255, 200, 0);
+}
+
+.link-event-container {
+    margin-bottom: 20px;
+}
+
+.link-event {
+    font-size: 1rem;
+    color: rgb(206, 168, 0);
+    text-decoration: none;
+    margin-bottom: 20px;    
+    transition: color 0.3s ease; 
+    border: 1px solid rgb(206, 168, 0);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.link-event:hover {
+    color: rgb(255, 200, 0); 
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .event-card {
+        flex-direction: column; 
+        text-align: center;
+    }
+
+    .event-image {
+        width: 100%; 
+        height: 200px;
+    }
+
+    .event-info {
+        padding-left: 0;
+    }
+}

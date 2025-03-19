@@ -107,16 +107,16 @@ const EventsPanel = () => {
   };
 
   const columns = [
-    { title: "Title", dataIndex: "title", key: "title" },
+    { title: "Title", dataIndex: "title", key: "title", width: 300 },
     { title: "Date", dataIndex: "date", key: "date" },
     {
       title: "Content",
       dataIndex: "content",
       key: "content",
-      width: 1000,
+      width: 700,
       render: (text, record) => {
         return (
-          <div style={{ whiteSpace: "pre-line" }}>{text.substring(0, 150)}</div>
+          <div style={{ whiteSpace: "pre-line" }}>{text ? (text.length > 150 ? `${text.substring(0, 150)}...` : text) : 'No Content Available'}</div>
         );
       },
     },
@@ -195,15 +195,28 @@ const EventsPanel = () => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name="date" label="Date" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
+          <Form.Item
+  name="date"
+  label="Date"
+  rules={[{ required: true, message: "Please select a date" }]}
+>
+  <Input
+    type="date"
+    onChange={(e) =>
+      addForm.setFieldsValue({ date: e.target.value })
+    }
+  />
+</Form.Item>
+
           <Form.Item
             name="link"
             label="Event Link"
             rules={[{ required: true }]}
           >
             <Input placeholder="Enter event link (e.g., https://example.com)" />
+          </Form.Item>
+          <Form.Item name="content" label="Content" rules={[{ required: true }]}>
+            <Input.TextArea showCount placeholder='Enter detailed content here...' style={{ height: 300 }}/>
           </Form.Item>
           <Form.Item
             name="file"
@@ -233,15 +246,28 @@ const EventsPanel = () => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name="date" label="Date" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
+          <Form.Item
+  name="date"
+  label="Date"
+  rules={[{ required: true, message: "Please select a date" }]}
+>
+  <Input
+    type="date"
+    onChange={(e) =>
+      editForm.setFieldsValue({ date: e.target.value })
+    }
+  />
+</Form.Item>
+
           <Form.Item
             name="link"
             label="Event Link"
             rules={[{ required: true }]}
           >
             <Input placeholder="Enter event link (e.g., https://example.com)" />
+          </Form.Item>
+          <Form.Item name="content" label="Content" rules={[{ required: true }]}>
+            <Input.TextArea showCount placeholder='Enter detailed content here...' style={{ height: 300 }}/>
           </Form.Item>
           <Form.Item
             name="file"

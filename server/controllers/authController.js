@@ -10,10 +10,6 @@ exports.createAccount = async (req, res) => {
             return res.status(400).json({ error: true, message: "All fields are required" });
         }
 
-        if (!["User", "Admin"].includes(usertype)) {
-            return res.status(400).json({ error: true, message: "Invalid usertype value" });
-        }
-
         const isUser = await User.findOne({ email });
         if (isUser) {
             return res.status(400).json({ error: true, message: "User already exists" });
@@ -21,14 +17,10 @@ exports.createAccount = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const user = new User({ name, email, password: hashedPassword, usertype });
+        const user = new User({ name, email, usertype,password: hashedPassword });
         await user.save();
 
-        const accessToken = jwt.sign(
-            { userId: user._id, usertype: user.usertype },
-            process.env.ACCESS_TOKEN_SECRET,
-            { expiresIn: "72h" }
-        );
+        const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "72h" });
 
         return res.status(201).json({
             error: false,
@@ -42,7 +34,6 @@ exports.createAccount = async (req, res) => {
         res.status(500).json({ error: true, message: "Internal Server Error" });
     }
 };
-
 
 exports.login = async (req, res) => {
     try {
@@ -62,11 +53,15 @@ exports.login = async (req, res) => {
             return res.status(400).json({ error: true, message: "Invalid password" });
         }
 
-        const accessToken = jwt.sign({ userId: user._id, email: user.email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "72h" });
+        const accessToken = jwt.sign(
+            { userId: user._id, email: user.email, usertype: user.usertype },
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: "72h" }
+        );
 
         return res.json({
             error: false,
-            user: { name: user.name, email: user.email },
+            user: { name: user.name, email: user.email, usertype: user.usertype },
             accessToken,
             message: "Login Successful",
         });
@@ -76,6 +71,8 @@ exports.login = async (req, res) => {
         res.status(500).json({ error: true, message: "Internal Server Error" });
     }
 };
+
+
 
 exports.getUser = async (req, res) => {
     try {
@@ -108,7 +105,7 @@ exports.getAllUsers = async (req, res) => {
 // Add a new user
 exports.addUser = async (req, res) => {
     try {
-        const { name, email, password, usertype} = req.body;
+        const { name, email, password, usertype } = req.body;
         if (!name || !email || !password || !usertype) {
             return res.status(400).json({ error: true, message: "All fields are required" });
         }
@@ -121,7 +118,7 @@ exports.addUser = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ name, email, password: hashedPassword, usertype });
+        const newUser = new User({ name, email, usertype, password: hashedPassword });
         await newUser.save();
 
         return res.status(201).json({ error: false, message: "User added successfully", user: newUser });
@@ -173,5 +170,3 @@ exports.deleteUser = async (req, res) => {
         res.status(500).json({ error: true, message: "Internal Server Error" });
     }
 };
-
-
