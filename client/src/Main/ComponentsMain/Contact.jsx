@@ -61,7 +61,7 @@ const Contact = () => {
         </div>
       )}
       <div className="contact-title">
-        <h1>Get In Touch</h1>
+        <h1>GET IN TOUCH</h1>
       </div>
       <div className="contact-section">
         <div className="contact-left">

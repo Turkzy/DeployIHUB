@@ -30,7 +30,7 @@ const Vision = () => {
   return (
     <section id="vision" className="mvv-section">
       <div className="vision-title">
-        <h1>Our Vision</h1>
+        <h1>OUR VISION</h1>
       </div>
 
       <div className="mvv-container">

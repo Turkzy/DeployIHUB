@@ -123,10 +123,11 @@ const TeamPanel = () => {
         ),
     },
     {
-      title: "PDF",
+      title: "PDF Status",
       dataIndex: "pdfUrl",
       key: "pdfUrl", width:"200px",
-      render: (pdfUrl) => (pdfUrl ? "Yes" : "No"),
+      render: (pdfUrl) => (
+        <span style={{ color: pdfUrl ? "green" : "red", fontWeight:"bold" }}>{pdfUrl ? "Yes" : "No"}</span>),
     },
     {
       title: "Actions",width:"200px",

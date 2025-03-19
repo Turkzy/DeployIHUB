@@ -18,3 +18,14 @@
     font-weight: 500;
     color: #222b62;
 }
+
+@media screen and (max-width: 768px) {
+    .logout-container{
+        background: url("../../img/logoutbg.png") no-repeat center center;
+        background-size: cover;
+    }
+
+    .logout-container img {
+        height: 350px;
+    }
+}

@@ -49,7 +49,7 @@ const Team = () => {
   return (
     <div id="team" className='team-section'>
       <div className='team-title'>
-        <h1>Our Team</h1>
+        <h1>OUR TEAM</h1>
         <p>Meet the innovative minds behind Philippine Innovation Hub</p>
       </div>
       

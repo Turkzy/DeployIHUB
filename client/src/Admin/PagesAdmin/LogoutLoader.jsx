@@ -20,7 +20,8 @@ const LogoutLoader = () => {
         <div className="logout-container">
             
             <img src={LogoutLogo}/>
-            <p>Logging out...</p>
+            <p>Session Expired</p>
+            <p>Signing out...</p>
         </div>
     );
 };

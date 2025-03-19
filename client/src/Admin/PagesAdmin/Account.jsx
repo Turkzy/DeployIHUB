@@ -87,7 +87,7 @@ const Account = () => {
   };
 
   const columns = [
-    { title: "Name", dataIndex: "name", key: "name", width: "200px" },
+    { title: "Name", dataIndex: "name", key: "name", width: "100px" },
     { title: "Email", dataIndex: "email", key: "email", width: "200px" },
     {
       title: "Password",
@@ -127,7 +127,7 @@ const Account = () => {
 
   return (
     <div className="Team-container">
-      <h1>User Accounts</h1>
+      <h1>Account Management</h1>
       <Button
         type="primary"
         className="add-btn-team"

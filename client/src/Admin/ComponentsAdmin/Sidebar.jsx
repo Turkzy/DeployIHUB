@@ -19,14 +19,21 @@ import LogoDashboard from "../../img/ihublogo.gif";
 const Sidebar = ({ onSelect, collapsed }) => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userType, setUserType] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+
+    if(token) {
+      setIsLoggedIn(true);
+      setUserType(storedUser?.usertype || "");
+    }
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user")
     setIsLoggedIn(false);
     navigate("/Logout");
   };
@@ -53,7 +60,9 @@ const Sidebar = ({ onSelect, collapsed }) => {
           { key: "5", icon: <CalendarOutlined />, label: "Events" },
           { key: "6", icon: <TeamOutlined />, label: "Team" },
           { key: "7", icon: <MailOutlined />, label: "Contact" },
-          { key: "8", icon: <UserOutlined />, label: "Account" },
+          userType === "Admin" && {
+            key: "8", icon: <UserOutlined/>, label: "Account"
+          },
           isLoggedIn && {
             key: "9",
             icon: <LogoutOutlined style={{ color: "red" }} />,

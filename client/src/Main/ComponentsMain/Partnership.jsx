@@ -33,7 +33,7 @@ const Partnership = () => {
   return (
     <div className="Partnership">
       <div className="Partnership-title">
-        <h1>Government Partnership</h1>
+        <h1>GOVERNMENT PARTNERSHIP</h1>
         <div className="Partnership-title-img">
           <a href="https://www.dti.gov.ph/">
             <img className="Partnership-img" src={DTILogo} alt="DTI Logo" />
@@ -67,7 +67,7 @@ const Partnership = () => {
       </div>
 
       <div className="Knowledge-title">
-        <h1>Knowledge Partners</h1>
+        <h1>KNOWLEDGE PARTNERS</h1>
           <Marquee>
             <div>
               <a href="https://ace.sg/">

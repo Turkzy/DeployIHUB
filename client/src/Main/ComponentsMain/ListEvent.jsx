@@ -41,7 +41,7 @@ const ListEvent = () => {
   return (
     <div id='events' className='list-events-container'>
       <div className='list-events-content'>
-        <h1>List of Events</h1>
+        <h1>LIST OF EVENTS</h1>
       </div>
 
       <div className='list-events-grid'>

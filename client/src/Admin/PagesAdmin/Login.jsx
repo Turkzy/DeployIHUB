@@ -50,7 +50,7 @@ const Login = () => {
         if (user.usertype === "Admin") {
             navigate("/CMS");
         } else if (user.usertype === "User") {
-            navigate("/register");
+            navigate("/CMS");
         } else {
             setError("Invalid user type. Contact support.");
         }
