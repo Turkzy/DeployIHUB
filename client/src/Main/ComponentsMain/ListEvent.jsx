@@ -5,7 +5,7 @@ import axios from "axios";
 
 const ListEvent = () => {
   const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {

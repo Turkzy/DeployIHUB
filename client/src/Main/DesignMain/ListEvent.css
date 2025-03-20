@@ -44,11 +44,25 @@
 /* Individual Event Card */
 .list-event-card {
     background-color: #ffffff;
-    
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-decoration: none;
+
+    transform: translateY(50px);
+    opacity: 0;
+    animation: slideUp 1s  ease-in-out forwards;
+}
+
+@keyframes slideUp{
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .list-event-card:hover {

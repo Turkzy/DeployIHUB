@@ -44,6 +44,21 @@
     max-width: 1250px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     gap: 20px;
+
+    transform: translateY(50px);
+    opacity: 0;
+    animation: slideUp 1s  ease-in-out forwards;
+}
+
+@keyframes slideUp{
+    from {
+        transform: translateY(5px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 /* Event Image */
@@ -52,6 +67,8 @@
     height: 300px;
     object-fit: cover;
 }
+
+
 
 /* Event Details */
 .event-date {
