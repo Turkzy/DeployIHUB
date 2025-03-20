@@ -10,6 +10,7 @@ import ContactPanel from "../PagesAdmin/ContactPanel";
 import AccountPanel from "../PagesAdmin/Account";
 import TeamPanel from "../PagesAdmin/TeamPanel";
 import HubStory from "../PagesAdmin/iHubStory.jsx";
+import LogsHistory from "../PagesAdmin/LogsPanel.jsx"
 
 import Header from "../ComponentsAdmin/Header.jsx";
 import Sidebar from "../ComponentsAdmin/Sidebar";
@@ -45,7 +46,7 @@ const Dashboard = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         navigate("/Logout");
-      }, 600000); // 10 minutes
+      },  300000); // 300,000 ms = 5 minutes
     };
 
     const events = ["mousemove", "keydown", "click"];
@@ -165,7 +166,8 @@ const Dashboard = () => {
           {selectedMenu === "5" ? <EventsPanel /> : <h2></h2>}
           {selectedMenu === "6" ? <TeamPanel /> : <h2></h2>}
           {selectedMenu === "7" ? <ContactPanel /> : <h2></h2>}
-          {selectedMenu === "8" ? <AccountPanel /> : <h2></h2>}
+          {selectedMenu === "8" ? <LogsHistory /> : <h2></h2>}
+          {selectedMenu === "9" ? <AccountPanel /> : <h2></h2>}
         </Content>
 
         {/* Footer */}

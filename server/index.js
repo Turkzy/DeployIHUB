@@ -12,6 +12,7 @@ const visionRoutes = require("./routes/VisionRoutes.js");
 const homeRoutes = require ("./routes/HomeRoutes.js");
 const hubRoutes = require ("./routes/HubRoutes.js")
 const fileUpload = require("express-fileupload");
+const HistoryRoutes = require ("./routes/LogsRoute.js")
 
 
 connectDB();
@@ -39,6 +40,7 @@ app.use("/api/about", aboutRoutes);
 app.use("/api/vision", visionRoutes);
 app.use("/api/home", homeRoutes);
 app.use("/api/hub", hubRoutes);
+app.use("/api/logs", HistoryRoutes)
 
 
 

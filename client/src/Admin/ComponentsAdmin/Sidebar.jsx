@@ -11,6 +11,7 @@ import {
   MailOutlined,
   UserOutlined,
   LogoutOutlined,
+  FileTextOutlined 
 } from "@ant-design/icons";
 
 import "../DesignAdmin/Sidebar.css";
@@ -49,7 +50,7 @@ const Sidebar = ({ onSelect, collapsed }) => {
         defaultSelectedKeys={["1"]}
         className="menu-bar"
         onClick={(e) => {
-          if (e.key === "9") handleLogout();
+          if (e.key === "10") handleLogout();
           else onSelect(e.key);
         }}
         items={[
@@ -60,11 +61,13 @@ const Sidebar = ({ onSelect, collapsed }) => {
           { key: "5", icon: <CalendarOutlined />, label: "Events" },
           { key: "6", icon: <TeamOutlined />, label: "Team" },
           { key: "7", icon: <MailOutlined />, label: "Contact" },
+          { key: "8", icon: <FileTextOutlined />, label: "Logs" },
+
           userType === "Admin" && {
-            key: "8", icon: <UserOutlined/>, label: "Account"
+            key: "9", icon: <UserOutlined/>, label: "Account"
           },
           isLoggedIn && {
-            key: "9",
+            key: "10",
             icon: <LogoutOutlined style={{ color: "red" }} />,
             label: "Logout",
             danger: true,

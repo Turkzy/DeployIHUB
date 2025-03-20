@@ -57,6 +57,7 @@ const EventsPanel = () => {
     try {
       await axios.post(
         "https://cloud-database-test3.onrender.com/api/event/create-events",
+        
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
