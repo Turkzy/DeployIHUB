@@ -46,7 +46,7 @@ const Dashboard = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         navigate("/Logout");
-      },  300000); // 300,000 ms = 5 minutes
+      },  600000); // 300,000 ms = 5 minutes
     };
 
     const events = ["mousemove", "keydown", "click"];

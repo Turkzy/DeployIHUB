@@ -21,7 +21,7 @@ const EventsPanel = () => {
   const fetchEvents = async () => {
     try {
       const res = await axios.get(
-        "https://cloud-database-test3.onrender.com/api/event/events"
+        "http://localhost:5000/api/event/events"
       );
       setEvents(res.data);
     } catch (err) {
@@ -33,7 +33,7 @@ const EventsPanel = () => {
     if (!window.confirm("Are you sure you want to delete this Event?")) return;
     try {
       await axios.delete(
-        `https://cloud-database-test3.onrender.com/api/event/delete-events/${id}`
+        `http://localhost:5000/api/event/delete-events/${id}`
       );
       message.success("Events deleted Successfully");
       fetchEvents();
@@ -56,7 +56,7 @@ const EventsPanel = () => {
 
     try {
       await axios.post(
-        "https://cloud-database-test3.onrender.com/api/event/create-events",
+        "http://localhost:5000/api/event/create-events",
         
         formData,
         {
@@ -89,7 +89,7 @@ const EventsPanel = () => {
 
     try {
       await axios.put(
-        `https://cloud-database-test3.onrender.com/api/event/update-events/${selectedEvent._id}`,
+        `http://localhost:5000/api/event/update-events/${selectedEvent._id}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

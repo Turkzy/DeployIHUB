@@ -32,7 +32,7 @@ export const createEvent = async (req, res) => {
     const imageResult = await cloudinary.v2.uploader.upload(
       imageFile.tempFilePath || imageFile.path,
       {
-        folder: "events_images",
+        folder: "InnovationHub_Events",
       }
     );
 
@@ -72,7 +72,7 @@ export const updateEvent = async (req, res) => {
 
       const imageResult = await cloudinary.v2.uploader.upload(
         req.files.Imgurl.tempFilePath || req.files.Imgurl.path,
-        { folder: "events_images" }
+        { folder: "InnovationHub_Events" }
       );
       
       newImageUrl = imageResult.secure_url;

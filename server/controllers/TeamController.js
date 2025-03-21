@@ -33,7 +33,7 @@ export const createTeam = async (req, res) => {
     const imageResult = await cloudinary.v2.uploader.upload(
       imageFile.tempFilePath || imageFile.path,
       {
-        folder: "team_images",
+        folder: "InnovationHub_Teams",
       }
     );
 
@@ -43,7 +43,7 @@ export const createTeam = async (req, res) => {
       const pdfResult = await cloudinary.v2.uploader.upload(
         pdfFile.tempFilePath || pdfFile.path,
         {
-          folder: "team_pdfs",
+          folder: "InnovationHub_Teams",
           resource_type: "raw", // Important for PDF uploads
         }
       );
@@ -91,7 +91,7 @@ export const updateTeam = async (req, res) => {
       // Upload new image
       const imageResult = await cloudinary.v2.uploader.upload(
         req.files.Imgurl.tempFilePath,
-        { folder: "team_images" }
+        { folder: "InnovationHub_Teams" }
       );
       newImageUrl = imageResult.secure_url;
     }
@@ -117,7 +117,7 @@ export const updateTeam = async (req, res) => {
       const pdfResult = await cloudinary.v2.uploader.upload(
         req.files.pdf.tempFilePath,
         {
-          folder: "team_pdfs",
+          folder: "InnovationHub_Teams",
           resource_type: "raw",
         }
       );

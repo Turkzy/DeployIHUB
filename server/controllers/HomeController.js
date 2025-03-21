@@ -40,7 +40,7 @@ export const createHome = async (req, res) => {
         const uploadResult = await cloudinary.v2.uploader.upload(
             file.tempFilePath,
             {
-                folder: "home_content",
+                folder: "InnovationHub_Home",
                 resource_type: isVideo ? "video" : "image",
                 chunk_size: 6000000, // Recommended for videos
                 eager_async: true
@@ -101,7 +101,7 @@ export const updateHome = async (req, res) => {
             const uploadResult = await cloudinary.v2.uploader.upload(
                 file.tempFilePath,
                 {
-                    folder: "home_content",
+                    folder: "InnovationHub_Home",
                     resource_type: isVideo ? "video" : "image",
                     chunk_size: 6000000,
                     eager_async: true

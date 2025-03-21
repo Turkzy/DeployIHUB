@@ -20,7 +20,7 @@ const TeamPanel = () => {
 
   const fetchTeams = async () => {
     try {
-      const res = await axios.get("https://cloud-database-test3.onrender.com/api/team/teams");
+      const res = await axios.get("http://localhost:5000/api/team/teams");
       setTeams(res.data);
     } catch (err) {
       message.error("Failed to fetch teams.");
@@ -31,7 +31,7 @@ const TeamPanel = () => {
     if (!window.confirm("Are you sure you want to delete this team member?"))
       return;
     try {
-      await axios.delete(`https://cloud-database-test3.onrender.com/api/team/delete-teams/${id}`);
+      await axios.delete(`http://localhost:5000/api/team/delete-teams/${id}`);
       message.success("Team member deleted successfully.");
       fetchTeams();
     } catch (err) {
@@ -55,7 +55,7 @@ const TeamPanel = () => {
 
     try {
       await axios.post(
-        "https://cloud-database-test3.onrender.com/api/team/create-teams",
+        "http://localhost:5000/api/team/create-teams",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -89,7 +89,7 @@ const TeamPanel = () => {
 
     try {
       await axios.put(
-        `https://cloud-database-test3.onrender.com/api/team/edit-teams/${selectedTeam._id}`,
+        `http://localhost:5000/api/team/edit-teams/${selectedTeam._id}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

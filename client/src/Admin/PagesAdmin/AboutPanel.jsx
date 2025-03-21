@@ -33,7 +33,7 @@ const toggleExpanded = (key) => {
 
     try {
       await axios.post(
-        "https://cloud-database-test3.onrender.com/api/about/create-about-content", formData, {
+        "http://localhost:5000/api/about/create-about-content", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
@@ -56,7 +56,7 @@ const toggleExpanded = (key) => {
 
   const fetchAbouts = async () => {
     try {
-      const res = await axios.get("https://cloud-database-test3.onrender.com/api/about/abouts");
+      const res = await axios.get("http://localhost:5000/api/about/abouts");
       setAbouts(res.data);
     } catch (error) {
       message.error("Failed to Fetch the content of Abouts.");
@@ -76,7 +76,7 @@ const toggleExpanded = (key) => {
 
     try {
       await axios.put(
-        `https://cloud-database-test3.onrender.com/api/about/update-about-content/${selectedAbout._id}`, formData, {
+        `http://localhost:5000/api/about/update-about-content/${selectedAbout._id}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
@@ -96,7 +96,7 @@ const toggleExpanded = (key) => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this About Content?")) return;
     try {
-      await axios.delete(`https://cloud-database-test3.onrender.com/api/about/delete-about-content/${id}`);
+      await axios.delete(`http://localhost:5000/api/about/delete-about-content/${id}`);
       message.success("About Content is deleted Successfully");
       fetchAbouts();
     } catch (error) {

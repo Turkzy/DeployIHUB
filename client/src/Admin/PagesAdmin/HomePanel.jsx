@@ -27,7 +27,7 @@ const toggleExpanded = (key) => {
 
   const fetchHomes = async () => {
     try {
-      const res = await axios.get("https://cloud-database-test3.onrender.com/api/home/homes");
+      const res = await axios.get("http://localhost:5000/api/home/homes");
       setHomes(res.data);
     } catch (error) {
       message.error("Failed to Fetch the content of Homes.");
@@ -47,7 +47,7 @@ const toggleExpanded = (key) => {
 
     try {
       await axios.put(
-        `https://cloud-database-test3.onrender.com/api/home/update-home-content/${selectedHome._id}`, formData, {
+        `http://localhost:5000/api/home/update-home-content/${selectedHome._id}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
