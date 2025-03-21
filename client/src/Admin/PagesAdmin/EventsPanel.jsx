@@ -29,13 +29,16 @@ const EventsPanel = () => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, eventName) => {
     if (!window.confirm("Are you sure you want to delete this Event?")) return;
     try {
       await axios.delete(
         `http://localhost:5000/api/event/delete-events/${id}`
       );
       message.success("Events deleted Successfully");
+
+      await logAction("DELETE", `Deleted Event: ${eventName}`);
+
       fetchEvents();
     } catch (err) {
       message.error("Error deleting events");
@@ -65,6 +68,9 @@ const EventsPanel = () => {
       );
 
       message.success("The New Event added Successfully");
+
+      await logAction("CREATE", `Added New Event: ${values.title}`);
+
       fetchEvents();
       setIsAddModalOpen(false);
       addForm.resetFields();
@@ -97,6 +103,9 @@ const EventsPanel = () => {
       );
 
       message.success("Event updated Successfully!");
+
+      await logAction("UPDATE", `Update the Event: ${values.title}`);
+
       fetchEvents();
       setIsEditModalOpen(false);
       editForm.resetFields();
@@ -104,6 +113,21 @@ const EventsPanel = () => {
       message.error("Failed to update new Event.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const logAction = async (action, details) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const loggedInUser = user ? user.name : "Unknown User";
+
+    try {
+      await axios.post("http://localhost:5000/api/logs/create-logs", {
+        action,
+        details,
+        user: loggedInUser,
+      });
+    } catch (error) {
+      console.error("Failed to log action", error);
     }
   };
 
@@ -150,7 +174,7 @@ const EventsPanel = () => {
             className="del-btn-team"
             type="primary"
             danger
-            onClick={() => handleDelete(record._id)}
+            onClick={() => handleDelete(record._id, record.title)}
           >
             <FaTrash /> Delete
           </Button>

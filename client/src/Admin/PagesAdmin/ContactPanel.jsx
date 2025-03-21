@@ -36,10 +36,21 @@ const ContactPanel = () => {
   const handleUpdate = async (values) => {
     try {
       await axios.put(
-        "https://cloud-database-test3.onrender.com/api/contact/update-contact",
+        "http://localhost:5000/api/contact/update-contact",
         values
       );
       message.success("Contact updated successfully!");
+
+      const user = JSON.parse(localStorage.getItem("user"));
+      const loggedInUser = user ? user.name : "Unknown User";
+  
+      // Log the update action
+      await axios.post("http://localhost:5000/api/logs/create-logs", {
+        action: "Update",
+        details: `Updated contact with email: ${values.email}, phone: ${values.phone}, address: ${values.address}`,
+        user: loggedInUser, // Replace with actual user info if available
+      });
+  
       setIsModalVisible(false);
       fetchContacts(); // Refresh data
     } catch (error) {
@@ -47,6 +58,7 @@ const ContactPanel = () => {
       console.error(error);
     }
   };
+  
 
   // Table Columns
   const columns = [

@@ -53,6 +53,9 @@ const toggleExpanded = (key) => {
       );
 
       message.success("The Home Content is updated Successfully");
+
+      await logAction("UPDATE", `Update Title/Content: ${values.title}`);
+
       fetchHomes();
       setIsEditModalOpen(false);
       editForm.resetFields();
@@ -60,6 +63,22 @@ const toggleExpanded = (key) => {
       message.error (" Failed to Edit Home Content ");
     } finally {
       setLoading(false);
+    }
+  };
+
+
+  const logAction = async (action, details) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const loggedInUser = user ? user.name : "Unknown User";
+
+    try {
+      await axios.post("http://localhost:5000/api/logs/create-logs", {
+        action,
+        details,
+        user: loggedInUser,
+      });
+    } catch (error) {
+      console.error("Failed to log action", error);
     }
   };
 

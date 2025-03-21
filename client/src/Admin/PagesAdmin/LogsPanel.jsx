@@ -19,16 +19,29 @@ const LogsPanel = () => {
     };
 
     const columns = [
-        { title: "Action", dataIndex: "action", key: "action" },
+        { 
+            title: "Action", 
+            dataIndex: "action", 
+            key: "action",
+            render: (action) => {
+                let color = "black"; // Default color
+    
+                if (action === "CREATE") color = "blue";
+                else if (action === "UPDATE") color = "green";
+                else if (action === "DELETE") color = "red";
+    
+                return <span style={{ color, fontWeight: "bold" }}>{action}</span>;
+            }
+        },
         { title: "Details", dataIndex: "details", key: "details" },
         { title: "User", dataIndex: "user", key: "user" },
-        { title: "Timestamp", dataIndex: "timestamp", key: "timestamp" }
+        { title: "Time", dataIndex: "timestamp", key: "timestamp" }
     ];
 
     return (
-        <div>
+        <div className="Team-container">
             <h1>Logs Panel</h1>
-            <Table columns={columns} dataSource={logs} rowKey="_id" />
+            <Table columns={columns} dataSource={logs} rowKey="_id" scroll={{ x: "max-content" }}  />
         </div>
     );
 };

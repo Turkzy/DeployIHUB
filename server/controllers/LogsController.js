@@ -16,7 +16,14 @@ export const createLog = async (req, res) => {
 export const getLogs = async (req, res) => {
     try {
         const logs = await Log.find().sort({ timestamp: -1 });
-        res.status(200).json(logs);
+
+        if (logs.length > 10){
+            const excessLogs = logs.slice(10);
+            const excessLogIds = excessLogs.map(log => log._id);
+
+            await Log.deleteMany({ _id: { $in: excessLogIds } });
+        }
+        res.status(200).json(logs.slice(0, 10));
     } catch (error) {
         res.status(500).json({ message: "Failed to fetch logs", error });
     }

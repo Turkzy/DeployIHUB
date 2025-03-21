@@ -27,12 +27,15 @@ const TeamPanel = () => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, teamName) => {
     if (!window.confirm("Are you sure you want to delete this team member?"))
       return;
     try {
       await axios.delete(`http://localhost:5000/api/team/delete-teams/${id}`);
       message.success("Team member deleted successfully.");
+
+      await logAction("DELETE", `Deleted team member: ${teamName}`);
+
       fetchTeams();
     } catch (err) {
       message.error("Error deleting team member.");
@@ -63,6 +66,10 @@ const TeamPanel = () => {
       );
 
       message.success("Team added successfully!");
+
+      await logAction("CREATE", `Added new team member: ${values.name}, Position: ${values.position}`);
+
+
       fetchTeams();
       setIsAddModalOpen(false);
       addForm.resetFields();
@@ -97,6 +104,9 @@ const TeamPanel = () => {
       );
 
       message.success("Team updated successfully!");
+
+      await logAction("UPDATE", `Update Team member: ${values.name}`);
+
       fetchTeams();
       setIsEditModalOpen(false);
       editForm.resetFields();
@@ -107,6 +117,22 @@ const TeamPanel = () => {
       setLoading(false);
     }
   };
+
+  const logAction = async (action, details) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const loggedInUser = user ? user.name : "Unknown User";
+
+    try {
+      await axios.post("http://localhost:5000/api/logs/create-logs", {
+        action,
+        details,
+        user: loggedInUser,
+      });
+    } catch (error) {
+      console.error("Failed to log action", error);
+    }
+  };
+
 
   const columns = [
     { title: "Name", dataIndex: "name", key: "name", width:"200px" },
@@ -147,7 +173,7 @@ const TeamPanel = () => {
             className="del-btn-team"
             type="primary"
             danger
-            onClick={() => handleDelete(record._id)}
+            onClick={() => handleDelete(record._id, record.name)}
           >
             <FaTrash /> Delete
           </Button>

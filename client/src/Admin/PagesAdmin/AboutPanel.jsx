@@ -39,6 +39,9 @@ const toggleExpanded = (key) => {
       );
 
       message.success("The New About Content is added Successfully");
+
+      await logAction("CREATE", `Create New About: ${values.title}`);
+
       fetchAbouts();
       setIsAddModalOpen(false);
       addForm.resetFields();
@@ -82,6 +85,9 @@ const toggleExpanded = (key) => {
       );
 
       message.success("The About Content is updated Successfully");
+
+      await logAction("UPDATE", `Update the About: ${values.title}`);
+
       fetchAbouts();
       setIsEditModalOpen(false);
       editForm.resetFields();
@@ -93,18 +99,34 @@ const toggleExpanded = (key) => {
   };
 
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, title) => {
     if (!window.confirm("Are you sure you want to delete this About Content?")) return;
     try {
       await axios.delete(`http://localhost:5000/api/about/delete-about-content/${id}`);
       message.success("About Content is deleted Successfully");
+
+      await logAction("DELETE", `Delete About: ${title}`);
+
       fetchAbouts();
     } catch (error) {
       message.error("Error deleting the about content");
     }
   }
 
-  
+  const logAction = async (action, details) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const loggedInUser = user ? user.name : "Unknown User";
+
+    try {
+      await axios.post("http://localhost:5000/api/logs/create-logs", {
+        action,
+        details,
+        user: loggedInUser,
+      });
+    } catch (error) {
+      console.error("Failed to log action", error);
+    }
+  };
 
   const columns = [
     { title: "Title", dataIndex: "title", key: "title", width: 120},
@@ -161,7 +183,7 @@ const toggleExpanded = (key) => {
           }}><FaEdit />
             Edit
           </Button>
-          <Button className='del-btn-team' type="primary" danger onClick={() => handleDelete(record._id)}>
+          <Button className='del-btn-team' type="primary" danger onClick={() => handleDelete(record._id, record.title)}>
           <FaTrash />Delete
           </Button>
         </>

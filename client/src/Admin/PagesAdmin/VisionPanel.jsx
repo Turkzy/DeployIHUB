@@ -25,6 +25,9 @@ const toggleExpanded = (key) => {
     try {
       await axios.post("https://cloud-database-test3.onrender.com/api/vision/create-vision-content", values);
       message.success("The Content is added successfully");
+
+      await logAction("CREATE", `CREATE  Mission/Vision/Values: ${values.title}`);
+
       fetchVisions();
       setIsAddModalOpen(false);
       addForm.resetFields();
@@ -56,6 +59,9 @@ const toggleExpanded = (key) => {
         values
       );
       message.success("The Content is updated successfully");
+
+      await logAction("UPDATE", `Update Mision/Vision/Values: ${values.title}`);
+
       fetchVisions();
       setIsEditModalOpen(false);
       editForm.resetFields();
@@ -66,14 +72,32 @@ const toggleExpanded = (key) => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, title) => {
     if (!window.confirm("Are you sure you want to delete this content?")) return;
     try {
       await axios.delete(`https://cloud-database-test3.onrender.com/api/vision/delete-vision-content/${id}`);
       message.success("Content deleted successfully");
+
+      await logAction("DELETE", `Update Team member: ${title}`);
+
       fetchVisions();
     } catch (error) {
       message.error("Error deleting the content");
+    }
+  };
+
+  const logAction = async (action, details) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const loggedInUser = user ? user.name : "Unknown User";
+
+    try {
+      await axios.post("http://localhost:5000/api/logs/create-logs", {
+        action,
+        details,
+        user: loggedInUser,
+      });
+    } catch (error) {
+      console.error("Failed to log action", error);
     }
   };
 
@@ -121,7 +145,7 @@ const toggleExpanded = (key) => {
             className='del-btn-team' 
             type="primary" 
             danger 
-            onClick={() => handleDelete(record._id)}
+            onClick={() => handleDelete(record._id, record.title)}
           >
             <FaTrash /> Delete
           </Button>
@@ -143,6 +167,7 @@ const toggleExpanded = (key) => {
       >
         <FaPlus /> Add New Content
       </Button>
+      <p className='vision-note'>Note: Only [MISSION, VISION, VALUES] are allowed for the Title. Delete if not needed.</p>
       <Table 
         className="table-team" 
         dataSource={visions} 

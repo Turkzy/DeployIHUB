@@ -48,11 +48,30 @@ const toggleExpanded = (key) => {
         values
       );
       message.success("Hub Story updated successfully!");
+
+      await logAction("UPDATE", `Update iHub Story `);
+
       setIsModalVisible(false);
       fetchHubs(); // Refresh data
     } catch (error) {
       message.error("Error updating Hub Story.");
       console.error(error);
+    }
+  };
+
+
+  const logAction = async (action, details) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const loggedInUser = user ? user.name : "Unknown User";
+
+    try {
+      await axios.post("http://localhost:5000/api/logs/create-logs", {
+        action,
+        details,
+        user: loggedInUser,
+      });
+    } catch (error) {
+      console.error("Failed to log action", error);
     }
   };
 
