@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "../DesignMain/Vision.css";
 
 const Vision = () => {
   const [visions, setVisions] = useState([]);
+  const cardsRef = useRef([]);
 
   useEffect(() => {
     const fetchVisions = async () => {
       try {
-        const res = await axios.get("https://cloud-database-test3.onrender.com/api/vision/visions");
+        const res = await axios.get("https://projectihub-cloud-database.onrender.com/api/vision/visions");
 
         // Predefined Order: Mission -> Vision -> Values
         const order = ["mission", "vision", "values"];
@@ -27,6 +28,26 @@ const Vision = () => {
     fetchVisions();
   }, []);
 
+  // Intersection Observer to animate on scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+          }
+        });
+      },
+      { threshold: 0.3 } // Trigger when 30% of the element is visible
+    );
+
+    cardsRef.current.forEach((card) => {
+      if (card) observer.observe(card);
+    });
+
+    return () => observer.disconnect();
+  }, [visions]);
+
   return (
     <section id="vision" className="mvv-section">
       <div className="vision-title">
@@ -34,8 +55,12 @@ const Vision = () => {
       </div>
 
       <div className="mvv-container">
-        {visions.map((vision) => (
-          <div key={vision._id} className="mvv-card">
+        {visions.map((vision, index) => (
+          <div
+            key={vision._id}
+            ref={(el) => (cardsRef.current[index] = el)}
+            className="mvv-card"
+          >
             <div className={`card-header ${vision.title.toLowerCase()}`}>
               {vision.title}
             </div>

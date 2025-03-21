@@ -8,7 +8,7 @@ const About = () => {
   useEffect(() => {
     const fetchAbouts = async () => {
       try {
-        const res = await axios.get("https://cloud-database-test3.onrender.com/api/about/abouts");
+        const res = await axios.get("https://projectihub-cloud-database.onrender.com/api/about/abouts");
         setAboutData(res.data);
       } catch (error) {
         console.error("Failed to fetch About content:", error);

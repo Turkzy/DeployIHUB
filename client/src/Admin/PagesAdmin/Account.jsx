@@ -24,7 +24,7 @@ const Account = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/all-users");
+      const res = await axios.get("https://projectihub-cloud-database.onrender.com/api/auth/all-users");
       setUsers(res.data.users || []);
     } catch (error) {
       message.error("Error fetching users.");
@@ -34,7 +34,7 @@ const Account = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/auth/delete-user/${id}`);
+      await axios.delete(`https://projectihub-cloud-database.onrender.com/api/auth/delete-user/${id}`);
       message.success("User deleted successfully.");
       fetchUsers();
     } catch (error) {
@@ -45,7 +45,7 @@ const Account = () => {
   const handleAddUser = async (values) => {
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/auth/add-user", values);
+      await axios.post("https://projectihub-cloud-database.onrender.com/api/auth/add-user", values);
       message.success("User added successfully!");
       fetchUsers();
       setIsAddModalOpen(false);
@@ -66,7 +66,7 @@ const Account = () => {
     setLoading(true);
     try {
       await axios.put(
-        `http://localhost:5000/api/auth/edit-user/${selectedUser._id}`,
+        `https://projectihub-cloud-database.onrender.com/api/auth/edit-user/${selectedUser._id}`,
         values
       );
       message.success("User updated successfully!");

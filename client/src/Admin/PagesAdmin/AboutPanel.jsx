@@ -12,14 +12,6 @@ const AboutPanel = () => {
   const [addForm] = Form.useForm();
   const [editForm] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [expandedRows, setExpandedRows] = useState({});
-
-const toggleExpanded = (key) => {
-  setExpandedRows((prev) => ({
-    ...prev,
-    [key]: !prev[key]
-  }));
-};
 
   const handleAddAbout = async (values) => {
     setLoading(true);
@@ -33,7 +25,7 @@ const toggleExpanded = (key) => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/about/create-about-content", formData, {
+        "https://projectihub-cloud-database.onrender.com/api/about/create-about-content", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
@@ -59,7 +51,7 @@ const toggleExpanded = (key) => {
 
   const fetchAbouts = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/about/abouts");
+      const res = await axios.get("https://projectihub-cloud-database.onrender.com/api/about/abouts");
       setAbouts(res.data);
     } catch (error) {
       message.error("Failed to Fetch the content of Abouts.");
@@ -79,7 +71,7 @@ const toggleExpanded = (key) => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/about/update-about-content/${selectedAbout._id}`, formData, {
+        `https://projectihub-cloud-database.onrender.com/api/about/update-about-content/${selectedAbout._id}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
@@ -102,7 +94,7 @@ const toggleExpanded = (key) => {
   const handleDelete = async (id, title) => {
     if (!window.confirm("Are you sure you want to delete this About Content?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/about/delete-about-content/${id}`);
+      await axios.delete(`https://projectihub-cloud-database.onrender.com/api/about/delete-about-content/${id}`);
       message.success("About Content is deleted Successfully");
 
       await logAction("DELETE", `Delete About: ${title}`);
@@ -118,7 +110,7 @@ const toggleExpanded = (key) => {
     const loggedInUser = user ? user.name : "Unknown User";
 
     try {
-      await axios.post("http://localhost:5000/api/logs/create-logs", {
+      await axios.post("https://projectihub-cloud-database.onrender.com/api/logs/create-logs", {
         action,
         details,
         user: loggedInUser,
@@ -136,23 +128,10 @@ const toggleExpanded = (key) => {
       key: "content",
       width: 1000,
       render: (text, record) => {
-        const isExpanded = expandedRows[record._id] || false;
-  
         return (
-          <div style={{ whiteSpace: 'pre-line' }}>
-            {isExpanded ? text : `${text.substring(0, 150)}...`}
-            {text.length > 100 && (
-              <Button className='see-lessmore'
-                type="link"
-                onClick={() => toggleExpanded(record._id)}
-                style={{ padding: 0, marginLeft: 5 }}
-              >
-                {isExpanded ? "See Less" : "See More"}
-              </Button>
-            )}
-          </div>
+          <div style={{ whiteSpace: "pre-line" }}>{text ? (text.length > 150 ? `${text.substring(0, 150)}...` : text) : 'No Content Available'}</div>
         );
-      }
+      },
     },
     {
       title: "Media",
@@ -169,7 +148,7 @@ const toggleExpanded = (key) => {
             Your browser does not support the video tag.
           </video>
         ) : (
-          <img src={Imgurl} alt="About Media" style={{ width: 200 }} />
+          <img src={Imgurl} alt="About Media" style={{ width: 100 }} />
         );
       }  
     },

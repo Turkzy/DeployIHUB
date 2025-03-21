@@ -12,7 +12,7 @@ const Team = () => {
   }, []);
     const fetchTeams = async () => {
       try {
-        const res = await axios.get("https://cloud-database-test3.onrender.com/api/team/teams");
+        const res = await axios.get("https://projectihub-cloud-database.onrender.com/api/team/teams");
         setTeamMembers(res.data);
       } catch (err) {
         message.error("Failed to Fetch Team Members");
@@ -22,7 +22,7 @@ const Team = () => {
   const handleDownload = async (member) => {
     try {
       const response = await axios({
-        url: `https://cloud-database-test3.onrender.com/api/team/download-pdf/${member._id}`,
+        url: `https://projectihub-cloud-database.onrender.com/api/team/download-pdf/${member._id}`,
         method: 'GET',
         responseType: 'blob',
       });

@@ -20,7 +20,7 @@ const TeamPanel = () => {
 
   const fetchTeams = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/team/teams");
+      const res = await axios.get("https://projectihub-cloud-database.onrender.com/api/team/teams");
       setTeams(res.data);
     } catch (err) {
       message.error("Failed to fetch teams.");
@@ -31,7 +31,7 @@ const TeamPanel = () => {
     if (!window.confirm("Are you sure you want to delete this team member?"))
       return;
     try {
-      await axios.delete(`http://localhost:5000/api/team/delete-teams/${id}`);
+      await axios.delete(`https://projectihub-cloud-database.onrender.com/api/team/delete-teams/${id}`);
       message.success("Team member deleted successfully.");
 
       await logAction("DELETE", `Deleted team member: ${teamName}`);
@@ -58,7 +58,7 @@ const TeamPanel = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/team/create-teams",
+        "https://projectihub-cloud-database.onrender.com/api/team/create-teams",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -96,7 +96,7 @@ const TeamPanel = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/team/edit-teams/${selectedTeam._id}`,
+        `https://projectihub-cloud-database.onrender.com/api/team/edit-teams/${selectedTeam._id}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -123,7 +123,7 @@ const TeamPanel = () => {
     const loggedInUser = user ? user.name : "Unknown User";
 
     try {
-      await axios.post("http://localhost:5000/api/logs/create-logs", {
+      await axios.post("https://projectihub-cloud-database.onrender.com/api/logs/create-logs", {
         action,
         details,
         user: loggedInUser,

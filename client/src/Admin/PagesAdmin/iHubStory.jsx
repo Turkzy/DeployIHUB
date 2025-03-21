@@ -8,20 +8,12 @@ const IHubStory = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editHub, setEditHub] = useState(null);
   const [form] = Form.useForm();
-  const [expandedRows, setExpandedRows] = useState({});
-
-const toggleExpanded = (key) => {
-  setExpandedRows((prev) => ({
-    ...prev,
-    [key]: !prev[key]
-  }));
-};
 
   // Fetch Hub
   const fetchHubs = async () => {
     try {
       const response = await axios.get(
-        "https://cloud-database-test3.onrender.com/api/hub/hub"
+        "https://projectihub-cloud-database.onrender.com/api/hub/hub"
       );
       setHubs(response.data);
     } catch (error) {
@@ -44,7 +36,7 @@ const toggleExpanded = (key) => {
   const handleUpdate = async (values) => {
     try {
       await axios.put(
-        "https://cloud-database-test3.onrender.com/api/hub/update-hub",
+        "https://projectihub-cloud-database.onrender.com/api/hub/update-hub",
         values
       );
       message.success("Hub Story updated successfully!");
@@ -65,7 +57,7 @@ const toggleExpanded = (key) => {
     const loggedInUser = user ? user.name : "Unknown User";
 
     try {
-      await axios.post("http://localhost:5000/api/logs/create-logs", {
+      await axios.post("https://projectihub-cloud-database.onrender.com/api/logs/create-logs", {
         action,
         details,
         user: loggedInUser,
@@ -83,23 +75,10 @@ const toggleExpanded = (key) => {
       key: "content",
       width: 1800,
       render: (text, record) => {
-        const isExpanded = expandedRows[record._id] || false;
-  
         return (
-          <div style={{ whiteSpace: 'pre-line' }}>
-            {isExpanded ? text : `${text.substring(0, 150)}...`}
-            {text.length > 100 && (
-              <Button className='see-lessmore'
-                type="link"
-                onClick={() => toggleExpanded(record._id)}
-                style={{ padding: 0, marginLeft: 5 }}
-              >
-                {isExpanded ? "See Less" : "See More"}
-              </Button>
-            )}
-          </div>
+          <div style={{ whiteSpace: "pre-line" }}>{text ? (text.length > 150 ? `${text.substring(0, 150)}...` : text) : 'No Content Available'}</div>
         );
-      }
+      },
     },
     {
       title: "Actions",

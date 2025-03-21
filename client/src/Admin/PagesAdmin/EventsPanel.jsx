@@ -21,7 +21,7 @@ const EventsPanel = () => {
   const fetchEvents = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/event/events"
+        "https://projectihub-cloud-database.onrender.com/api/event/events"
       );
       setEvents(res.data);
     } catch (err) {
@@ -33,7 +33,7 @@ const EventsPanel = () => {
     if (!window.confirm("Are you sure you want to delete this Event?")) return;
     try {
       await axios.delete(
-        `http://localhost:5000/api/event/delete-events/${id}`
+        `https://projectihub-cloud-database.onrender.com/api/event/delete-events/${id}`
       );
       message.success("Events deleted Successfully");
 
@@ -59,7 +59,7 @@ const EventsPanel = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/event/create-events",
+        "https://projectihub-cloud-database.onrender.com/api/event/create-events",
         
         formData,
         {
@@ -95,7 +95,7 @@ const EventsPanel = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/event/update-events/${selectedEvent._id}`,
+        `https://projectihub-cloud-database.onrender.com/api/event/update-events/${selectedEvent._id}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -121,7 +121,7 @@ const EventsPanel = () => {
     const loggedInUser = user ? user.name : "Unknown User";
 
     try {
-      await axios.post("http://localhost:5000/api/logs/create-logs", {
+      await axios.post("https://projectihub-cloud-database.onrender.com/api/logs/create-logs", {
         action,
         details,
         user: loggedInUser,

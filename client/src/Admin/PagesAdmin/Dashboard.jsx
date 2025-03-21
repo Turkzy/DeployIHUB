@@ -29,12 +29,6 @@ const Dashboard = () => {
     setIsLoggedIn(!!token);
   }, []);
 
-  // Handle logout
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    navigate("/login");
-  };
 
   // Auto logout feature after inactivity
   useEffect(() => {
@@ -46,7 +40,7 @@ const Dashboard = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         navigate("/Logout");
-      },  600000); // 300,000 ms = 5 minutes
+      },  300000); // 300,000 ms = 5 minutes
     };
 
     const events = ["mousemove", "keydown", "click"];

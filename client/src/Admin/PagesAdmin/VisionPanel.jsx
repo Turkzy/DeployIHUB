@@ -11,19 +11,11 @@ const VisionPanel = () => {
   const [addForm] = Form.useForm();
   const [editForm] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [expandedRows, setExpandedRows] = useState({});
-
-const toggleExpanded = (key) => {
-  setExpandedRows((prev) => ({
-    ...prev,
-    [key]: !prev[key] // Toggle the specific row's state
-  }));
-};
 
   const handleAddVision = async (values) => {
     setLoading(true);
     try {
-      await axios.post("https://cloud-database-test3.onrender.com/api/vision/create-vision-content", values);
+      await axios.post("https://projectihub-cloud-database.onrender.com/api/vision/create-vision-content", values);
       message.success("The Content is added successfully");
 
       await logAction("CREATE", `CREATE  Mission/Vision/Values: ${values.title}`);
@@ -44,7 +36,7 @@ const toggleExpanded = (key) => {
 
   const fetchVisions = async () => {
     try {
-      const res = await axios.get("https://cloud-database-test3.onrender.com/api/vision/visions");
+      const res = await axios.get("https://projectihub-cloud-database.onrender.com/api/vision/visions");
       setVisions(res.data);
     } catch (error) {
       message.error("Failed to fetch the content of Vision/Mission");
@@ -55,7 +47,7 @@ const toggleExpanded = (key) => {
     setLoading(true);
     try {
       await axios.put(
-        `https://cloud-database-test3.onrender.com/api/vision/update-vision-content/${selectedVision._id}`, 
+        `https://projectihub-cloud-database.onrender.com/api/vision/update-vision-content/${selectedVision._id}`, 
         values
       );
       message.success("The Content is updated successfully");
@@ -75,7 +67,7 @@ const toggleExpanded = (key) => {
   const handleDelete = async (id, title) => {
     if (!window.confirm("Are you sure you want to delete this content?")) return;
     try {
-      await axios.delete(`https://cloud-database-test3.onrender.com/api/vision/delete-vision-content/${id}`);
+      await axios.delete(`https://projectihub-cloud-database.onrender.com/api/vision/delete-vision-content/${id}`);
       message.success("Content deleted successfully");
 
       await logAction("DELETE", `Update Team member: ${title}`);
@@ -91,7 +83,7 @@ const toggleExpanded = (key) => {
     const loggedInUser = user ? user.name : "Unknown User";
 
     try {
-      await axios.post("http://localhost:5000/api/logs/create-logs", {
+      await axios.post("https://projectihub-cloud-database.onrender.com/api/logs/create-logs", {
         action,
         details,
         user: loggedInUser,
@@ -109,23 +101,10 @@ const toggleExpanded = (key) => {
       key: "content",
       width: 1000,
       render: (text, record) => {
-        const isExpanded = expandedRows[record._id] || false;
-  
         return (
-          <div style={{ whiteSpace: 'pre-line' }}>
-            {isExpanded ? text : `${text.substring(0, 150)}...`}
-            {text.length > 100 && (
-              <Button className='see-lessmore'
-                type="link"
-                onClick={() => toggleExpanded(record._id)}
-                style={{ padding: 0, marginLeft: 5 }}
-              >
-                {isExpanded ? "See Less" : "See More"}
-              </Button>
-            )}
-          </div>
+          <div style={{ whiteSpace: "pre-line" }}>{text ? (text.length > 150 ? `${text.substring(0, 150)}...` : text) : 'No Content Available'}</div>
         );
-      }
+      },
     },
     {
       title: "Actions",

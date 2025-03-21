@@ -13,7 +13,7 @@ const ContactPanel = () => {
   const fetchContacts = async () => {
     try {
       const response = await axios.get(
-        "https://cloud-database-test3.onrender.com/api/contact/all-contacts"
+        "https://projectihub-cloud-database.onrender.com/api/contact/all-contacts"
       );
       setContacts(response.data);
     } catch (error) {
@@ -36,7 +36,7 @@ const ContactPanel = () => {
   const handleUpdate = async (values) => {
     try {
       await axios.put(
-        "http://localhost:5000/api/contact/update-contact",
+        "https://projectihub-cloud-database.onrender.com/api/contact/update-contact",
         values
       );
       message.success("Contact updated successfully!");
@@ -45,8 +45,8 @@ const ContactPanel = () => {
       const loggedInUser = user ? user.name : "Unknown User";
   
       // Log the update action
-      await axios.post("http://localhost:5000/api/logs/create-logs", {
-        action: "Update",
+      await axios.post("https://projectihub-cloud-database.onrender.com/api/logs/create-logs", {
+        action: "UPDATE",
         details: `Updated contact with email: ${values.email}, phone: ${values.phone}, address: ${values.address}`,
         user: loggedInUser, // Replace with actual user info if available
       });

@@ -11,7 +11,7 @@ const LogsPanel = () => {
 
     const fetchLogs = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/logs/logs");
+            const res = await axios.get("https://projectihub-cloud-database.onrender.com/api/logs/logs");
             setLogs(res.data);
         } catch (err) {
             message.error("Failed to fetch logs");
@@ -35,7 +35,12 @@ const LogsPanel = () => {
         },
         { title: "Details", dataIndex: "details", key: "details" },
         { title: "User", dataIndex: "user", key: "user" },
-        { title: "Time", dataIndex: "timestamp", key: "timestamp" }
+        { 
+            title: "Time", 
+            dataIndex: "timestamp", 
+            key: "timestamp",
+            render: (timestamp) => new Date(timestamp).toLocaleString() // Format date & time
+        }
     ];
 
     return (
